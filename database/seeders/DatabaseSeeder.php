@@ -2,22 +2,37 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Department;
+use App\Models\Employee;
+use App\Models\Leave;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $dev = Department::create(['name' => 'Development', 'description' => 'Dev team']);
+        $hr = Department::create(['name' => 'HR', 'description' => 'Human Resources']);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $emp1 = Employee::create([
+            'employee_code' => 'EMP001',
+            'cin' => 'AB123456',
+            'adress' => 'Casablanca',
+            'department_id' => $dev->id
+        ]);
+
+        $emp2 = Employee::create([
+            'employee_code' => 'EMP002',
+            'cin' => 'XY987654',
+            'adress' => 'Rabat',
+            'department_id' => $hr->id
+        ]);
+
+        Leave::create([
+            'start_date' => now(),
+            'end_date' => now()->addDays(5),
+            'reason' => 'Vacation',
+            'employee_id' => $emp1->id
         ]);
     }
 }
