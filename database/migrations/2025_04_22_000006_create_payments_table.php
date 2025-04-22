@@ -8,9 +8,9 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('payment_id')->nullable()->constrained('payment_types')->nullOnDelete();
+            $table->foreignId('payment_type_id')->nullable()->constrained();
             $table->double('salary')->default(0);
-            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('employee_id')->constrained();
             $table->date('date');
             $table->double('tax')->default(0);
             $table->double('net')->default(0);
