@@ -10,9 +10,9 @@ return new class extends Migration {
             $table->id();
             $table->date('start_date');
             $table->date('end_date');
-            $table->text('reason')->nullable();
             $table->string('status')->default('pending');
-            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('reason_id')->constrained();
+            $table->foreignId('employee_id')->constrained();
             $table->timestamps();
         });
     }

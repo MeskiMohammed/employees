@@ -50,7 +50,6 @@ class EmployeeController extends Controller
         $departments = Department::all();
         $operators = Operator::all();
         $statuses = Status::all();
-        // $users = User::whereDoesntHave('employee')->get();
         
         return view('employees.create', compact('departments', 'operators', 'statuses'));
     }

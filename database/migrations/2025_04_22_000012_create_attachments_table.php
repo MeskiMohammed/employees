@@ -9,8 +9,8 @@ return new class extends Migration {
         Schema::create('attachments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('attachment')->nullable();
-            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
+            $table->text('attachment');
+            $table->foreignId('post_employee_id')->constrained();
             $table->timestamps();
         });
     }

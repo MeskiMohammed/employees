@@ -18,7 +18,6 @@ class Employee extends Model
     public function evaluations() { return $this->hasMany(Evaluation::class); }
     public function payments() { return $this->hasMany(Payment::class); }
     public function freelancerProjects() { return $this->hasMany(FreelancerProject::class); }
-    public function attachments() { return $this->hasMany(Attachment::class); }
     public function posts() { return $this->hasMany(PostEmployee::class); }
     public function operator() { return $this->belongsTo(Operator::class); }
     public function user() { return $this->belongsTo(User::class); }

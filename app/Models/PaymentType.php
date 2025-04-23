@@ -8,5 +8,5 @@ class PaymentType extends Model
 {
     protected $fillable = ['type'];
 
-    public function payments() { return $this->hasMany(Payment::class, 'payment_id'); }
+    public function payments() { return $this->hasMany(Payment::class, 'payment_type_id'); }
 }

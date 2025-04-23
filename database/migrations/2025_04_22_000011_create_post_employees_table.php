@@ -8,10 +8,11 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('post_employees', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('employee_post_id')->constrained('employee_posts')->cascadeOnDelete();
-            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
+            $table->string('description');
             $table->date('in_date')->nullable();
             $table->date('out_date')->nullable();
+            $table->foreignId('employee_id')->constrained();
+            $table->foreignId('employee_post_id')->constrained();
             $table->timestamps();
         });
     }

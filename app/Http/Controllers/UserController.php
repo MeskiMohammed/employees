@@ -56,7 +56,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => ['required', Password::defaults()],
             'user_role_id' => 'required|exists:user_roles,id',
-            'user_status_id' => 'required|exists:users_status,id',
+            'user_status_id' => 'required|exists:user_statuses,id',
         ]);
         
         $validated['password'] = Hash::make($validated['password']);
@@ -90,7 +90,7 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'password' => ['nullable', Password::defaults()],
             'user_role_id' => 'required|exists:user_roles,id',
-            'user_status_id' => 'required|exists:users_status,id',
+            'user_status_id' => 'required|exists:user_statuses,id',
         ]);
         
         if (isset($validated['password']) && $validated['password']) {

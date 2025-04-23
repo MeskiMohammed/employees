@@ -10,14 +10,20 @@ class PaymentTypeController extends Controller
 {
     public function index(Request $request)
     {
-        $query = PaymentType::withCount('payments');
+        // $paymentTypes = null;
         
-        if ($request->has('search')) {
-            $search = $request->search;
-            $query->where('type', 'like', "%{$search}%");
-        }
+        // if ($request->has('search')) {
+        //     $search = $request->search;
+        //     $paymentTypes= PaymentType::where('type', 'like', "%{$search}%");
+        // }else{
+        //     $paymentTypes= PaymentType::all();
+
+        // }
         
-        $paymentTypes = $query->paginate(10);
+        $paymentTypes = PaymentType::when($request->search, function ($query, $search) {
+            return $query->where('type', 'like', "%{$search}%");
+        })->paginate(10);
+        
         
         return view('payment-types.index', compact('paymentTypes'));
     }

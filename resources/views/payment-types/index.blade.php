@@ -37,7 +37,7 @@
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payments Count</th>
+                    <!-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payments Count</th> -->
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
                     <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
@@ -51,9 +51,9 @@
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm font-medium text-gray-900">{{ $paymentType->type }}</div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
+                    <!-- <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900">{{ $paymentType->payments_count }}</div>
-                    </td>
+                    </td> -->
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900">{{ $paymentType->created_at->format('M d, Y') }}</div>
                         <div class="text-sm text-gray-500">{{ $paymentType->created_at->format('h:i A') }}</div>

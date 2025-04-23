@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attachment extends Model
 {
-    protected $fillable = ['name', 'attachment', 'employee_id'];
+    protected $fillable = ['name', 'attachment', 'post_employee_id'];
 
-    public function employee() { return $this->belongsTo(Employee::class); }
+    public function post() { return $this->belongsTo(PostEmployee::class,'post_employee_id'); }
 }

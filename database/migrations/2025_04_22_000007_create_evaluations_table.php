@@ -9,9 +9,9 @@ return new class extends Migration {
         Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->bigInteger('score');
-            $table->text('notes')->nullable();
-            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
+            $table->double('score');
+            $table->text('notes');
+            $table->foreignId('employee_id')->constrained();
             $table->timestamps();
         });
     }
