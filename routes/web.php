@@ -7,7 +7,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/layout', fn()=>view('layout.app'));
+Route::get('/layout', fn()=>view('layout.example'));
 
 Route::get('/dashboard', function () {
     return view('dashboard');
