@@ -8,5 +8,5 @@ class Operator extends Model
 {
     protected $fillable = ['operator'];
 
-    public function employee(){return $this->belongsTo(Employee::class);}
+    public function employees(){return $this->hasMany(Employee::class);}
 }

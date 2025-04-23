@@ -16,9 +16,20 @@
                                                 <div id="sidebar-menu">
                                                     <p class="sidebar-menu-title">Pages</p>
                                                     <a class="sidebar-menu-item false" href="/dashboard" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Dashboard</span></a>
-                                                    <a class="sidebar-menu-item false" href="/projects" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Projects</span></a>
-                                                    <a class="sidebar-menu-item false" href="/tasks" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Tasks</span></a>
-                                                    <a class="sidebar-menu-item false" href="/landing" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Link 3</span></a>
+                                                    <a class="sidebar-menu-item false" href="/employees" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Employees</span></a>
+                                                    <a class="sidebar-menu-item false" href="/departments" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Departments</span></a>
+                                                    <a class="sidebar-menu-item false" href="/users" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Users </span></a>
+                                                    <a class="sidebar-menu-item false" href="/payments" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Payments </span></a>
+                                                    <a class="sidebar-menu-item false" href="/leaves" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Leaves </span></a>
+                                                    <a class="sidebar-menu-item false" href="/evaluations" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Evaluations </span></a>
+                                                    <a class="sidebar-menu-item false" href="/freelancer-projects" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Freelancer-projects</span></a>
+                                                    <a class="sidebar-menu-item false" href="/post-employees" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Post-employees</span></a>
+                                                    <a class="sidebar-menu-item false" href="/employee-posts" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Employee-posts</span></a>
+                                                    <a class="sidebar-menu-item false" href="/payment-types" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Payment-types</span></a>
+                                                    <a class="sidebar-menu-item false" href="/operators" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Operators</span></a>
+                                                    <a class="sidebar-menu-item false" href="/statuses" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">Statuses</span></a>
+                                                    <a class="sidebar-menu-item false" href="/user-roles" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">User-roles</span></a>
+                                                    <a class="sidebar-menu-item false" href="/user-statuses" data-discover="true"><span class="iconify lucide--file size-4"></span><span class="grow">User-statuses</span></a>
                                                 </div>
                                             </div>
                                         </div>

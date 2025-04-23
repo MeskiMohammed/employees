@@ -21,9 +21,9 @@ return new class extends Migration {
             $table->string('professionalEmail')->nullable();
             $table->string('cnss')->nullable();
             $table->string('assurance')->nullable();
-            $table->foreignId('operator_id')->nullable()->constrained('operators')->nullOnDelete();
+            $table->foreignId('operator_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('department_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('status_id')->nullable()->constrained('status')->nullOnDelete();
+            $table->foreignId('status_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }
