@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::create('status_users', function (Blueprint $table) {
+        Schema::create('user_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('status');
             $table->timestamps();
@@ -14,6 +14,6 @@ return new class extends Migration {
     }
 
     public function down(): void {
-        Schema::dropIfExists('status_users');
+        Schema::dropIfExists('user_statuses');
     }
 };

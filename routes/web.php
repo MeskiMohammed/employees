@@ -1,22 +1,86 @@
 <?php
 
+use App\Http\Controllers\AttachmentController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeePostController;
+use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\FreelancerProjectController;
+use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentTypeController;
+use App\Http\Controllers\PostEmployeeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StatusController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserRoleController;
+use App\Http\Controllers\UserStatusController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
-Route::get('/layout', fn()=>view('layout.example'));
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    // Employee routes
+    Route::resource('employees', EmployeeController::class);
 
-Route::middleware('auth')->group(function () {
+    // Department routes
+    Route::resource('departments', DepartmentController::class);
+
+    // User routes
+    Route::resource('users', UserController::class);
+
+    // Payment routes
+    Route::resource('payments', PaymentController::class);
+
+    // Leave routes
+    Route::resource('leaves', LeaveController::class);
+
+    // Evaluation routes
+    Route::resource('evaluations', EvaluationController::class);
+
+    // Freelancer Project routes
+    Route::resource('freelancer-projects', FreelancerProjectController::class);
+
+    // Attachment routes
+    // Route::resource('attachments', AttachmentController::class);
+    Route::get('attachments/{attachment}/download', [AttachmentController::class, 'download'])->name('attachments.download');
+
+    // Post Employee routes
+    Route::resource('post-employees', PostEmployeeController::class);
+    // Route::get('post-employees/{postEmployee}/download', [PostEmployeeController::class, 'download'])->name('post-employees.download');
+
+    // Employee Post routes
+    Route::resource('employee-posts', EmployeePostController::class);
+
+    // Settings routes
+    Route::resource('payment-types', PaymentTypeController::class);
+    Route::resource('operators', OperatorController::class);
+    Route::resource('statuses', StatusController::class);
+    Route::resource('user-roles', UserRoleController::class);
+    Route::resource('user-statuses', UserStatusController::class);
+
+    // Profile routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('profile.settings');
+    Route::patch('/profile/settings', [ProfileController::class, 'updateSettings'])->name('profile.settings.update');
 });
 
 require __DIR__.'/auth.php';
