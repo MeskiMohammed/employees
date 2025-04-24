@@ -7,6 +7,8 @@ use App\Models\Employee;
 use App\Models\Operator;
 use App\Models\Status;
 use App\Models\User;
+use App\Models\UserRole;
+use App\Models\UserStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -16,7 +18,7 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         $query = Employee::with(['department', 'status', 'user']);
-        
+
         if ($request->has('search')) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
@@ -29,19 +31,19 @@ class EmployeeController extends Controller
                   });
             });
         }
-        
+
         if ($request->has('department')) {
             $query->where('department_id', $request->department);
         }
-        
+
         if ($request->has('status')) {
             $query->where('status_id', $request->status);
         }
-        
+
         $employees = $query->paginate(10);
         $departments = Department::all();
         $statuses = Status::all();
-        
+
         return view('employees.index', compact('employees', 'departments', 'statuses'));
     }
 
@@ -50,8 +52,10 @@ class EmployeeController extends Controller
         $departments = Department::all();
         $operators = Operator::all();
         $statuses = Status::all();
-        
-        return view('employees.create', compact('departments', 'operators', 'statuses'));
+        $user_roles = UserRole::all();
+        $user_statuses = UserStatus::all();
+
+        return view('employees.create', compact('departments', 'operators', 'statuses','user_statuses','user_roles'));
     }
 
     public function store(Request $request)
@@ -77,14 +81,14 @@ class EmployeeController extends Controller
             'department_id' => 'required|exists:departments,id',
             'status_id' => 'required|exists:status,id',
         ]);
-        
+
         if ($request->hasFile('profile_picture')) {
             $path = $request->file('profile_picture')->store('profile_pictures', 'public');
             $validated['profile_picture'] = $path;
         }
-        
+
         Employee::create($validated);
-        
+
         return redirect()->route('employees.index')
             ->with('success', 'Employee created successfully.');
     }
@@ -92,7 +96,7 @@ class EmployeeController extends Controller
     public function show(Employee $employee)
     {
         $employee->load(['department', 'status', 'user', 'operator', 'payments', 'leaves', 'attachments', 'evaluations', 'freelancerProjects', 'posts']);
-        
+
         return view('employees.show', compact('employee'));
     }
 
@@ -102,7 +106,7 @@ class EmployeeController extends Controller
         $operators = Operator::all();
         $statuses = Status::all();
         $users = User::whereDoesntHave('employee')->orWhere('id', $employee->users_id)->get();
-        
+
         return view('employees.edit', compact('employee', 'departments', 'operators', 'statuses', 'users'));
     }
 
@@ -129,7 +133,7 @@ class EmployeeController extends Controller
             'department_id' => 'required|exists:departments,id',
             'status_id' => 'required|exists:status,id',
         ]);
-        
+
         if ($request->hasFile('profile_picture')) {
             if ($employee->profile_picture) {
                 Storage::disk('public')->delete($employee->profile_picture);
@@ -137,9 +141,9 @@ class EmployeeController extends Controller
             $path = $request->file('profile_picture')->store('profile_pictures', 'public');
             $validated['profile_picture'] = $path;
         }
-        
+
         $employee->update($validated);
-        
+
         return redirect()->route('employees.index')
             ->with('success', 'Employee updated successfully.');
     }
@@ -149,9 +153,9 @@ class EmployeeController extends Controller
         if ($employee->profile_picture) {
             Storage::disk('public')->delete($employee->profile_picture);
         }
-        
+
         $employee->delete();
-        
+
         return redirect()->route('employees.index')
             ->with('success', 'Employee deleted successfully.');
     }
