@@ -10,12 +10,7 @@
                 
                 <!-- Search -->
                 <div class="hidden sm:block">
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                            <span class="iconify w-4 h-4 text-base-content/60" data-icon="solar:magnifer-bold-duotone"></span>
-                        </span>
-                        <input type="text" class="input input-bordered w-72 pl-10 pr-4 py-2 text-sm" placeholder="Search...">
-                    </div>
+                   
                 </div>
             </div>
 

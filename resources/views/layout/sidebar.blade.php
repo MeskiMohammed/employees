@@ -68,7 +68,7 @@
                         <span>User Roles</span>
                     </a>
                     <a href="/user-statuses" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('user-statuses') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
-                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:user-status-bold-duotone"></span>
+                        <span class="iconify w-5 h-5 mr-3" data-icon="ic:outline-grade"></span>
                         <span>User Statuses</span>
                     </a>
                 </div>
