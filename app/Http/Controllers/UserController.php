@@ -14,7 +14,6 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        dd($request);
         $query = User::with(['role', 'status']);
 
         if ($request->has('search')) {
@@ -24,14 +23,12 @@ class UserController extends Controller
                   ->orWhere('last_name', 'like', "%{$search}%")
                   ->orWhere('email', 'like', "%{$search}%");
             });
-            if ($request->role != null) {
-                $query->where('user_role_id', $request->role);
-            }
 
             if ($request->status != null) {
                 $query->where('user_status_id', $request->status);
             }
         }
+        $query->where('user_role_id','=', 2);
 
         $users = $query->paginate(10);
         $roles = UserRole::all();

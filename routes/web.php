@@ -76,6 +76,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('user-roles', UserRoleController::class);
     Route::resource('user-statuses', UserStatusController::class);
 
+
+    Route::get('/employee/dashboard', [App\Http\Controllers\EmployeeProfileController::class, 'dashboard'])->name('employee.dashboard');
+    Route::get('/employee/profile/edit', [App\Http\Controllers\EmployeeProfileController::class, 'edit'])->name('employee.profile.edit');
+    Route::put('/employee/profile/update', [App\Http\Controllers\EmployeeProfileController::class, 'update'])->name('employee.profile.update');
     // Profile routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

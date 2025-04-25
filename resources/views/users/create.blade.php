@@ -1,14 +1,14 @@
 @extends('layout.app')
 
-@section('title', 'Create User')
+@section('title', 'Create Admin')
 
-@section('header', 'Create User')
+@section('header', 'Create Admin')
 
 @section('content')
 <div class="max-w-4xl mx-auto">
     <div class="bg-white shadow rounded-lg">
         <div class="p-6 border-b">
-            <h2 class="text-xl font-semibold text-gray-800">Create New User</h2>
+            <h2 class="text-xl font-semibold text-gray-800">Create New Admin</h2>
         </div>
         
         <form action="{{ route('users.store') }}" method="POST" class="p-6">
@@ -79,7 +79,7 @@
                     Cancel
                 </a>
                 <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Create User
+                    Create Admin
                 </button>
             </div>
         </form>

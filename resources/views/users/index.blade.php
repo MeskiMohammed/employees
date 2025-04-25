@@ -1,15 +1,15 @@
 @extends('layout.app')
 
-@section('title', 'Users')
+@section('title', 'Admins')
 
-@section('header', 'Users')
+@section('header', 'Admins')
 
 @section('content')
 <div class="bg-white shadow rounded-lg">
     <div class="flex justify-between items-center p-6 border-b">
-        <h2 class="text-xl font-semibold text-gray-800">Users List</h2>
+        <h2 class="text-xl font-semibold text-gray-800">Admins List</h2>
         <a href="{{ route('users.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <i class="fas fa-plus mr-2"></i> Add User
+            <i class="fas fa-plus mr-2"></i> Add Admin
         </a>
     </div>
     
@@ -17,17 +17,7 @@
         <form action="{{ route('users.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
                 <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
-                <input type="text" name="search" id="search" value="{{ request('search') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Search users...">
-            </div>
-            
-            <div>
-                <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Role</label>
-                <select name="role" id="role" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
-                    <option value="">All Roles</option>
-                    @foreach($roles as $role)
-                        <option value="{{ $role->id }}" {{ request('role') == $role->id ? 'selected' : '' }}>{{ $role->role }}</option>
-                    @endforeach
-                </select>
+                <input type="text" name="search" id="search" value="{{ request('search') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Search Admins...">
             </div>
             
             <div>
@@ -57,7 +47,6 @@
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                     <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
@@ -71,15 +60,12 @@
                                 <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name={{ $user->first_name }}+{{ $user->last_name }}&background=random" alt="{{ $user->full_name }}">
                             </div>
                             <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">{{ $user->full_name }}</div>
+                                <div class="text-sm font-medium text-gray-900">{{ $user->first_name .' '. $user->last_name }}</div>
                             </div>
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900">{{ $user->email }}</div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">{{ $user->role->role ?? 'N/A' }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 

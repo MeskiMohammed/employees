@@ -1,14 +1,14 @@
 @extends('layout.app')
 
-@section('title', 'Edit User')
+@section('title', 'Edit Admin')
 
-@section('header', 'Edit User')
+@section('header', 'Edit Admin')
 
 @section('content')
 <div class="max-w-4xl mx-auto">
     <div class="bg-white shadow rounded-lg">
         <div class="p-6 border-b">
-            <h2 class="text-xl font-semibold text-gray-800">Edit User</h2>
+            <h2 class="text-xl font-semibold text-gray-800">Edit Admin</h2>
         </div>
         
         <form action="{{ route('users.update', $user) }}" method="POST" class="p-6">
@@ -81,7 +81,7 @@
                     Cancel
                 </a>
                 <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Update User
+                    Update Admin
                 </button>
             </div>
         </form>
