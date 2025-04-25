@@ -32,7 +32,7 @@ class UserController extends Controller
 
         $users = $query->paginate(10);
         $roles = UserRole::all();
-        $statuses = UserStatus::all();
+        $statuses = UserStatus::where('id','!=',1)->get();
 
         return view('users.index', compact('users', 'roles', 'statuses'));
     }
@@ -40,7 +40,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = UserRole::all();
-        $statuses = UserStatus::all();
+        $statuses = UserStatus::where('id','!=',1)->get();
 
         return view('users.create', compact('roles', 'statuses'));
     }
@@ -74,7 +74,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $roles = UserRole::all();
-        $statuses = UserStatus::all();
+        $statuses = UserStatus::where('id','!=',1)->get();
 
         return view('users.edit', compact('user', 'roles', 'statuses'));
     }
@@ -104,11 +104,6 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        if ($user->employee) {
-            return redirect()->route('users.index')
-                ->with('error', 'Cannot delete user with associated employee.');
-        }
-
         $user->delete();
 
         return redirect()->route('users.index')
