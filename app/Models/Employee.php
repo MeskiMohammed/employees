@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     protected $fillable = [
-        'employee_code', 'cin', 'profile_picture', 'adress', 'personal_num',
+        'employee_code', 'cin', 'profile_picture', 'address', 'personal_num',
         'professional_num', 'pin', 'salary', 'is_project', 'hours', 'ice',
-        'professional_email', 'cnss', 'assurance', 'users_id', 'department_id', 'status_id'
+        'professional_email', 'cnss', 'assurance', 'user_id', 'department_id', 'status_id'
     ];
 
     public function department() { return $this->belongsTo(Department::class); }

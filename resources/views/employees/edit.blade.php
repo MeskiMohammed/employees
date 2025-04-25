@@ -10,50 +10,90 @@
         <div class="p-6 border-b">
             <h2 class="text-xl font-semibold text-gray-800">Edit Employee</h2>
         </div>
-        
+
         <form action="{{ route('employees.update', $employee) }}" method="POST" enctype="multipart/form-data" class="p-6">
             @csrf
             @method('PUT')
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" x-data="{freelancer : {{ old('is_freelancer', $employee->is_freelancer == 'freelancer' ? 'true' : 'false') }}}">
                 <div class="md:col-span-3">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">Basic Information</h3>
                 </div>
-                
+
                 <div>
-                    <label for="users_id" class="block text-sm font-medium text-gray-700 mb-1">User</label>
-                    <select name="users_id" id="users_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('users_id') border-red-500 @enderror" required>
-                        <option value="">Select User</option>
-                        @foreach($users as $user)
-                            <option value="{{ $user->id }}" {{ old('users_id', $employee->users_id) == $user->id ? 'selected' : '' }}>
-                                {{ $user->full_name }} ({{ $user->email }})
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('users_id')
+                    <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                    <input type="text" name="first_name" id="first_name" value="{{ old('first_name', $employee->user->first_name) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('first_name') border-red-500 @enderror" >
+                    @error('first_name')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
-                
+
                 <div>
-                    <label for="employee_code" class="block text-sm font-medium text-gray-700 mb-1">Employee Code</label>
-                    <input type="text" name="employee_code" id="employee_code" value="{{ old('employee_code', $employee->employee_code) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('employee_code') border-red-500 @enderror" required>
-                    @error('employee_code')
+                    <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                    <input type="text" name="last_name" id="last_name" value="{{ old('last_name', $employee->user->last_name) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('last_name') border-red-500 @enderror" >
+                    @error('last_name')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
-                
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="text" name="email" id="email" value="{{ old('email', $employee->user->email) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('email') border-red-500 @enderror" >
+                    @error('email')
+                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="text" name="password" id="password" placeholder="Leave blank to keep current password" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('password') border-red-500 @enderror" >
+                    <p class="text-xs text-gray-500 mt-1">Leave empty to keep current password</p>
+                    @error('password')
+                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <div>
                     <label for="cin" class="block text-sm font-medium text-gray-700 mb-1">CIN</label>
-                    <input type="text" name="cin" id="cin" value="{{ old('cin', $employee->cin) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('cin') border-red-500 @enderror" required>
+                    <input type="text" name="cin" id="cin" value="{{ old('cin', $employee->cin) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('cin') border-red-500 @enderror" >
                     @error('cin')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>                
+                
+                <div>
+                    <label for="salary" class="block text-sm font-medium text-gray-700 mb-1">Salary</label>
+                    <input type="number" name="salary" id="salary" step="0.01" min="0" value="{{ old('salary', $employee->salary) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('salary') border-red-500 @enderror">
+                    @error('salary')
+                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+                
+                <div>
+                    <label for="personal_num" class="block text-sm font-medium text-gray-700 mb-1">Personal Number</label>
+                    <input type="text" name="personal_num" id="personal_num" value="{{ old('personal_num', $employee->personal_num) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('personal_num') border-red-500 @enderror">
+                    @error('personal_num')
+                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
+                    <label for="profile_picture" class="block text-sm font-medium text-gray-700 mb-1">Profile Picture <span class="text-gray-500 text-xs">(1080x1080px)</span></label>
+                    @if($employee->profile_picture)
+                        <div class="mb-2">
+                            <img src="{{ Storage::url($employee->profile_picture) }}" alt="Current profile picture" class="h-20 w-20 rounded-full object-cover">
+                            <p class="text-xs text-gray-500 mt-1">Current profile picture</p>
+                        </div>
+                    @endif
+                    <input type="file" name="profile_picture" id="profile_picture" class="file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('profile_picture') border-red-500 @enderror">
+                    <p class="text-xs text-gray-500 mt-1">Leave empty to keep current picture</p>
+                    @error('profile_picture')
+                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
                 
                 <div>
                     <label for="department_id" class="block text-sm font-medium text-gray-700 mb-1">Department</label>
-                    <select name="department_id" id="department_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('department_id') border-red-500 @enderror" required>
+                    <select name="department_id" id="department_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('department_id') border-red-500 @enderror" >
                         <option value="">Select Department</option>
                         @foreach($departments as $department)
                             <option value="{{ $department->id }}" {{ old('department_id', $employee->department_id) == $department->id ? 'selected' : '' }}>
@@ -67,161 +107,148 @@
                 </div>
                 
                 <div>
-                    <label for="operator_id" class="block text-sm font-medium text-gray-700 mb-1">Operator</label>
-                    <select name="operator_id" id="operator_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('operator_id') border-red-500 @enderror">
-                        <option value="">Select Operator</option>
-                        @foreach($operators as $operator)
-                            <option value="{{ $operator->id }}" {{ old('operator_id', $employee->operator_id) == $operator->id ? 'selected' : '' }}>
-                                {{ $operator->operator }}
+                    <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                    <input type="text" name="address" id="address" value="{{ old('address', $employee->address) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('address') border-red-500 @enderror">
+                    @error('address')
+                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="cin_attachment" class="block text-sm font-medium text-gray-700 mb-1">CIN Attachment</label>
+                    @if($employee->cinAttachment)
+                        <div class="mb-2">
+                            <p class="text-xs text-gray-500">Current attachment: {{ $employee->cinAttachment->original_name }}</p>
+                            <a href="{{ route('attachments.download', $employee->cinAttachment) }}" class="text-xs text-indigo-600 hover:text-indigo-800">Download</a>
+                        </div>
+                    @endif
+                    <input type="file" name="cin_attachment" id="cin_attachment" class="file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('cin_attachment') border-red-500 @enderror">
+                    <p class="text-xs text-gray-500 mt-1">Leave empty to keep current attachment</p>
+                    @error('cin_attachment')
+                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="employee_post_id" class="block text-sm font-medium text-gray-700 mb-1">Post</label>
+                    <select name="employee_post_id" id="employee_post_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('employee_post_id') border-red-500 @enderror" >
+                        <option value="">Select Post</option>
+                        @foreach($posts as $post)
+                            <option value="{{ $post->id }}" {{ old('employee_post_id', $employee->employee_post_id) == $post->id ? 'selected' : '' }}>
+                                {{ $post->post }}
                             </option>
                         @endforeach
                     </select>
-                    @error('operator_id')
+                    @error('employee_post_id')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
-                
-                <div>
-                    <label for="status_id" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                    <select name="status_id" id="status_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('status_id') border-red-500 @enderror" required>
-                        <option value="">Select Status</option>
-                        @foreach($statuses as $status)
-                            <option value="{{ $status->id }}" {{ old('status_id', $employee->status_id) == $status->id ? 'selected' : '' }}>
-                                {{ $status->status }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('status_id')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div class="md:col-span-3">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Contact Information</h3>
-                </div>
-                
-                <div>
-                    <label for="professional_email" class="block text-sm font-medium text-gray-700 mb-1">Professional Email</label>
-                    <input type="email" name="professional_email" id="professional_email" value="{{ old('professional_email', $employee->professional_email) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('professional_email') border-red-500 @enderror">
-                    @error('professional_email')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div>
-                    <label for="professional_num" class="block text-sm font-medium text-gray-700 mb-1">Professional Number</label>
-                    <input type="text" name="professional_num" id="professional_num" value="{{ old('professional_num', $employee->professional_num) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('professional_num') border-red-500 @enderror">
-                    @error('professional_num')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div>
-                    <label for="personal_num" class="block text-sm font-medium text-gray-700 mb-1">Personal Number</label>
-                    <input type="text" name="personal_num" id="personal_num" value="{{ old('personal_num', $employee->personal_num) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('personal_num') border-red-500 @enderror">
-                    @error('personal_num')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div class="md:col-span-3">
-                    <label for="adress" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                    <textarea name="adress" id="adress" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('adress') border-red-500 @enderror">{{ old('adress', $employee->adress) }}</textarea>
-                    @error('adress')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div class="md:col-span-3">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Employment Details</h3>
-                </div>
-                
-                <div>
-                    <label for="salary" class="block text-sm font-medium text-gray-700 mb-1">Salary</label>
-                    <input type="number" name="salary" id="salary" step="0.01" min="0" value="{{ old('salary', $employee->salary) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('salary') border-red-500 @enderror">
-                    @error('salary')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div>
-                    <label for="is_project" class="flex items-center text-sm font-medium text-gray-700 mb-1">
-                        <input type="checkbox" name="is_project" id="is_project" value="1" {{ old('is_project', $employee->is_project) ? 'checked' : '' }} class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-                        <span class="ml-2">Is Project Based</span>
-                    </label>
-                    @error('is_project')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div>
-                    <label for="houres" class="block text-sm font-medium text-gray-700 mb-1">Hours</label>
-                    <input type="number" name="houres" id="houres" min="0" value="{{ old('houres', $employee->houres) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('houres') border-red-500 @enderror">
-                    @error('houres')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-                
+
                 <div class="md:col-span-3">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">Additional Information</h3>
                 </div>
+
+                <span>
+                    <input type='radio' @click="freelancer=false" value="employee" name="is_freelancer" {{ old('is_freelancer', $employee->is_freelancer) != 'freelancer' ? 'checked' : '' }}> Employee
+                </span>
+                <span>
+                    <input type='radio' @click="freelancer=true" value="freelancer" name="is_freelancer" {{ old('is_freelancer', $employee->is_freelancer) == 'freelancer' ? 'checked' : '' }}> FreeLancer
+                </span>
                 
-                <div>
-                    <label for="pin" class="block text-sm font-medium text-gray-700 mb-1">PIN</label>
-                    <input type="text" name="pin" id="pin" value="{{ old('pin', $employee->pin) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('pin') border-red-500 @enderror">
-                    @error('pin')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
+                <span x-show="freelancer" class="col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="ice" class="block text-sm font-medium text-gray-700 mb-1">ICE</label>
+                        <input type="text" name="ice" id="ice" value="{{ old('ice', $employee->ice) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('ice') border-red-500 @enderror">
+                        @error('ice')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="is_project" class="flex items-center text-sm font-medium text-gray-700 mt-8 ">
+                            <input type="checkbox" name="is_project" id="is_project" value="1" {{ old('is_project', $employee->is_project) ? 'checked' : '' }} class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                            <span class="ml-2">Is Project Based</span>
+                        </label>
+                        @error('is_project')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </span>
+                <div x-show="!freelancer" class="col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="employee_code" class="block text-sm font-medium text-gray-700 mb-1">Employee Code</label>
+                        <input type="text" name="employee_code" id="employee_code" value="{{ old('employee_code', $employee->employee_code) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('employee_code') border-red-500 @enderror">
+                        @error('employee_code')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="professional_email" class="block text-sm font-medium text-gray-700 mb-1">Professional Email</label>
+                        <input type="email" name="professional_email" id="professional_email" value="{{ old('professional_email', $employee->professional_email) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('professional_email') border-red-500 @enderror">
+                        @error('professional_email')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="professional_num" class="block text-sm font-medium text-gray-700 mb-1">Professional Number</label>
+                        <input type="text" name="professional_num" id="professional_num" value="{{ old('professional_num', $employee->professional_num) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('professional_num') border-red-500 @enderror">
+                        @error('professional_num')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="pin" class="block text-sm font-medium text-gray-700 mb-1">PIN</label>
+                        <input type="text" name="pin" id="pin" value="{{ old('pin', $employee->pin) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('pin') border-red-500 @enderror">
+                        @error('pin')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="puk" class="block text-sm font-medium text-gray-700 mb-1">PUK</label>
+                        <input type="text" name="puk" id="puk" value="{{ old('puk', $employee->puk) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('puk') border-red-500 @enderror">
+                        @error('puk')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="operator_id" class="block text-sm font-medium text-gray-700 mb-1">Operator</label>
+                        <select name="operator_id" id="operator_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('operator_id') border-red-500 @enderror">
+                            <option value="">Select Operator</option>
+                            @foreach($operators as $operator)
+                                <option value="{{ $operator->id }}" {{ old('operator_id', $employee->operator_id) == $operator->id ? 'selected' : '' }}>
+                                    {{ $operator->operator }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('operator_id')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="cnss" class="block text-sm font-medium text-gray-700 mb-1">CNSS</label>
+                        <input type="text" name="cnss" id="cnss" value="{{ old('cnss', $employee->cnss) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('cnss') border-red-500 @enderror">
+                        @error('cnss')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="assurance" class="block text-sm font-medium text-gray-700 mb-1">Assurance</label>
+                        <input type="text" name="assurance" id="assurance" value="{{ old('assurance', $employee->assurance) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('assurance') border-red-500 @enderror">
+                        @error('assurance')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
-                
-                <div>
-                    <label for="puk" class="block text-sm font-medium text-gray-700 mb-1">PUK</label>
-                    <input type="text" name="puk" id="puk" value="{{ old('puk', $employee->puk) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('puk') border-red-500 @enderror">
-                    @error('puk')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div>
-                    <label for="ice" class="block text-sm font-medium text-gray-700 mb-1">ICE</label>
-                    <input type="text" name="ice" id="ice" value="{{ old('ice', $employee->ice) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('ice') border-red-500 @enderror">
-                    @error('ice')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div>
-                    <label for="cnss" class="block text-sm font-medium text-gray-700 mb-1">CNSS</label>
-                    <input type="text" name="cnss" id="cnss" value="{{ old('cnss', $employee->cnss) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('cnss') border-red-500 @enderror">
-                    @error('cnss')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div>
-                    <label for="assurance" class="block text-sm font-medium text-gray-700 mb-1">Assurance</label>
-                    <input type="text" name="assurance" id="assurance" value="{{ old('assurance', $employee->assurance) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('assurance') border-red-500 @enderror">
-                    @error('assurance')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div>
-                    <label for="profile_picture" class="block text-sm font-medium text-gray-700 mb-1">Profile Picture</label>
-                    @if($employee->profile_picture)
-                        <div class="mb-2">
-                            <img src="{{ Storage::url($employee->profile_picture) }}" alt="Current profile picture" class="h-20 w-20 rounded-full object-cover">
-                            <p class="text-xs text-gray-500 mt-1">Current profile picture</p>
-                        </div>
-                    @endif
-                    <input type="file" name="profile_picture" id="profile_picture" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('profile_picture') border-red-500 @enderror">
-                    <p class="text-xs text-gray-500 mt-1">Leave empty to keep current picture</p>
-                    @error('profile_picture')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
+
             </div>
-            
+
             <div class="mt-6 flex items-center justify-end">
                 <a href="{{ route('employees.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mr-4">
                     Cancel
