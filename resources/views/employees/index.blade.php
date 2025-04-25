@@ -56,7 +56,6 @@
             <thead class="bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
@@ -79,16 +78,13 @@
                             </div>
                             <div class="ml-4">
                                 <div class="text-sm font-medium text-gray-900">
-                                    {{ $employee->user->full_name ?? 'N/A' }}
+                                    {{ $employee->user->first_name .' '. $employee->user->last_name  ?? 'N/A' }}
                                 </div>
                                 <div class="text-sm text-gray-500">
                                     {{ $employee->cin }}
                                 </div>
                             </div>
                         </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">{{ $employee->employee_code }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900">{{ $employee->department->name ?? 'N/A' }}</div>

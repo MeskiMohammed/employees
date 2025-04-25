@@ -69,9 +69,9 @@
                         <div class="text-sm text-gray-500">{{ $userStatus->created_at->format('h:i A') }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="{{ route('user-statuses.show', $userStatus) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">
+                        <!-- <a href="{{ route('user-statuses.show', $userStatus) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">
                             <i class="fas fa-eye"></i>
-                        </a>
+                        </a> -->
                         <a href="{{ route('user-statuses.edit', $userStatus) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">
                             <i class="fas fa-edit"></i>
                         </a>

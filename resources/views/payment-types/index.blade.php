@@ -59,9 +59,9 @@
                         <div class="text-sm text-gray-500">{{ $paymentType->created_at->format('h:i A') }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="{{ route('payment-types.show', $paymentType) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">
+                        <!-- <a href="{{ route('payment-types.show', $paymentType) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">
                             <i class="fas fa-eye"></i>
-                        </a>
+                        </a> -->
                         <a href="{{ route('payment-types.edit', $paymentType) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">
                             <i class="fas fa-edit"></i>
                         </a>
