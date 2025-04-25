@@ -15,31 +15,61 @@
                         <span class="iconify w-5 h-5 mr-3" data-icon="solar:home-2-bold-duotone"></span>
                         <span>Dashboard</span>
                     </a>
-                    <a href="/projects" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('projects') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
-                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:chart-2-bold-duotone"></span>
-                        <span>Projects</span>
+                    <a href="/employees" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('employees') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
+                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:users-group-two-rounded-bold-duotone"></span>
+                        <span>Employees</span>
                     </a>
-                    <a href="/tasks" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('tasks') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
-                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:list-bold-duotone"></span>
-                        <span>Tasks</span>
+                    <a href="/departments" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('departments') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
+                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:buildings-2-bold-duotone"></span>
+                        <span>Departments</span>
                     </a>
-                    <a href="/calendar" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('calendar') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
-                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:calendar-bold-duotone"></span>
-                        <span>Calendar</span>
+                    <a href="/users" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('users') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
+                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:user-rounded-bold-duotone"></span>
+                        <span>Users</span>
                     </a>
                 </div>
             </div>
 
             <div class="mb-4">
-                <p class="text-xs font-semibold text-base-content/60 uppercase tracking-wider mb-4 px-3">Communication</p>
+                <p class="text-xs font-semibold text-base-content/60 uppercase tracking-wider mb-4 px-3">Management</p>
                 <div class="space-y-1">
-                    <a href="/chats" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('chats') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
-                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:chat-round-dots-bold-duotone"></span>
-                        <span>Chats</span>
+                    <a href="/leaves" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('leaves') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
+                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:calendar-mark-bold-duotone"></span>
+                        <span>Leaves</span>
                     </a>
-                    <a href="/report" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('report') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
-                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:document-bold-duotone"></span>
-                        <span>Reports</span>
+                    <a href="/freelancer-projects" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('freelancer-projects') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
+                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:case-minimalistic-bold-duotone"></span>
+                        <span>Freelancer Projects</span>
+                    </a>
+                    <a href="/employee-posts" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('employee-posts') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
+                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:document-text-bold-duotone"></span>
+                        <span>Employee Posts</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <p class="text-xs font-semibold text-base-content/60 uppercase tracking-wider mb-4 px-3">Settings</p>
+                <div class="space-y-1">
+                    <a href="/payment-types" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('payment-types') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
+                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:wallet-money-bold-duotone"></span>
+                        <span>Payment Types</span>
+                    </a>
+                    <a href="/operators" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('operators') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
+                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:settings-bold-duotone"></span>
+                        <span>Operators</span>
+                    </a>
+                    <a href="/statuses" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('statuses') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
+                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:info-circle-bold-duotone"></span>
+                        <span>Statuses</span>
+                    </a>
+                    <a href="/user-roles" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('user-roles') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
+                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:user-id-bold-duotone"></span>
+                        <span>User Roles</span>
+                    </a>
+                    <a href="/user-statuses" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('user-statuses') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
+                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:user-status-bold-duotone"></span>
+                        <span>User Statuses</span>
                     </a>
                 </div>
             </div>
