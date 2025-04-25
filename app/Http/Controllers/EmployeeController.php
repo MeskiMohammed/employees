@@ -31,15 +31,15 @@ class EmployeeController extends Controller
                             ->orWhere('last_name', 'like', "%{$search}%");
                     });
             });
+            if ($request->department != null) { 
+                $query->where('department_id', $request->department);
+            }
+    
+            if ($request->status != null) {
+                $query->where('status_id', $request->status);
+            }
         }
 
-        if ($request->has('department')) {
-            $query->where('department_id', $request->department);
-        }
-
-        if ($request->has('status')) {
-            $query->where('status_id', $request->status);
-        }
 
         $employees = $query->paginate(10);
         $departments = Department::all();

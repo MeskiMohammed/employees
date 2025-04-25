@@ -1,59 +1,37 @@
 @extends('layout.app')
 
-@section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Edit Employee Post</h3>
-                    <div class="card-tools">
-                        <a href="{{ route('employee-posts.index') }}" class="btn btn-default btn-sm">
-                            <i class="fas fa-arrow-left"></i> Back to List
-                        </a>
-                    </div>
-                </div>
-                <div class="card-body">
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+@section('title', 'Edit Post')
 
-                    <form action="{{ route('employee-posts.update', $employeePost->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <div class="form-group">
-                            <label for="employee_id">Employee</label>
-                            <select name="employee_id" id="employee_id" class="form-control" required>
-                                <option value="">Select Employee</option>
-                                @foreach($employees as $employee)
-                                    <option value="{{ $employee->id }}" {{ old('employee_id', $employeePost->employee_id) == $employee->id ? 'selected' : '' }}>
-                                        {{ $employee->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="post_id">Post</label>
-                            <select name="post_id" id="post_id" class="form-control" required>
-                                <option value="">Select Post</option>
-                                @foreach($posts as $post)
-                                    <option value="{{ $post->id }}" {{ old('post_id', $employeePost->post_id) == $post->id ? 'selected' : '' }}>
-                                        {{ $post->title }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Update Employee Post</button>
-                    </form>
-                </div>
-            </div>
+@section('header', 'Edit Post')
+
+@section('content')
+<div class="max-w-4xl mx-auto">
+    <div class="bg-white shadow rounded-lg">
+        <div class="p-6 border-b">
+            <h2 class="text-xl font-semibold text-gray-800">Edit Post</h2>
         </div>
+        
+        <form action="{{ route('employee-posts.update', $employeePost) }}" method="POST" class="p-6">
+            @csrf
+            @method('PUT')
+            
+            <div class="mb-6">
+                <label for="post" class="block text-sm font-medium text-gray-700 mb-1">Post Name</label>
+                <input type="text" name="post" id="post" value="{{ old('post', $employeePost->post) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('post') border-red-500 @enderror" required>
+                @error('post')
+                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+            
+            <div class="flex items-center justify-end">
+                <a href="{{ route('employee-posts.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mr-4">
+                    Cancel
+                </a>
+                <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Update Post
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 @endsection

@@ -18,7 +18,6 @@ class EmployeePostController extends Controller
         }
         
         $employeePosts = $query->paginate(10);
-        
         return view('employee-posts.index', compact('employeePosts'));
     }
 

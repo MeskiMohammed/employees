@@ -24,14 +24,13 @@ class UserController extends Controller
                   ->orWhere('last_name', 'like', "%{$search}%")
                   ->orWhere('email', 'like', "%{$search}%");
             });
-        }
+            if ($request->role != null) {
+                $query->where('user_role_id', $request->role);
+            }
 
-        if ($request->has('role')  ) {
-            $query->where('user_role_id', $request->role);
-        }
-
-        if ($request->has('status')) {
-            $query->where('user_status_id', $request->status);
+            if ($request->status != null) {
+                $query->where('user_status_id', $request->status);
+            }
         }
 
         $users = $query->paginate(10);

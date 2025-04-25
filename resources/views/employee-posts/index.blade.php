@@ -1,70 +1,99 @@
 @extends('layout.app')
 
+@section('title', 'Employee Posts')
+
+@section('header', 'Employee Posts')
+
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Employee Posts</h3>
-                    <div class="card-tools">
-                        <a href="{{ route('employee-posts.create') }}" class="btn btn-primary btn-sm">
-                            <i class="fas fa-plus"></i> Add Employee Post
-                        </a>
-                    </div>
-                </div>
-                <div class="card-body">
-                    @if(session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
+<div class="bg-white shadow rounded-lg">
+    <div class="flex justify-between items-center p-6 border-b">
+        <h2 class="text-xl font-semibold text-gray-800">Employee Posts List</h2>
+        <a href="{{ route('employee-posts.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <i class="fas fa-plus mr-2"></i> Add Post
+        </a>
+    </div>
 
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Post</th>
-                                <th>Created At</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($employeePosts as $employeePost)
-                                <tr>
-                                    <td>{{ $employeePost->id }}</td>
-                                    <td>{{ $employeePost->post }}</td>
-                                    <td>{{ $employeePost->created_at }}</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="{{ route('employee-posts.show', $employeePost->id) }}" class="btn btn-info btn-sm">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <a href="{{ route('employee-posts.edit', $employeePost->id) }}" class="btn btn-warning btn-sm">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <form action="{{ route('employee-posts.destroy', $employeePost->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="text-center">No employee posts found.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-
-                    <div class="mt-3">
-                        {{ $employeePosts->links() }}
-                    </div>
-                </div>
+    <div class="p-6 border-b">
+        <form action="{{ route('employee-posts.index') }}" method="GET" class="flex gap-4">
+            <div class="flex-1">
+                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                <input type="text" name="search" id="search" value="{{ request('search') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Search Post...">
             </div>
-        </div>
+
+            <div class="flex items-end">
+                <button type="submit" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                    <i class="fas fa-search mr-2"></i> Search
+                </button>
+                <a href="{{ route('employee-posts.index') }}" class="ml-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                    <i class="fas fa-times mr-2"></i> Reset
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <div class="overflow-x-auto">
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Post</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee Count</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
+                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                @forelse($employeePosts as $post)
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">{{ $post->id }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                            {{ $post->post }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                            {{ $post->post_employees_count }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">{{ $post->created_at->format('M d, Y') }}</div>
+                        <div class="text-sm text-gray-500">{{ $post->created_at->format('h:i A') }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <!-- <a href="{{ route('employee-posts.show', $post) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">
+                            <i class="fas fa-eye"></i>
+                        </a> -->
+                        <a href="{{ route('employee-posts.edit', $post) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form action="{{ route('employee-posts.destroy', $post) }}" method="POST" class="inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this post?')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">
+                        No employee-posts found.
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
+    <div class="px-6 py-4 border-t">
+        {{ $employeePosts->withQueryString()->links() }}
     </div>
 </div>
 @endsection
