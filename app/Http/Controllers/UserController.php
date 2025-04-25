@@ -14,8 +14,9 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
+        dd($request);
         $query = User::with(['role', 'status']);
-        
+
         if ($request->has('search')) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
@@ -24,19 +25,19 @@ class UserController extends Controller
                   ->orWhere('email', 'like', "%{$search}%");
             });
         }
-        
-        if ($request->has('role')) {
+
+        if ($request->has('role')  ) {
             $query->where('user_role_id', $request->role);
         }
-        
+
         if ($request->has('status')) {
             $query->where('user_status_id', $request->status);
         }
-        
+
         $users = $query->paginate(10);
         $roles = UserRole::all();
         $statuses = UserStatus::all();
-        
+
         return view('users.index', compact('users', 'roles', 'statuses'));
     }
 
@@ -44,7 +45,7 @@ class UserController extends Controller
     {
         $roles = UserRole::all();
         $statuses = UserStatus::all();
-        
+
         return view('users.create', compact('roles', 'statuses'));
     }
 
@@ -58,11 +59,11 @@ class UserController extends Controller
             'user_role_id' => 'required|exists:user_roles,id',
             'user_status_id' => 'required|exists:user_statuses,id',
         ]);
-        
+
         $validated['password'] = Hash::make($validated['password']);
-        
+
         User::create($validated);
-        
+
         return redirect()->route('users.index')
             ->with('success', 'User created successfully.');
     }
@@ -70,7 +71,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $user->load(['role', 'status', 'employee']);
-        
+
         return view('users.show', compact('user'));
     }
 
@@ -78,7 +79,7 @@ class UserController extends Controller
     {
         $roles = UserRole::all();
         $statuses = UserStatus::all();
-        
+
         return view('users.edit', compact('user', 'roles', 'statuses'));
     }
 
@@ -92,15 +93,15 @@ class UserController extends Controller
             'user_role_id' => 'required|exists:user_roles,id',
             'user_status_id' => 'required|exists:user_statuses,id',
         ]);
-        
+
         if (isset($validated['password']) && $validated['password']) {
             $validated['password'] = Hash::make($validated['password']);
         } else {
             unset($validated['password']);
         }
-        
+
         $user->update($validated);
-        
+
         return redirect()->route('users.index')
             ->with('success', 'User updated successfully.');
     }
@@ -111,9 +112,9 @@ class UserController extends Controller
             return redirect()->route('users.index')
                 ->with('error', 'Cannot delete user with associated employee.');
         }
-        
+
         $user->delete();
-        
+
         return redirect()->route('users.index')
             ->with('success', 'User deleted successfully.');
     }
