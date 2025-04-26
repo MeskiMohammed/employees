@@ -80,7 +80,7 @@ class EmployeeController extends Controller
                 'address' => 'required|string|max:255',
                 'cin' => 'required|string|max:8|unique:employees',
                 'cin_attachment' => 'required|image|mimes:jpeg,png,jpg',
-                'type' => 'required',
+                'type_id' => 'required',
             ]);
 
             $user = User::create([
