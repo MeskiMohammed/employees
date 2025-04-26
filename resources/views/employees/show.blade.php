@@ -191,17 +191,7 @@
                             </div>
                         </a>
                         
-                        <a href="{{ route('attachments.index', ['employee_id' => $employee->id]) }}" class="bg-white p-4 rounded-md shadow hover:shadow-md transition-shadow">
-                            <div class="flex items-center">
-                                <div class="p-2 rounded-full bg-purple-100 text-purple-500">
-                                    <i class="fas fa-paperclip"></i>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm font-medium text-gray-900">Attachments</p>
-                                    <p class="text-sm text-gray-500">{{ $employee->attachments->count() }} records</p>
-                                </div>
-                            </div>
-                        </a>
+
                     </div>
                 </div>
             </div>

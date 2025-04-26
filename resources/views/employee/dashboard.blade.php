@@ -41,16 +41,9 @@
                 <a href="#time-off" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-emerald-100 hover:text-white hover:border-emerald-300">Time Off</a>
                 <a href="#pay-info" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-emerald-100 hover:text-white hover:border-emerald-300">Pay Info</a>
                 <a href="#documents" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-emerald-100 hover:text-white hover:border-emerald-300">Documents</a>
-                <a href="#performance" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-emerald-100 hover:text-white hover:border-emerald-300">Performance</a>
                 <a href="#benefits" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-emerald-100 hover:text-white hover:border-emerald-300">Benefits</a>
-                <a href="#training" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-emerald-100 hover:text-white hover:border-emerald-300">Training</a>
-                <a href="#assets" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-emerald-100 hover:text-white hover:border-emerald-300">Assets</a>
-                <a href="#more" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-emerald-100 hover:text-white hover:border-emerald-300">
-                    More
-                    <svg xmlns="http://www.w3.org/2000/svg" class="inline-block ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </a>
+
+                
             </nav>
         </div>
     </div>
@@ -76,20 +69,19 @@
                             </div>
                             @endif
                             
-                            @if($employee->personal_num)
+                    
                             <div class="py-3 sm:py-4 sm:px-6 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                 </svg>
-                                <span class="text-sm text-gray-500">{{ $employee->personal_num }}</span>
+                                <span class="text-sm text-gray-500">{{ $employee->user->email }}</span>
                             </div>
-                            @endif
                             
                             <div class="py-3 sm:py-4 sm:px-6 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
-                                <span class="text-sm text-gray-500">{{ $employee->professional_email ?? $employee->email }}</span>
+                                <span class="text-sm text-gray-500">{{ $employee->professional_email }}</span>
                             </div>
                             
                             @if($employee->address)

@@ -130,16 +130,16 @@
                 </div>
 
                 <div>
-                    <label for="employee_post_id" class="block text-sm font-medium text-gray-700 mb-1">Post</label>
-                    <select name="employee_post_id" id="employee_post_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('employee_post_id') border-red-500 @enderror" >
+                    <label for="type_id" class="block text-sm font-medium text-gray-700 mb-1">Post</label>
+                    <select name="type_id" id="type_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('type_id') border-red-500 @enderror" >
                         <option value="">Select Post</option>
-                        @foreach($posts as $post)
-                            <option value="{{ $post->id }}" {{ old('employee_post_id', $employee->employee_post_id) == $post->id ? 'selected' : '' }}>
-                                {{ $post->post }}
+                        @foreach($types as $type)
+                            <option value="{{ $type->id }}" {{ old('type_id', $employee->type_id) == $type->id ? 'selected' : '' }}>
+                                {{ $type->type }}
                             </option>
                         @endforeach
                     </select>
-                    @error('employee_post_id')
+                    @error('type_id')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>

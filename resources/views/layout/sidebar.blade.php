@@ -41,9 +41,9 @@
                         <span class="iconify w-5 h-5 mr-3" data-icon="solar:case-minimalistic-bold-duotone"></span>
                         <span>Freelancer Projects</span>
                     </a>
-                    <a href="/employee-posts" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('employee-posts') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
+                    <a href="/types" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('types') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
                         <span class="iconify w-5 h-5 mr-3" data-icon="solar:document-text-bold-duotone"></span>
-                        <span>Employee Posts</span>
+                        <span>Employee Types</span>
                     </a>
                 </div>
             </div>

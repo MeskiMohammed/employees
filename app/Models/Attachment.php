@@ -9,4 +9,5 @@ class Attachment extends Model
     protected $fillable = ['name', 'attachment', 'post_employee_id'];
 
     public function post() { return $this->belongsTo(PostEmployee::class,'post_employee_id'); }
+
 }

@@ -10,7 +10,7 @@ class DepartmentController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Department::withCount('employees');
+        $query = Department::withCount('employeeDepartments');
         
         if ($request->has('search')) {
             $search = $request->search;
@@ -67,7 +67,7 @@ class DepartmentController extends Controller
 
     public function destroy(Department $department)
     {
-        if ($department->employees()->count() > 0) {
+        if ($department->employeeDepartments()->count() > 0) {
             return redirect()->route('departments.index')
                 ->with('error', 'Cannot delete department with associated employees.');
         }

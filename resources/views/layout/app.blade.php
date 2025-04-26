@@ -18,6 +18,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <script src="https://kit.fontawesome.com/7a09db649a.js" crossorigin="anonymous"></script>
+    @stack('scripts')
 </head>
 
 <body class="font-sans antialiased bg-base-100/50">

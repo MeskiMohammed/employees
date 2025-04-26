@@ -14,9 +14,11 @@ use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\PostEmployeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\UserStatusController;
+use App\Models\TypeEmployee;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,11 +65,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('attachments/{attachment}/download', [AttachmentController::class, 'download'])->name('attachments.download');
 
     // Post Employee routes
-    Route::resource('post-employees', PostEmployeeController::class);
+    // Route::resource('post-employees', TypeEmployee::class);
     // Route::get('post-employees/{postEmployee}/download', [PostEmployeeController::class, 'download'])->name('post-employees.download');
 
     // Employee Post routes
-    Route::resource('employee-posts', EmployeePostController::class);
+    Route::resource('types', TypeController::class);
 
     // Settings routes
     Route::resource('payment-types', PaymentTypeController::class);

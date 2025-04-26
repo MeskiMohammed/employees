@@ -10,7 +10,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->text('attachment');
-            $table->foreignId('post_employee_id')->constrained();
+            $table->foreignId('type_employee_id')->constrained();
             $table->timestamps();
         });
     }

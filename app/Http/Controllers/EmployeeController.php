@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use App\Models\Employee;
+use App\Models\EmployeeDepartment;
+use App\Models\EmployeeDepartments;
 use App\Models\EmployeePost;
 use App\Models\Operator;
 use App\Models\Status;
+use App\Models\Type;
+use App\Models\TypeEmployee;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +21,7 @@ class EmployeeController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Employee::with(['department', 'status', 'user']);
+        $query = Employee::with(['status', 'user']);
 
         if ($request->has('search')) {
             $search = $request->search;
@@ -51,10 +55,15 @@ class EmployeeController extends Controller
     {
         $departments = Department::all();
         $operators = Operator::all();
-        $posts = EmployeePost::all();
+        $types = Type::all();
 
-        return view('employees.create', compact('departments', 'operators', 'posts'));
+        return view('employees.create', compact('departments', 'operators', 'types'));
     }
+
+    // public function store(Request $request){
+    //     dd($request);
+    // }
+
 
     public function store(Request $request)
     {
@@ -65,13 +74,13 @@ class EmployeeController extends Controller
                 'last_name' => 'required|string|max:255',
                 'email' => 'required|email|max:255|unique:users',
                 'password' => 'required|min:8',
-
-                'department_id' => 'required|exists:departments,id',
+                'department_ids' => 'required|array|min:1',
                 'profile_picture' => ['required', 'image', 'mimes:jpeg,png,jpg', 'dimensions:width=1080,height=1080,ratio=1/1'],
                 'personal_num' => 'required|string|max:255',
-                'salary' => 'required|numeric',
                 'address' => 'required|string|max:255',
                 'cin' => 'required|string|max:8|unique:employees',
+                'cin_attachment' => 'required|image|mimes:jpeg,png,jpg',
+                'type' => 'required',
             ]);
 
             $user = User::create([
@@ -82,36 +91,46 @@ class EmployeeController extends Controller
                 'user_role_id' => 3,
             ]);
 
-            $pic_path = null;
+            $pic = $request->file('profile_picture')->store('profile_pictures', 'public');
 
-            if ($request->hasFile('profile_picture')) {
-                $path = $request->file('profile_picture')->store('profile_pictures', 'public');
-                // $validated['profile_picture'] = $path;
-                $pic_path = $path;
-            }
+            $cin = $request->file('cin_attachment')->store('cin_attachments', 'public');
 
             $data = [
-                'department_id' => $request->department_id,
-                'profile_picture' => $pic_path,
+                'profile_picture' => $pic,
                 'personal_num' => $request->personal_num,
-                'salary' => $request->salary,
                 'address' => $request->address,
                 'status_id' => 1,
                 'user_id' => $user->id,
-                'cin' => $request->cin
+                'cin' => $request->cin,
+                'cin_attachment' => $cin
             ];
 
             if ($request->is_freelancer === 'freelancer') {
-                $request->validate([
-                    'ice' => 'required|string|max:255',
-                ]);
+
+                if($request->is_project){
+
+                    $request->validate([
+                        'ice' => 'required|string|max:255',
+                    ]);
+                    
+                    $data['is_project'] = true;
+
+                }else{
+
+                    $request->validate([
+                        'ice' => 'required|string|max:255',
+                        'salary' => 'required|numeric',
+                    ]);
+
+                    $data['is_project'] = false;
+                    $data['salary'] = $request->salary;
+                    $data['hours'] = 0;
+                }
 
                 $data['ice'] = $request->ice;
-                $data['is_project'] = $request->is_project ? true : false;
-                $data['hours'] = 0;
             } else {
                 $request->validate([
-                    'employee_code' => 'required|string|max:255|unique:employees',
+                    'salary' => 'required|numeric',
                     'professional_num' => 'required|string|max:255',
                     'pin' => 'required|string|max:255',
                     'puk' => 'required|string|max:255',
@@ -121,7 +140,8 @@ class EmployeeController extends Controller
                     'assurance' => 'required|string|max:255',
                 ]);
 
-                $data['employee_code'] = $request->employee_code;
+                $data['employee_code'] = $this->generateEmployeeCode();
+                $data['salary'] = $request->salary;
                 $data['professional_num'] = $request->professional_num;
                 $data['professional_email'] = $request->professional_email;
                 $data['pin'] = $request->pin;
@@ -130,10 +150,27 @@ class EmployeeController extends Controller
                 $data['cnss'] = $request->cnss;
                 $data['assurance'] = $request->assurance;
             }
-            Employee::create($data);
+            
+            $emp = Employee::create($data);
 
-            return redirect()->route('employees.index')
-                ->with('success', 'Employee created successfully.');
+            foreach($request->department_ids as $id){
+                EmployeeDepartment::create([
+                    'employee_id' => $emp->id,
+                    'department_id' => $id,
+                ]);
+            }
+
+            TypeEmployee::create([
+                'description' => 'test',
+                'in_date' => now(),
+                'employee_id' => $emp->id,
+                'type_id' => $request->type_id,
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
+
         } catch (\Exception $e) {
             DB::rollback();
 
@@ -143,7 +180,7 @@ class EmployeeController extends Controller
 
     public function show(Employee $employee)
     {
-        $employee->load(['department', 'status', 'user', 'operator', 'payments', 'leaves', 'attachments', 'evaluations', 'freelancerProjects', 'posts']);
+        $employee->load(['status', 'user', 'operator', 'payments', 'leaves', 'evaluations', 'freelancerProjects', 'posts']);
 
         return view('employees.show', compact('employee'));
     }
@@ -152,9 +189,9 @@ class EmployeeController extends Controller
     {
         $departments = Department::all();
         $operators = Operator::all();
-        $posts = EmployeePost::all();
+        $types = Type::all();
 
-        return view('employees.edit', compact('employee', 'departments', 'operators', 'posts'));
+        return view('employees.edit', compact('employee', 'departments', 'operators', 'types'));
     }
 
     public function update(Request $request, Employee $employee)
@@ -201,12 +238,23 @@ class EmployeeController extends Controller
             if ($employee->profile_picture) {
                 Storage::disk('public')->delete($employee->profile_picture);
             }
+            $id = $employee->user_id;
 
-            User::where('user_id', $employee->id)->delete();
             $employee->delete();
+
+            User::where('id', $id)->delete();
         });
 
-        return redirect()->route('employees.index')
-            ->with('success', 'Employee deleted successfully.');
+        return redirect()->route('employees.index')->with('success', 'Employee deleted successfully.');
     }
+
+    private function generateEmployeeCode()
+    {
+        do {
+            $number = mt_rand(10000000, 99999999);
+        } while (Employee::where('employee_code', $number)->exists());
+
+        return $number;
+    }
+
 }

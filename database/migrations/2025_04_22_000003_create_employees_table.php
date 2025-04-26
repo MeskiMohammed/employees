@@ -10,13 +10,14 @@ return new class extends Migration {
             $table->id();
             $table->string('employee_code')->nullable();
             $table->string('cin')->unique();
+            $table->text('cin_attachment');
             $table->string('profile_picture');
             $table->string('address');
             $table->string('personal_num');
             $table->string('professional_num')->nullable();
             $table->string('pin')->nullable();
             $table->string('puk')->nullable();
-            $table->string('salary');
+            $table->string('salary')->nullable();
             $table->boolean('is_project')->nullable()->default(false);
             $table->string('hours')->nullable();
             $table->string('ice')->nullable();
@@ -25,7 +26,6 @@ return new class extends Migration {
             $table->string('assurance')->nullable();
             $table->foreignId('operator_id')->nullable()->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('department_id')->constrained();
             $table->foreignId('status_id')->constrained();
             $table->timestamps();
         });

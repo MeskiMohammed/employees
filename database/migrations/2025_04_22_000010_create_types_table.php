@@ -6,14 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::create('employee_posts', function (Blueprint $table) {
+        Schema::create('types', function (Blueprint $table) {
             $table->id();
-            $table->string('post');
+            $table->string('type');
             $table->timestamps();
         });
     }
 
     public function down(): void {
-        Schema::dropIfExists('employee_posts');
+        Schema::dropIfExists('types');
     }
 };
