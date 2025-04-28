@@ -7,10 +7,10 @@
                 <button class="btn btn-ghost btn-sm rounded-lg" aria-label="Toggle sidebar">
                     <span class="iconify w-5 h-5" data-icon="solar:hamburger-menu-broken"></span>
                 </button>
-                
+
                 <!-- Search -->
                 <div class="hidden sm:block">
-                   
+
                 </div>
             </div>
 
@@ -57,10 +57,10 @@
                 <!-- User Menu -->
                 <div class="dropdown dropdown-end">
                     <button class="flex items-center space-x-3 focus:outline-none">
-                        <img class="h-8 w-8 rounded-full border border-base-200" src="{{ asset('images/image.png') }}" alt="User avatar">
+                        <img class="h-8 w-8 rounded-full border border-base-200" src="{{ Auth::user()->employee->profile_picture ?? 'https://img.freepik.com/premium-vector/character-avatar-isolated_729149-194801.jpg?semt=ais_hybrid&w=740' }}" alt="User avatar">
                         <div class="hidden md:block text-left">
-                            <h6 class="text-sm font-medium">Denish</h6>
-                            <p class="text-xs text-base-content/60">Administrator</p>
+                            <h6 class="text-sm font-medium">{{ Auth::user()->first_name." ".Auth::user()->last_name }}</h6>
+                            <p class="text-xs text-base-content/60">{{ Auth::user()->is_super_admin?'super admin':Auth::user()->employee->typeEmployee->type->type }}</p>
                         </div>
                         <span class="iconify w-4 h-4 text-base-content/60" data-icon="solar:alt-arrow-down-bold-duotone"></span>
                     </button>

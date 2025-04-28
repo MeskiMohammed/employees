@@ -8,7 +8,7 @@
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center">
-            <div class="p-3 rounded-full bg-indigo-100 text-indigo-500">
+            <div class="w-16 rounded-full flex items-center justify-center aspect-square bg-indigo-100 text-indigo-500">
                 <i class="fas fa-users fa-2x"></i>
             </div>
             <div class="ml-4">
@@ -17,10 +17,10 @@
             </div>
         </div>
     </div>
-    
+
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center">
-            <div class="p-3 rounded-full bg-green-100 text-green-500">
+            <div class=" w-16 rounded-full flex items-center justify-center aspect-square bg-green-100 text-green-500">
                 <i class="fas fa-building fa-2x"></i>
             </div>
             <div class="ml-4">
@@ -29,10 +29,10 @@
             </div>
         </div>
     </div>
-    
+
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center">
-            <div class="p-3 rounded-full bg-blue-100 text-blue-500">
+            <div class="w-16 rounded-full flex items-center justify-center aspect-square bg-blue-100 text-blue-500">
                 <i class="fas fa-user-shield fa-2x"></i>
             </div>
             <div class="ml-4">
@@ -41,10 +41,10 @@
             </div>
         </div>
     </div>
-    
+
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center">
-            <div class="p-3 rounded-full bg-yellow-100 text-yellow-500">
+            <div class="w-16 rounded-full flex items-center justify-center aspect-square bg-yellow-100 text-yellow-500">
                 <i class="fas fa-money-bill-wave fa-2x"></i>
             </div>
             <div class="ml-4">
@@ -60,7 +60,7 @@
         <h2 class="text-lg font-semibold text-gray-700 mb-4">Monthly Payments</h2>
         <canvas id="paymentsChart" height="300"></canvas>
     </div>
-    
+
     <div class="bg-white rounded-lg shadow p-6">
         <h2 class="text-lg font-semibold text-gray-700 mb-4">Employees by Department</h2>
         <canvas id="departmentsChart" height="300"></canvas>
@@ -121,7 +121,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="bg-white rounded-lg shadow">
         <div class="px-6 py-4 border-b border-gray-200">
             <h2 class="text-lg font-semibold text-gray-700">Recent Leaves</h2>
@@ -150,7 +150,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                     @if($leave->status == 'approved')
                                         bg-green-100 text-green-800
                                     @elseif($leave->status == 'rejected')
@@ -178,11 +178,11 @@
     const paymentsCtx = document.getElementById('paymentsChart').getContext('2d');
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const monthlyData = Array(12).fill(0);
-    
+
     @foreach($monthlyPayments as $month => $total)
         monthlyData[{{ $month - 1 }}] = {{ $total }};
     @endforeach
-    
+
     new Chart(paymentsCtx, {
         type: 'bar',
         data: {
@@ -204,17 +204,17 @@
             }
         }
     });
-    
+
     // Departments Chart
     const departmentsCtx = document.getElementById('departmentsChart').getContext('2d');
     const departmentNames = [];
     const departmentCounts = [];
-    
+
     @foreach($departmentEmployees as $name => $count)
         departmentNames.push('{{ $name }}');
         departmentCounts.push({{ $count }});
     @endforeach
-    
+
     new Chart(departmentsCtx, {
         type: 'pie',
         data: {

@@ -11,14 +11,11 @@
             <h2 class="text-xl font-semibold text-gray-800">Create New Employee</h2>
         </div>
 
-        @foreach ($errors->all() as $er)
-            <p>{{ $er }}</p>
-        @endforeach
 
         <form action="{{ route('employees.store') }}" method="POST" enctype="multipart/form-data" class="p-6">
             @csrf
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" x-data="{freelancer : {{ old('is_freelancer') ? old('is_freelancer')=='freelancer'?'true':'false' : 'false' }}}">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" x-data="{freelancer : '{{ old('is_freelancer','employee') }}'}">
                 <div class="md:col-span-3">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">Basic Information</h3>
                 </div>
@@ -55,16 +52,16 @@
                     @enderror
                 </div>
 
-                   
-                
+
+
                 <div>
                     <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                    <input type="text" name="address" id="address" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('address') border-red-500 @enderror">{{ old('address') }}</input>
+                    <input type="text" name="address" id="address" value="{{ old('address') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('address') border-red-500 @enderror">
                     @error('address')
                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
-                
+
                 <div>
                     <label for="personal_num" class="block text-sm font-medium text-gray-700 mb-1">Personal Number</label>
                     <input type="text" name="personal_num" id="personal_num" value="{{ old('personal_num') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('personal_num') border-red-500 @enderror">
@@ -87,7 +84,7 @@
                     @error('cin')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
-                </div>  
+                </div>
 
                 <div>
                     <label for="cin_attachment" class="block text-sm font-medium text-gray-700 mb-1">CIN Attachment</label>
@@ -97,26 +94,11 @@
                     @enderror
                 </div>
 
-                <div>
-                    <label for="type_id" class="block text-sm font-medium text-gray-700 mb-1">Type</label>
-                    <select name="type_id" id="type_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('type_id') border-red-500 @enderror" >
-                        <option value="">Select Type</option>
-                        @foreach($types as $type)
-                            <option value="{{ $type->id }}" {{ old('type_id') == $type->type ? 'selected' : '' }}>
-                                {{ $type->type }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('type_id')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-                
                 <div class="col-span-3">
                     <label for="department_id" class="block text-sm font-medium text-gray-700 mb-1">Department</label>
                     <span>Search Department:</span> <input type="text" id="search_field" oninput="searching(event)" class="shadow-sm w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md">
-                    
-                    <div class="overflow-y-auto grid md:grid-cols-3 gap-4 p-2 border rounded max-h-40 mt-2">
+
+                    <div class="overflow-y-auto grid md:grid-cols-3 gap-4 p-2 border rounded max-h-40 mt-2 @error('department_ids') border-red-500 @enderror">
                         @forelse($departments as $dep)
                             <label for="dep{{ $dep->id }}" class="deps flex justify-center bg-gray-200 rounded items-center py-4">
                                 <div class="w-full px-6">
@@ -127,25 +109,26 @@
                         @empty
                         @endforelse
                     </div>
-                    @error('department_id')
+                    @error('department_ids')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
-                
+
                 <div class="md:col-span-3">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">Additional Information</h3>
                 </div>
 
                 <span>
-
-                    <input type='radio' @click="freelancer=false" value="employee" name="is_freelancer" @if(old('is_freelancer'))@if(old('is_freelancer') != 'freelancer') checked @endif @else checked  @endif> Employee
+                    <input type='radio' @click="freelancer='employee'" value="employee" name="is_freelancer" @if(old('is_freelancer'))@if(old('is_freelancer') == 'employee') checked @endif @else checked  @endif> Employee
                 </span>
                 <span>
-
-                    <input type='radio' @click="freelancer=true" value="freelancer" name="is_freelancer" @if(old('is_freelancer'))@if(old('is_freelancer') == 'freelancer') checked @endif @endif> FreeLancer
+                    <input type='radio' @click="freelancer='freelancer'" value="freelancer" name="is_freelancer" @if(old('is_freelancer'))@if(old('is_freelancer') == 'freelancer') checked @endif @endif> FreeLancer
                 </span>
-                
-                <span x-show="freelancer"  class="col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6" x-data="{salary:true}">
+                <span>
+                    <input type='radio' @click="freelancer='trainee'" value="trainee" name="is_freelancer" @if(old('is_freelancer'))@if(old('is_freelancer') == 'trainee') checked @endif @endif> Trainee
+                </span>
+
+                <div x-show="freelancer==='freelancer'"  class="col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6" x-data="{salary:true}">
                     <div>
                         <label for="ice" class="block text-sm font-medium text-gray-700 mb-1">ICE</label>
                         <input type="text" name="ice" id="ice" value="{{ old('ice') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('ice') border-red-500 @enderror">
@@ -171,8 +154,27 @@
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
-                </span>
-                <div x-show="!freelancer" class="col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
+                </div>
+                <div x-show="freelancer==='employee'" class="col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <div>
+                    <label for="type_id" class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                    <select name="type_id" id="type_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('type_id') border-red-500 @enderror" >
+                        <option value="">Select Type</option>
+                        @foreach($types as $type)
+                            @if($type->type === 'stagiaire' || $type->type === 'freelancer')
+                                @continue
+                            @endif
+                            <option value="{{ $type->id }}" {{ old('type_id') == $type->type ? 'selected' : '' }}>
+                                {{ $type->type }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('type_id')
+                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+
                     <div>
                         <label for="salary" class="block text-sm font-medium text-gray-700 mb-1">Salary</label>
                         <input type="number" name="salary" id="salary" min="0" value="{{ old('salary') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('salary') border-red-500 @enderror">

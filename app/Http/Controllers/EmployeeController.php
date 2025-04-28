@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\EmployeeDepartment;
-use App\Models\EmployeeDepartments;
-use App\Models\EmployeePost;
 use App\Models\Operator;
 use App\Models\Status;
 use App\Models\Type;
@@ -16,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use App\Http\Requests\StoreEmployeeRequest;
 
 class EmployeeController extends Controller
 {
@@ -27,12 +26,12 @@ class EmployeeController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('employee_code', 'like', "%{$search}%")
-                    ->orWhere('cin', 'like', "%{$search}%")
-                    ->orWhere('professional_email', 'like', "%{$search}%")
-                    ->orWhereHas('user', function ($qu) use ($search) {
-                        $qu->where('first_name', 'like', "%{$search}%")
-                            ->orWhere('last_name', 'like', "%{$search}%");
-                    });
+                ->orWhere('cin', 'like', "%{$search}%")
+                ->orWhere('professional_email', 'like', "%{$search}%")
+                ->orWhereHas('user', function ($qu) use ($search) {
+                    $qu->where('first_name', 'like', "%{$search}%")
+                    ->orWhere('last_name', 'like', "%{$search}%");
+                });
             });
             if ($request->department != null) {
                 $query->where('department_id', $request->department);
@@ -65,122 +64,110 @@ class EmployeeController extends Controller
     // }
 
 
-    public function store(Request $request)
+
+    public function store(StoreEmployeeRequest $request)
     {
         DB::beginTransaction();
-        try {
-            $request->validate([
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
-                'email' => 'required|email|max:255|unique:users',
-                'password' => 'required|min:8',
-                'department_ids' => 'required|array|min:1',
-                'profile_picture' => ['required', 'image', 'mimes:jpeg,png,jpg', 'dimensions:width=1080,height=1080,ratio=1/1'],
-                'personal_num' => 'required|string|max:255',
-                'address' => 'required|string|max:255',
-                'cin' => 'required|string|max:8|unique:employees',
-                'cin_attachment' => 'required|image|mimes:jpeg,png,jpg',
-                'type_id' => 'required',
-            ]);
 
-            $user = User::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-                'user_role_id' => 3,
-            ]);
+        // Store Files with uniqid
+        $picPath = $request->file('profile_picture')->storeAs(
+            'profile_pictures',
+            uniqid().'_'.$request->file('profile_picture')->getClientOriginalName(),
+            'public'
+        );
 
-            $pic = $request->file('profile_picture')->store('profile_pictures', 'public');
+        $cinPath = $request->file('cin_attachment')->storeAs(
+            'cin_attachments',
+            uniqid().'_'.$request->file('cin_attachment')->getClientOriginalName(),
+            'public'
+        );
 
-            $cin = $request->file('cin_attachment')->store('cin_attachments', 'public');
+        // Base Employee Data
+        $data = [
+            'profile_picture' => $picPath,
+            'personal_num' => $request->personal_num,
+            'address' => $request->address,
+            'status_id' => 1,
+            'cin' => $request->cin,
+            'cin_attachment' => $cinPath,
+        ];
 
-            $data = [
-                'profile_picture' => $pic,
-                'personal_num' => $request->personal_num,
-                'address' => $request->address,
-                'status_id' => 1,
-                'user_id' => $user->id,
-                'cin' => $request->cin,
-                'cin_attachment' => $cin
-            ];
+        // Freelancer Specific
+        if ($request->is_freelancer === 'freelancer') {
+            $data['ice'] = $request->ice;
+            $data['is_project'] = $request->has('is_project') ? true : false;
 
-            if ($request->is_freelancer === 'freelancer') {
-
-                if($request->is_project){
-
-                    $request->validate([
-                        'ice' => 'required|string|max:255',
-                    ]);
-                    
-                    $data['is_project'] = true;
-
-                }else{
-
-                    $request->validate([
-                        'ice' => 'required|string|max:255',
-                        'salary' => 'required|numeric',
-                    ]);
-
-                    $data['is_project'] = false;
-                    $data['salary'] = $request->salary;
-                    $data['hours'] = 0;
-                }
-
-                $data['ice'] = $request->ice;
-            } else {
-                $request->validate([
-                    'salary' => 'required|numeric',
-                    'professional_num' => 'required|string|max:255',
-                    'pin' => 'required|string|max:255',
-                    'puk' => 'required|string|max:255',
-                    'operator_id' => 'required|exists:operators,id',
-                    'professional_email' => 'required|email|max:255',
-                    'cnss' => 'required|string|max:255',
-                    'assurance' => 'required|string|max:255',
-                ]);
-
-                $data['employee_code'] = $this->generateEmployeeCode();
+            if (!$data['is_project']) {
                 $data['salary'] = $request->salary;
-                $data['professional_num'] = $request->professional_num;
-                $data['professional_email'] = $request->professional_email;
-                $data['pin'] = $request->pin;
-                $data['puk'] = $request->puk;
-                $data['operator_id'] = $request->operator_id;
-                $data['cnss'] = $request->cnss;
-                $data['assurance'] = $request->assurance;
+                $data['hours'] = 0;
             }
-            
-            $emp = Employee::create($data);
-
-            foreach($request->department_ids as $id){
-                EmployeeDepartment::create([
-                    'employee_id' => $emp->id,
-                    'department_id' => $id,
-                ]);
-            }
-
-            TypeEmployee::create([
-                'description' => 'test',
-                'in_date' => now(),
-                'employee_id' => $emp->id,
-                'type_id' => $request->type_id,
-            ]);
-
-            DB::commit();
-
-            return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
-
-        } catch (\Exception $e) {
-            DB::rollback();
-
-            return back()->withErrors(['error' => 'Something went wrong: ' . $e->getMessage()]);
         }
+        // Employee Specific
+        elseif ($request->is_freelancer === 'employee') {
+            $data = array_merge($data, [
+                'employee_code' => $this->generateEmployeeCode(),
+                'salary' => $request->salary,
+                'professional_num' => $request->professional_num,
+                'professional_email' => $request->professional_email,
+                'pin' => $request->pin,
+                'puk' => $request->puk,
+                'operator_id' => $request->operator_id,
+                'cnss' => $request->cnss,
+                'assurance' => $request->assurance,
+            ]);
+        }
+
+        // Create User
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        $data['user_id'] = $user->id;
+
+        // Create Employee
+        $employee = Employee::create($data);
+
+        // Attach Departments
+        foreach ($request->department_ids as $id) {
+            EmployeeDepartment::create([
+                'employee_id' => $employee->id,
+                'department_id' => $id,
+            ]);
+        }
+
+        // Determine Type
+        $type = match($request->is_freelancer) {
+        'freelancer', 'trainee' => Type::where('type', $request->is_freelancer)->first(),
+        default => Type::find($request->type_id),
+        };
+
+        // Create TypeEmployee
+        $typeEmployee = new TypeEmployee([
+            'description' => 'test',
+            'in_date' => now(),
+        ]);
+
+        $typeEmployee->employee()->associate($employee);
+        $typeEmployee->type()->associate($type);
+        $typeEmployee->save();
+
+        DB::commit();
+
+        return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
     }
+
 
     public function show(Employee $employee)
     {
-        $employee->load(['status', 'user', 'operator', 'payments', 'leaves', 'evaluations', 'freelancerProjects', 'posts']);
+        $employee->load([
+            'user',
+            'employeeDepartments.department',
+            'typeEmployees.type',
+            'operator',
+        ]);
 
         return view('employees.show', compact('employee'));
     }
@@ -228,8 +215,7 @@ class EmployeeController extends Controller
 
         $employee->update($validated);
 
-        return redirect()->route('employees.index')
-            ->with('success', 'Employee updated successfully.');
+        return redirect()->route('employees.index')->with('success', 'Employee updated successfully.');
     }
 
     public function destroy(Employee $employee)

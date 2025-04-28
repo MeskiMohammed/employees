@@ -19,7 +19,7 @@ class DashboardController extends Controller
         $totalUsers = User::count();
         $totalPayments = Payment::count();
 
-        $recentEmployees = Employee::with('department', 'status')
+        $recentEmployees = Employee::with('employeeDepartments', 'status')
             ->latest()
             ->take(5)
             ->get();
@@ -34,7 +34,7 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        $departmentEmployees = Department::withCount('employees')
+        $departmentEmployees = Department::withCount('employeeDepartments')
             ->get()
             ->pluck('employees_count', 'name')
             ->toArray();

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId('user_role_id')->constrained();
+            $table->boolean('is_super_admin')->default(false);
             $table->foreignId('user_status_id')->nullable()->constrained();
             $table->rememberToken();
             $table->timestamps();
