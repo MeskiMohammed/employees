@@ -102,7 +102,6 @@
     <div class="p-4 border-t border-base-200">
         <div class="flex items-center space-x-3">
             
-        
         </div>
     </div>
 </div>
