@@ -19,8 +19,8 @@ class EmployeeProfileController extends Controller
             ->firstOrFail();
             
         return view('employee.dashboard', compact('employee'));
+
     }
-    
     public function edit()
     {
         $authUser = Auth::user();

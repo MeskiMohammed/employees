@@ -65,6 +65,10 @@
                         <span class="iconify w-5 h-5 mr-3" data-icon="solar:info-circle-bold-duotone"></span>
                         <span>Statuses</span>
                     </a>
+                    <a href="/reasons" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('statuses') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
+                        <span class="iconify w-5 h-5 mr-3" data-icon="solar:info-circle-bold-duotone"></span>
+                        <span>reasons</span>
+                    </a>
                     <!--
                     <a href="/user-roles" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('user-roles') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
                         <span class="iconify w-5 h-5 mr-3" data-icon="solar:user-id-bold-duotone"></span>
@@ -81,11 +85,11 @@
             <div class="mb-4">
                 <p class="text-xs font-semibold text-base-content/60 uppercase tracking-wider mb-4 px-3">super admin only</p>
                 <div class="space-y-1">
-                    <a href="/payment-types" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('payment-types') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
+                    <a href="/enterprise" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('payment-types') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
                         <span class="iconify w-5 h-5 mr-3" data-icon="solar:wallet-money-bold-duotone"></span>
                         <span>Enterprise</span>
                     </a>
-                    <a href="/operators" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('operators') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
+                    <a href="/logs" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-base-200 transition-colors group {{ request()->is('operators') ? 'bg-primary/10 text-primary' : 'text-base-content/80' }}">
                         <span class="iconify w-5 h-5 mr-3" data-icon="solar:settings-bold-duotone"></span>
                         <span>Log</span>
                     </a>

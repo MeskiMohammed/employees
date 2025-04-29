@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeePostController;
+use App\Http\Controllers\EnterpriseController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\FreelancerProjectController;
 use App\Http\Controllers\LeaveController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\PostEmployeeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReasonController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
@@ -87,6 +89,25 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('profile.settings');
     Route::patch('/profile/settings', [ProfileController::class, 'updateSettings'])->name('profile.settings.update');
+
+
+
+
+
+
+
+
+
+
+
+
+    Route::resource('reasons', ReasonController::class);
+
+    Route::get('/enterprise', [EnterpriseController::class, 'edit'])->name('enterprise.edit');
+    Route::put('/enterprise', [EnterpriseController::class, 'update'])->name('enterprise.update');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
 });
 
 require __DIR__.'/auth.php';

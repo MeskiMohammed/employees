@@ -17,7 +17,8 @@ return new class extends Migration {
             $table->string('professional_num')->nullable();
             $table->string('pin')->nullable();
             $table->string('puk')->nullable();
-            $table->string('salary')->nullable();
+            $table->double('salary')->nullable();
+            $table->double('hourly_salary')->nullable();
             $table->boolean('is_project')->nullable()->default(false);
             $table->boolean('is_admin')->default(false);
             $table->string('hours')->nullable();

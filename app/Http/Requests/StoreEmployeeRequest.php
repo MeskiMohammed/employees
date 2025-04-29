@@ -25,23 +25,43 @@ class StoreEmployeeRequest extends FormRequest
             'cin' => 'required|string|max:8|unique:employees',
             'cin_attachment' => 'required|image|mimes:jpeg,png,jpg',
 
-            // Special freelancer fields
-            'is_freelancer' => 'nullable|string',
-            'ice' => 'required_if:is_freelancer,freelancer|string|max:255',
+            'is_freelancer' => 'required|string',
             'is_project' => 'nullable|boolean',
-            'salary' => 'required_if:is_freelancer,employee|nullable|numeric',
-            'type_id' => 'required_if:is_freelancer,employee|exists:types,id',
+            'salary' => 'nullable|numeric', // handled conditionally below
 
-            // Special employee fields
-            'professional_num' => 'required_if:is_freelancer,employee|string|max:255',
-            'pin' => 'required_if:is_freelancer,employee|string|max:255',
-            'puk' => 'required_if:is_freelancer,employee|string|max:255',
-            'operator_id' => 'required_if:is_freelancer,employee|exists:operators,id',
-            'professional_email' => 'required_if:is_freelancer,employee|email|max:255',
-            'cnss' => 'required_if:is_freelancer,employee|string|max:255',
-            'assurance' => 'required_if:is_freelancer,employee|string|max:255',
+            // optional employee/freelancer fields conditionally validated
+            'professional_num' => 'nullable|string|max:255',
+            'pin' => 'nullable|string|max:255',
+            'puk' => 'nullable|string|max:255',
+            'operator_id' => 'nullable|exists:operators,id',
+            'professional_email' => 'nullable|email|max:255',
+            'cnss' => 'nullable|string|max:255',
+            'assurance' => 'nullable|string|max:255',
+            'type_id' => 'nullable|exists:types,id',
+            'ice' => 'nullable|string|max:255',
         ];
     }
+
+    public function withValidator($validator)
+    {
+        $validator->sometimes([
+                'professional_num',
+                'pin', 
+                'puk', 
+                'operator_id', 
+                'professional_email', 
+                'cnss', 
+                'assurance', 
+                'type_id', 
+                'salary'
+            ], 'required', function ($input) {return $input->is_freelancer === 'employee';}
+        );
+
+        $validator->sometimes('ice', 'required|string|max:255', function ($input) {
+            return $input->is_freelancer === 'freelancer';
+        });
+    }
+
     public function messages()
     {
         return [
