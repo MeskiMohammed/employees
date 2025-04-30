@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-gray-50 px-4 py-4 sm:px-6 bg-base-200">
+            <div class=" px-4 py-4 sm:px-6 bg-base-200">
                 <div class="text-sm">
                     <a href="{{ route('employees.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">View all<span class="sr-only"> employees</span></a>
                 </div>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-gray-50 px-4 py-4 sm:px-6 bg-base-200">
+            <div class=" px-4 py-4 sm:px-6 bg-base-200">
                 <div class="text-sm">
                     <a href="{{ route('departments.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500 ">View all<span class="sr-only"> departments</span></a>
                 </div>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-gray-50 px-4 py-4 sm:px-6 bg-base-200">
+            <div class=" px-4 py-4 sm:px-6 bg-base-200">
                 <div class="text-sm">
                     <a href="{{ route('users.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">View all<span class="sr-only"> users</span></a>
                 </div>
@@ -109,7 +109,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-gray-50 px-4 py-4 sm:px-6 bg-base-200">
+            <div class=" px-4 py-4 sm:px-6 bg-base-200">
                 <div class="text-sm">
                     <a href="{{ route('payments.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">View all<span class="sr-only"> payments</span></a>
                 </div>
@@ -192,7 +192,7 @@
                     </table>
                 </div>
             </div>
-            <div class="bg-gray-50 px-4 py-4 sm:px-6 bg-base-200">
+            <div class=" px-4 py-4 sm:px-6 bg-base-200">
                 <div class="text-sm">
                     <a href="{{ route('employees.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">View all employees</a>
                 </div>
