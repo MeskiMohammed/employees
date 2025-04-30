@@ -1,9 +1,8 @@
 <div id="layout-sidebar" class="bg-base-100 border-r border-base-200 flex flex-col h-screen w-64 fixed left-0 top-0">
     <div class="p-4 border-b border-base-200">
         <a class="flex items-center justify-center" href="/" data-discover="true">
+            <img alt="logo-light" class="h-8 mr-2" src="{{asset('storage/' . \App\Models\Enterprise::first()->logo) }}" />
             {{ \App\Models\Enterprise::first()->name ?? 'Enterprise' }}
-            <img alt="logo-dark" class="hidden h-8 dark:inline" src="/images/logo/logo-dark.svg" />
-            <img alt="logo-light" class="h-8 dark:hidden" src="{{ \App\Models\Enterprise::first()->logo }}" />
         </a>
     </div>
 

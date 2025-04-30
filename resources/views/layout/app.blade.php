@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ \App\Models\Enterprise::first()->name ?? 'Enterprise' }}</title>
-
+    <link rel="icon" href="{{asset('storage/' . \App\Models\Enterprise::first()->logo) }}">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
