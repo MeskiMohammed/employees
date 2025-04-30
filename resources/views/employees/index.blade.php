@@ -65,7 +65,7 @@
             </thead>
             <tbody class=" divide-y divide-gray-200 bg-base-100 ">
                 @forelse($employees as $employee)
-                <tr>
+                <tr >
                     <td class="px-6 py-4 whitespace-nowrap  ">
                         <div class="flex items-center">
                             <div class="flex-shrink-0 h-10 w-10">

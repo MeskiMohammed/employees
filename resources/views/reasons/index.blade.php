@@ -7,7 +7,7 @@
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-semibold text-gray-900">Reasons</h1>
+        <h1 class="text-2xl font-semibold text-base-content">Reasons</h1>
         <a href="{{ route('reasons.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Add New Reason
         </a>
@@ -28,22 +28,22 @@
     </div>
     @endif
 
-    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="bg-base-200 shadow overflow-hidden sm:rounded-lg">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+                <thead class="bg-base-200">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reason</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">ID</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Reason</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Created At</th>
+                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-base-content uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-base-200 divide-y divide-gray-200">
                     @forelse($reasons as $reason)
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $reason->id }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $reason->reason }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-base-content">{{ $reason->id }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-base-content">{{ $reason->reason }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $reason->created_at->format('M d, Y') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         
@@ -68,7 +68,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
+        <div class="px-4 py-3 bg-white border-t border-gray-200 sm:px-6 bg-base-200">
             {{ $reasons->links() }}
         </div>
     </div>

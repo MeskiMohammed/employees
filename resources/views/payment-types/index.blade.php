@@ -44,7 +44,7 @@
             </thead>
             <tbody class="bg-base-200 divide-y divide-gray-200">
                 @forelse($paymentTypes as $paymentType)
-                <tr>
+                <tr class="hover:bg-base-100">
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-base-content">{{ $paymentType->id }}</div>
                     </td>

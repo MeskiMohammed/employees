@@ -6,17 +6,17 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto">
-    <div class="bg-white shadow rounded-lg">
+    <div class="bg-base-200 shadow rounded-lg">
         <div class="p-6 border-b">
-            <h2 class="text-xl font-semibold text-gray-800">Create New Operator</h2>
+            <h2 class="text-xl font-semibold text-base-content">Create New Operator</h2>
         </div>
         
         <form action="{{ route('operators.store') }}" method="POST" class="p-6">
             @csrf
             
             <div class="mb-6">
-                <label for="operator" class="block text-sm font-medium text-gray-700 mb-1">Operator Name</label>
-                <input type="text" name="operator" id="operator" value="{{ old('operator') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('operator') border-red-500 @enderror" required>
+                <label for="operator" class="block text-sm font-medium text-base-content mb-1">Operator Name</label>
+                <input type="text" name="operator" id="operator" value="{{ old('operator') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('operator') border-red-500 @enderror" required>
                 @error('operator')
                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                 @enderror

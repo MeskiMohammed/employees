@@ -6,9 +6,9 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto">
-    <div class="bg-white shadow rounded-lg">
+    <div class="bg-base-200 shadow rounded-lg">
         <div class="p-6 border-b">
-            <h2 class="text-xl font-semibold text-gray-800">Edit Status</h2>
+            <h2 class="text-xl font-semibold text-base-content">Edit Status</h2>
         </div>
         
         <form action="{{ route('statuses.update', $status) }}" method="POST" class="p-6">
@@ -16,8 +16,8 @@
             @method('PUT')
             
             <div class="mb-6">
-                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status Name</label>
-                <input type="text" name="status" id="status" value="{{ old('status', $status->status) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('status') border-red-500 @enderror" required>
+                <label for="status" class="block text-sm font-medium text-base-content mb-1">Status Name</label>
+                <input type="text" name="status" id="status" value="{{ old('status', $status->status) }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('status') border-red-500 @enderror" required>
                 @error('status')
                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                 @enderror
