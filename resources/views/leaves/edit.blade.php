@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto">
-    <div class="bg-white shadow rounded-lg">
+    <div class="bg-base-200 shadow rounded-lg">
         <div class="p-6 border-b">
             <h2 class="text-xl font-semibold text-gray-800">Edit Leave</h2>
         </div>

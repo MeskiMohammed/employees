@@ -6,9 +6,9 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto">
-    <div class="bg-white shadow rounded-lg">
+    <div class="bg-base-200 shadow rounded-lg">
         <div class="p-6 border-b">
-            <h2 class="text-xl font-semibold text-gray-800">Edit Department</h2>
+            <h2 class="text-xl font-semibold text-base-content">Edit Department</h2>
         </div>
         
         <form action="{{ route('departments.update', $department) }}" method="POST" class="p-6">
@@ -16,16 +16,16 @@
             @method('PUT')
             
             <div class="mb-6">
-                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Department Name</label>
-                <input type="text" name="name" id="name" value="{{ old('name', $department->name) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('name') border-red-500 @enderror" required>
+                <label for="name" class="block text-sm font-medium text-base-content mb-1">Department Name</label>
+                <input type="text" name="name" id="name" value="{{ old('name', $department->name) }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('name') border-red-500 @enderror" required>
                 @error('name')
                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                 @enderror
             </div>
             
             <div class="mb-6">
-                <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                <textarea name="description" id="description" rows="4" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('description') border-red-500 @enderror">{{ old('description', $department->description) }}</textarea>
+                <label for="description" class="block text-sm font-medium text-base-content mb-1">Description</label>
+                <textarea name="description" id="description" rows="4" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('description') border-red-500 @enderror">{{ old('description', $department->description) }}</textarea>
                 @error('description')
                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                 @enderror

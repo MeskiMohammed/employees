@@ -5,9 +5,9 @@
 @section('header', 'Freelancer Projects')
 
 @section('content')
-<div class="bg-white shadow rounded-lg">
+<div class="bg-base-200 shadow rounded-lg">
     <div class="flex justify-between items-center p-6 border-b">
-        <h2 class="text-xl font-semibold text-gray-800">Freelancer Projects List</h2>
+        <h2 class="text-xl font-semibold text-base-content">Freelancer Projects List</h2>
         <a href="{{ route('freelancer-projects.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <i class="fas fa-plus mr-2"></i> Add Project
         </a>
@@ -16,13 +16,13 @@
     <div class="p-6 border-b">
         <form action="{{ route('freelancer-projects.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
-                <input type="text" name="search" id="search" value="{{ request('search') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Search projects...">
+                <label for="search" class="block text-sm font-medium text-base-content mb-1">Search</label>
+                <input type="text" name="search" id="search" value="{{ request('search') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Search projects...">
             </div>
             
             <div>
-                <label for="employee_id" class="block text-sm font-medium text-gray-700 mb-1">Employee</label>
-                <select name="employee_id" id="employee_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                <label for="employee_id" class="block text-sm font-medium text-base-content mb-1">Employee</label>
+                <select name="employee_id" id="employee_id" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                     <option value="">All Employees</option>
                     @foreach($employees as $employee)
                         <option value="{{ $employee->id }}" {{ request('employee_id') == $employee->id ? 'selected' : '' }}>{{ $employee->user->full_name ?? 'N/A' }}</option>
@@ -31,13 +31,13 @@
             </div>
             
             <div>
-                <label for="price_min" class="block text-sm font-medium text-gray-700 mb-1">Min Price</label>
-                <input type="number" name="price_min" id="price_min" value="{{ request('price_min') }}" min="0" step="0.01" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Min price">
+                <label for="price_min" class="block text-sm font-medium text-base-content mb-1">Min Price</label>
+                <input type="number" name="price_min" id="price_min" value="{{ request('price_min') }}" min="0" step="0.01" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Min price">
             </div>
             
             <div>
-                <label for="price_max" class="block text-sm font-medium text-gray-700 mb-1">Max Price</label>
-                <input type="number" name="price_max" id="price_max" value="{{ request('price_max') }}" min="0" step="0.01" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Max price">
+                <label for="price_max" class="block text-sm font-medium text-base-content mb-1">Max Price</label>
+                <input type="number" name="price_max" id="price_max" value="{{ request('price_max') }}" min="0" step="0.01" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Max price">
             </div>
             
             <div class="flex items-end">
@@ -53,7 +53,7 @@
     
     <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
+            <thead class="bg-base-200">
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Project Name</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee</th>
@@ -62,7 +62,7 @@
                     <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody class="bg-base-200 divide-y divide-gray-200">
                 @forelse($projects as $project)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">

@@ -5,24 +5,24 @@
 @section('header', 'Employees')
 
 @section('content')
-<div class="bg-white shadow rounded-lg">
+<div class="bg-base-200 shadow rounded-lg">
     <div class="flex justify-between items-center p-6 border-b">
-        <h2 class="text-xl font-semibold text-gray-800">Employees List</h2>
+        <h2 class="text-xl font-semibold text-base-content">Employees List</h2>
         <a href="{{ route('employees.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <i class="fas fa-plus mr-2"></i> Add Employee
         </a>
     </div>
     
-    <div class="p-6 border-b">
+    <div class="p-6 border-b bg-base-200">
         <form action="{{ route('employees.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
-                <input type="text" name="search" id="search" value="{{ request('search') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Search employees...">
+                <label for="search" class="block text-sm font-medium text-base-content mb-1">Search</label>
+                <input type="text" name="search" id="search" value="{{ request('search') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-base-100" placeholder="Search employees...">
             </div>
             
             <div>
-                <label for="department" class="block text-sm font-medium text-gray-700 mb-1">Department</label>
-                <select name="department" id="department" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                <label for="department" class="block text-sm font-medium text-base-content mb-1">Department</label>
+                <select name="department" id="department" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-base-100">
                     <option value="">All Departments</option>
                     @foreach($departments as $department)
                         <option value="{{ $department->id }}" {{ request('department') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
@@ -31,8 +31,8 @@
             </div>
             
             <div>
-                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                <select name="status" id="status" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                <label for="status" class="block text-sm font-medium  mb-1 text-base-content">Status</label>
+                <select name="status" id="status" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-base-100">
                     <option value="">All Statuses</option>
                     @foreach($statuses as $status)
                         <option value="{{ $status->id }}" {{ request('status') == $status->id ? 'selected' : '' }}>{{ $status->status }}</option>
@@ -52,42 +52,43 @@
     </div>
     
     <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
+        <table class="min-w-full divide-y divide-gray-200 ">
+            <thead class="bg-base-100 ">
+        
                 <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Departments</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Employee</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Departments</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Contact</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Status</th>
+                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-base-content uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody class=" divide-y divide-gray-200 bg-base-100 ">
                 @forelse($employees as $employee)
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
+                    <td class="px-6 py-4 whitespace-nowrap  ">
                         <div class="flex items-center">
                             <div class="flex-shrink-0 h-10 w-10">
                                 @if($employee->profile_picture)
                                     <img class="h-10 w-10 rounded-full" src="{{ Storage::url($employee->profile_picture) }}" alt="">
                                 @else
-                                    <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700">
+                                    <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center text-base-content">
                                         <i class="fas fa-user"></i>
                                     </div>
                                 @endif
                             </div>
                             <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">
+                                <div class="text-sm font-medium text-base-content">
                                     {{ $employee->user->first_name .' '. $employee->user->last_name  ?? 'N/A' }}
                                 </div>
-                                <div class="text-sm text-gray-500">
+                                <div class="text-sm text-base-content">
                                     {{ $employee->cin }}
                                 </div>
                             </div>
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">
+                        <div class="text-sm text-base-content">
                             @foreach ($employee->employeeDepartments as $dep)
                                 @if ($loop->last)
                                     {{$dep->department->name}}
@@ -98,8 +99,8 @@
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">{{ $employee->professional_email ?? 'N/A' }}</div>
-                        <div class="text-sm text-gray-500">{{ $employee->professional_num ?? 'N/A' }}</div>
+                        <div class="text-sm text-base-content">{{ $employee->professional_email ?? 'N/A' }}</div>
+                        <div class="text-sm text-base-content">{{ $employee->professional_num ?? 'N/A' }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-{{ $employee->status ? ($employee->status->status === 'active' ? 'green' : 'red') : 'gray' }}-100 text-{{ $employee->status ? ($employee->status->status === 'active' ? 'green' : 'red') : 'gray' }}-800">
@@ -124,7 +125,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">
+                    <td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-base-content">
                         No employees found.
                     </td>
                 </tr>

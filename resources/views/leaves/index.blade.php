@@ -5,9 +5,9 @@
 @section('header', 'Leaves')
 
 @section('content')
-<div class="bg-white shadow rounded-lg">
+<div class="bg-base-200 shadow rounded-lg">
     <div class="flex justify-between items-center p-6 border-b">
-        <h2 class="text-xl font-semibold text-gray-800">Leaves List</h2>
+        <h2 class="text-xl font-semibold text-base-content">Leaves List</h2>
         <a href="{{ route('leaves.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <i class="fas fa-plus mr-2"></i> Add Leave
         </a>
@@ -16,13 +16,13 @@
     <div class="p-6 border-b">
         <form action="{{ route('leaves.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
-                <input type="text" name="search" id="search" value="{{ request('search') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Search leaves...">
+                <label for="search" class="block text-sm font-medium text-base-content mb-1">Search</label>
+                <input type="text" name="search" id="search" value="{{ request('search') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Search leaves...">
             </div>
             
             <div>
-                <label for="employee_id" class="block text-sm font-medium text-gray-700 mb-1">Employee</label>
-                <select name="employee_id" id="employee_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                <label for="employee_id" class="block text-sm font-medium text-base-content mb-1">Employee</label>
+                <select name="employee_id" id="employee_id" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                     <option value="">All Employees</option>
                     @foreach($employees as $employee)
                         <option value="{{ $employee->id }}" {{ request('employee_id') == $employee->id ? 'selected' : '' }}>{{ $employee->user->full_name ?? 'N/A' }}</option>
@@ -31,8 +31,8 @@
             </div>
             
             <div>
-                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                <select name="status" id="status" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                <label for="status" class="block text-sm font-medium text-base-content mb-1">Status</label>
+                <select name="status" id="status" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                     <option value="">All Statuses</option>
                     @foreach($statuses as $status)
                         <option value="{{ $status }}" {{ request('status') == $status ? 'selected' : '' }}>{{ ucfirst($status) }}</option>
@@ -41,13 +41,13 @@
             </div>
             
             <div>
-                <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
-                <input type="date" name="start_date" id="start_date" value="{{ request('start_date') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                <label for="start_date" class="block text-sm font-medium text-base-content mb-1">Start Date</label>
+                <input type="date" name="start_date" id="start_date" value="{{ request('start_date') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
             </div>
             
             <div>
-                <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
-                <input type="date" name="end_date" id="end_date" value="{{ request('end_date') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                <label for="end_date" class="block text-sm font-medium text-base-content mb-1">End Date</label>
+                <input type="date" name="end_date" id="end_date" value="{{ request('end_date') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
             </div>
             
             <div class="flex items-end">
@@ -62,18 +62,18 @@
     </div>
     
     <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
+        <table class=" min-w-full divide-y divide-gray-200">
+            <thead class=" bg-base-200">
                 <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Period</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reason</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Employee</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Period</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Duration</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Reason</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Status</th>
+                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-base-content uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody class="bg-base-200 divide-y divide-gray-200">
                 @forelse($leaves as $leave)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">

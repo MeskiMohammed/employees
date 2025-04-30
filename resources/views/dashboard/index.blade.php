@@ -5,16 +5,15 @@
 @section('header', 'Dashboard')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
     <div class="mb-8">
-        <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p class="mt-1 text-sm text-gray-500">Welcome to your admin dashboard.</p>
+        <h1 class="text-2xl font-bold text-base-content">Dashboard</h1>
+        <p class="mt-1 text-sm text-base-content">Welcome to your admin dashboard.</p>
     </div>
 
     <!-- Stats Cards -->
-    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8 ">
         <!-- Total Employees -->
-        <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="bg-base-200  overflow-hidden shadow rounded-lg">
             <div class="px-4 py-5 sm:p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 bg-indigo-500 rounded-md p-3">
@@ -24,15 +23,15 @@
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Total Employees</dt>
+                            <dt class="text-sm font-medium  text-base-content truncate">Total Employees</dt>
                             <dd>
-                                <div class="text-lg font-medium text-gray-900">{{ $totalEmployees }}</div>
+                                <div class="text-lg font-medium text-base-content">{{ $totalEmployees }}</div>
                             </dd>
                         </dl>
                     </div>
                 </div>
             </div>
-            <div class="bg-gray-50 px-4 py-4 sm:px-6">
+            <div class="bg-gray-50 px-4 py-4 sm:px-6 bg-base-200">
                 <div class="text-sm">
                     <a href="{{ route('employees.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">View all<span class="sr-only"> employees</span></a>
                 </div>
@@ -40,7 +39,7 @@
         </div>
 
         <!-- Total Departments -->
-        <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="bg-base-200 overflow-hidden shadow rounded-lg">
             <div class="px-4 py-5 sm:p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 bg-green-500 rounded-md p-3">
@@ -50,23 +49,23 @@
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Total Departments</dt>
+                            <dt class="text-sm font-medium text-base-content truncate">Total Departments</dt>
                             <dd>
-                                <div class="text-lg font-medium text-gray-900">{{ $totalDepartments }}</div>
+                                <div class="text-lg font-medium text-base-content">{{ $totalDepartments }}</div>
                             </dd>
                         </dl>
                     </div>
                 </div>
             </div>
-            <div class="bg-gray-50 px-4 py-4 sm:px-6">
+            <div class="bg-gray-50 px-4 py-4 sm:px-6 bg-base-200">
                 <div class="text-sm">
-                    <a href="{{ route('departments.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">View all<span class="sr-only"> departments</span></a>
+                    <a href="{{ route('departments.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500 ">View all<span class="sr-only"> departments</span></a>
                 </div>
             </div>
         </div>
 
         <!-- Total Users -->
-        <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="bg-base-200 overflow-hidden shadow rounded-lg">
             <div class="px-4 py-5 sm:p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 bg-yellow-500 rounded-md p-3">
@@ -76,15 +75,15 @@
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Total Users</dt>
+                            <dt class="text-sm font-medium text-base-content truncate">Total Users</dt>
                             <dd>
-                                <div class="text-lg font-medium text-gray-900">{{ $totalUsers }}</div>
+                                <div class="text-lg font-medium text-base-content">{{ $totalUsers }}</div>
                             </dd>
                         </dl>
                     </div>
                 </div>
             </div>
-            <div class="bg-gray-50 px-4 py-4 sm:px-6">
+            <div class="bg-gray-50 px-4 py-4 sm:px-6 bg-base-200">
                 <div class="text-sm">
                     <a href="{{ route('users.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">View all<span class="sr-only"> users</span></a>
                 </div>
@@ -92,7 +91,7 @@
         </div>
 
         <!-- Total Payments -->
-        <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="bg-base-200 overflow-hidden shadow rounded-lg">
             <div class="px-4 py-5 sm:p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 bg-red-500 rounded-md p-3">
@@ -102,15 +101,15 @@
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Total Payments</dt>
+                            <dt class="text-sm font-medium text-base-content truncate">Total Payments</dt>
                             <dd>
-                                <div class="text-lg font-medium text-gray-900">{{ $totalPayments }}</div>
+                                <div class="text-lg font-medium text-base-content">{{ $totalPayments }}</div>
                             </dd>
                         </dl>
                     </div>
                 </div>
             </div>
-            <div class="bg-gray-50 px-4 py-4 sm:px-6">
+            <div class="bg-gray-50 px-4 py-4 sm:px-6 bg-base-200">
                 <div class="text-sm">
                     <a href="{{ route('payments.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">View all<span class="sr-only"> payments</span></a>
                 </div>
@@ -121,9 +120,9 @@
     <!-- Charts Section -->
     <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 mb-8">
         <!-- Department Employees Chart -->
-        <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="bg-base-200 overflow-hidden shadow rounded-lg">
             <div class="px-4 py-5 sm:p-6">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Employees by Department</h3>
+                <h3 class="text-lg leading-6 font-medium text-base-content">Employees by Department</h3>
                 <div class="mt-4 h-80">
                     <canvas id="departmentEmployeesChart"></canvas>
                 </div>
@@ -131,9 +130,9 @@
         </div>
 
         <!-- Monthly Payments Chart -->
-        <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="bg-base-200 overflow-hidden shadow rounded-lg">
             <div class="px-4 py-5 sm:p-6">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Monthly Payments</h3>
+                <h3 class="text-lg leading-6 font-medium text-base -content">Monthly Payments</h3>
                 <div class="mt-4 h-80">
                     <canvas id="monthlyPaymentsChart"></canvas>
                 </div>
@@ -144,22 +143,22 @@
     <!-- Recent Activity Section -->
     <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <!-- Recent Employees -->
-        <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="bg-base-200 overflow-hidden shadow rounded-lg">
             <div class="px-4 py-5 sm:px-6">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Recent Employees</h3>
-                <p class="mt-1 max-w-2xl text-sm text-gray-500">Latest employees added to the system.</p>
+                <h3 class="text-lg leading-6 font-medium text-base-content">Recent Employees</h3>
+                <p class="mt-1 max-w-2xl text-sm text-base-content">Latest employees added to the system.</p>
             </div>
-            <div class="border-t border-gray-200">
+            <div class="border-t border-gray-200 ">
                 <div class="overflow-hidden overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
+                        <thead class="bg-gray-50 bg-base-200">
                             <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Name</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Department</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Status</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class="bg-base-200 divide-y divide-gray-200">
                             @foreach($recentEmployees as $employee)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -193,7 +192,7 @@
                     </table>
                 </div>
             </div>
-            <div class="bg-gray-50 px-4 py-4 sm:px-6">
+            <div class="bg-gray-50 px-4 py-4 sm:px-6 bg-base-200">
                 <div class="text-sm">
                     <a href="{{ route('employees.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">View all employees</a>
                 </div>
@@ -201,23 +200,23 @@
         </div>
 
         <!-- Recent Leaves -->
-        <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="bg-base-200 overflow-hidden shadow rounded-lg">
             <div class="px-4 py-5 sm:px-6">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Recent Leaves</h3>
-                <p class="mt-1 max-w-2xl text-sm text-gray-500">Latest leave requests.</p>
+                <h3 class="text-lg leading-6 font-medium text-base-content">Recent Leaves</h3>
+                <p class="mt-1 max-w-2xl text-sm text-base-content">Latest leave requests.</p>
             </div>
-            <div class="border-t border-gray-200">
+            <div class="border-t border-gray-200 ">
                 <div class="overflow-hidden overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
+                    <table class="min-w-full divide-y divide-gray-200 ">
+                        <thead class="bg-gray-50  bg-base-200 ">
                             <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">From</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">To</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Employee</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Type</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">From</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">To</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class="bg-base-200 divide-y divide-gray-200">
                             @foreach($recentLeaves as $leave)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -240,7 +239,7 @@
                     </table>
                 </div>
             </div>
-            <div class="bg-gray-50 px-4 py-4 sm:px-6">
+            <div class="bg-gray-50 px-4 py-4 sm:px-6 bg-base-200">
                 <div class="text-sm">
                     <a href="{{ route('leaves.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">View all leaves</a>
                 </div>
@@ -248,6 +247,7 @@
         </div>
     </div>
 </div>
+
 
 @endsection
 
@@ -334,5 +334,7 @@
             }
         });
     });
+    
 </script>
+
 @endsection
