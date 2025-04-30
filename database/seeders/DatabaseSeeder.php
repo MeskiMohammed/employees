@@ -11,6 +11,7 @@ use App\Models\Status;
 use App\Models\Type;
 use App\Models\User;
 use App\Models\UserStatus;
+use App\Models\Enterprise;
 
 class DatabaseSeeder extends Seeder
 {
@@ -138,6 +139,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'salmasalhi@gmail.com',
             'password' => Hash::make('salma'),
             'is_super_admin' => 1,
+        ]);
+
+
+        Enterprise::create([
+            'name'=>'hi',
+            'logo'=>null
         ]);
     }
 }

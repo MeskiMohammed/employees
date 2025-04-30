@@ -35,7 +35,7 @@ class EnterpriseController extends Controller
             if ($enterprise->logo && Storage::exists('public/' . $enterprise->logo)) {
                 Storage::delete('public/' . $enterprise->logo);
             }
-            
+
             // Store new logo
             $path = $request->file('logo')->store('enterprise', 'public');
             $enterprise->logo = $path;

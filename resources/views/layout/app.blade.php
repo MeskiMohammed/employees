@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ \App\Models\Enterprise::first()->name ?? 'Enterprise' }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Scripts -->
-     
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <script src="https://kit.fontawesome.com/7a09db649a.js" crossorigin="anonymous"></script>
@@ -60,7 +60,7 @@
             const navbar = document.querySelector('#main-navbar');
             const main = document.querySelector('main');
             const sidebarToggles = document.querySelectorAll('[aria-label="Toggle sidebar"]');
-            
+
             function toggleSidebar() {
                 sidebar.classList.toggle('-translate-x-full');
                 main.classList.toggle('pl-64');
@@ -90,7 +90,7 @@
                     navbar.classList.remove('left-0');
                 }
             }
-            
+
             mediaQuery.addListener(handleResponsive);
             handleResponsive(mediaQuery);
         });
