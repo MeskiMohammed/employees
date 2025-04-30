@@ -91,7 +91,7 @@
     </div>
 
     <div class="px-6 py-4 border-t">
-        {{ $statuses->withQueryString()->links() }}
+        {{ $statuses->withQueryString()->links('vendor.pagination.tailwind') }}
     </div>
 </div>
 @endsection

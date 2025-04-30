@@ -12,14 +12,14 @@
             <i class="fas fa-plus mr-2"></i> Add Payment Type
         </a>
     </div>
-    
+
     <div class="p-6 border-b">
         <form action="{{ route('payment-types.index') }}" method="GET" class="flex gap-4">
             <div class="flex-1">
                 <label for="search" class="block text-sm font-medium text-base-content mb-1">Search</label>
                 <input type="text" name="search" id="search" value="{{ request('search') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Search payment types...">
             </div>
-            
+
             <div class="flex items-end">
                 <button type="submit" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                     <i class="fas fa-search mr-2"></i> Search
@@ -30,7 +30,7 @@
             </div>
         </form>
     </div>
-    
+
     <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-base-200">
@@ -84,9 +84,9 @@
             </tbody>
         </table>
     </div>
-    
+
     <div class="px-6 py-4 border-t">
-        {{ $paymentTypes->withQueryString()->links() }}
+        {{ $paymentTypes->withQueryString()->links('vendor.pagination.tailwind') }}
     </div>
 </div>
 @endsection

@@ -12,14 +12,14 @@
             <i class="fas fa-plus mr-2"></i> Add Leave
         </a>
     </div>
-    
+
     <div class="p-6 border-b">
         <form action="{{ route('leaves.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
                 <label for="search" class="block text-sm font-medium text-base-content mb-1">Search</label>
                 <input type="text" name="search" id="search" value="{{ request('search') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Search leaves...">
             </div>
-            
+
             <div>
                 <label for="employee_id" class="block text-sm font-medium text-base-content mb-1">Employee</label>
                 <select name="employee_id" id="employee_id" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
@@ -29,7 +29,7 @@
                     @endforeach
                 </select>
             </div>
-            
+
             <div>
                 <label for="status" class="block text-sm font-medium text-base-content mb-1">Status</label>
                 <select name="status" id="status" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
@@ -39,17 +39,17 @@
                     @endforeach
                 </select>
             </div>
-            
+
             <div>
                 <label for="start_date" class="block text-sm font-medium text-base-content mb-1">Start Date</label>
                 <input type="date" name="start_date" id="start_date" value="{{ request('start_date') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
             </div>
-            
+
             <div>
                 <label for="end_date" class="block text-sm font-medium text-base-content mb-1">End Date</label>
                 <input type="date" name="end_date" id="end_date" value="{{ request('end_date') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
             </div>
-            
+
             <div class="flex items-end">
                 <button type="submit" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                     <i class="fas fa-search mr-2"></i> Filter
@@ -60,7 +60,7 @@
             </div>
         </form>
     </div>
-    
+
     <div class="overflow-x-auto">
         <table class=" min-w-full divide-y divide-gray-200">
             <thead class=" bg-base-200">
@@ -107,7 +107,7 @@
                         <div class="text-sm text-gray-900 truncate max-w-xs">{{ $leave->reason }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                             @if($leave->status == 'approved')
                                 bg-green-100 text-green-800
                             @elseif($leave->status == 'rejected')
@@ -145,9 +145,9 @@
             </tbody>
         </table>
     </div>
-    
+
     <div class="px-6 py-4 border-t">
-        {{ $leaves->withQueryString()->links() }}
+        {{ $leaves->withQueryString()->links('vendor.pagination.tailwind') }}
     </div>
 </div>
 @endsection

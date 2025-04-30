@@ -46,7 +46,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-base-content">{{ $reason->reason }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-base-content">{{ $reason->created_at->format('M d, Y') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        
+
                         <a href="{{ route('reasons.edit', $reason) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">
                             <i class="fas fa-edit"></i>
                         </a>
@@ -71,6 +71,11 @@
         <div class="px-4 py-3 bg-white border-t border-gray-200 sm:px-6 bg-base-200">
             {{ $reasons->links() }}
         </div>
+    </div>
+
+
+    <div class="px-6 py-4 border-t">
+        {{ $reasons->withQueryString()->links('vendor.pagination.tailwind') }}
     </div>
 </div>
 @endsection

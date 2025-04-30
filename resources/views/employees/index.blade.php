@@ -12,14 +12,14 @@
             <i class="fas fa-plus mr-2"></i> Add Employee
         </a>
     </div>
-    
+
     <div class="p-6 border-b bg-base-200">
         <form action="{{ route('employees.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
                 <label for="search" class="block text-sm font-medium text-base-content mb-1">Search</label>
                 <input type="text" name="search" id="search" value="{{ request('search') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-base-100" placeholder="Search employees...">
             </div>
-            
+
             <div>
                 <label for="department" class="block text-sm font-medium text-base-content mb-1">Department</label>
                 <select name="department" id="department" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-base-100">
@@ -29,7 +29,7 @@
                     @endforeach
                 </select>
             </div>
-            
+
             <div>
                 <label for="status" class="block text-sm font-medium  mb-1 text-base-content">Status</label>
                 <select name="status" id="status" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-base-100">
@@ -39,7 +39,7 @@
                     @endforeach
                 </select>
             </div>
-            
+
             <div class="flex items-end">
                 <button type="submit" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                     <i class="fas fa-search mr-2"></i> Filter
@@ -50,11 +50,11 @@
             </div>
         </form>
     </div>
-    
+
     <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200 ">
             <thead class="bg-base-100 ">
-        
+
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Employee</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Departments</th>
@@ -133,9 +133,9 @@
             </tbody>
         </table>
     </div>
-    
+
     <div class="px-6 py-4 border-t">
-        {{ $employees->withQueryString()->links() }}
+        {{ $employees->withQueryString()->links('vendor.pagination.tailwind') }}
     </div>
 </div>
 @endsection

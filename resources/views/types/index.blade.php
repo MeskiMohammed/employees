@@ -90,7 +90,7 @@
     </div>
 
     <div class="px-6 py-4 border-t">
-        {{ $types->withQueryString()->links() }}
+        {{ $types->withQueryString()->links('vendor.pagination.tailwind') }}
     </div>
 </div>
 @endsection

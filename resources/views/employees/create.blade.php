@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="max-w-6xl mx-auto">
-    <div class="bg-base-200  shadow rounded-lg">
+    <div class="bg-base-200 border shadow rounded-lg">
         <div class="p-6 border-b">
             <h2 class="text-xl font-semibold text-base-content">Create New Employee</h2>
         </div>
@@ -100,7 +100,7 @@
 
                     <div class="overflow-y-auto grid md:grid-cols-3 gap-4 p-2 border rounded max-h-40 mt-2 @error('department_ids') border-red-500  @enderror">
                         @forelse($departments as $dep)
-                            <label for="dep{{ $dep->id }}" class="deps flex justify-center bg-base-100 rounded items-center py-4 ">
+                            <label for="dep{{ $dep->id }}" class="deps border flex justify-center bg-base-100 rounded items-center py-4 ">
                                 <div class="w-full px-6">
                                     <input type="checkbox" name="department_ids[]" value="{{ $dep->id }}" id="dep{{ $dep->id }}" class="bg-base-200">
                                     <label>{{ $dep->name }}</label>
@@ -154,26 +154,36 @@
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
+
+
+                    <div>
+                        <label for="eic" class="block text-sm font-medium text-base-content mb-1">Entrepreneur identification card</label>
+                        <input type="file" name="eic" id="eic" class=" file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('eic') border-red-500  @enderror">
+                        @error('eic')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
+
                 <div x-show="freelancer==='employee'" class="col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                <div>
-                    <label for="type_id" class="block text-sm font-medium text-base-content mb-1">Type</label>
-                    <select name="type_id" id="type_id" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('type_id') border-red-500 @enderror" >
-                        <option value="">Select Type</option>
-                        @foreach($types as $type)
-                            @if($type->type === 'stagiaire' || $type->type === 'freelancer')
-                                @continue
-                            @endif
-                            <option value="{{ $type->id }}" {{ old('type_id') == $type->type ? 'selected' : '' }}>
-                                {{ $type->type }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('type_id')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
+                    <div>
+                        <label for="type_id" class="block text-sm font-medium text-base-content mb-1">Type</label>
+                        <select name="type_id" id="type_id" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('type_id') border-red-500 @enderror" >
+                            <option value="">Select Type</option>
+                            @foreach($types as $type)
+                                @if($type->type === 'stagiaire' || $type->type === 'freelancer')
+                                    @continue
+                                @endif
+                                    <option value="{{ $type->id }}" {{ old('type_id') == $type->type ? 'selected' : '' }}>
+                                        {{ $type->type }}
+                                    </option>
+                            @endforeach
+                        </select>
+                        @error('type_id')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
 
                     <div>
                         <label for="salary" class="block text-sm font-medium text-base-content mb-1">Salary</label>
@@ -245,8 +255,92 @@
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
+
+
+
+                    <div>
+                        <label for="cin_attachment" class="block text-sm font-medium text-base-content mb-1">Contrat de Travail</label>
+                        <input type="file" name="cin_attachment" id="cin_attachment" class=" file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('cin_attachment') border-red-500  @enderror">
+                        @error('cin_attachment')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="cin_attachment" class="block text-sm font-medium text-base-content mb-1">Demande de Travail</label>
+                        <input type="file" name="cin_attachment" id="cin_attachment" class=" file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('cin_attachment') border-red-500  @enderror">
+                        @error('cin_attachment')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="cin_attachment" class="block text-sm font-medium text-base-content mb-1">Assurance</label>
+                        <input type="file" name="cin_attachment" id="cin_attachment" class=" file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('cin_attachment') border-red-500  @enderror">
+                        @error('cin_attachment')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="cin_attachment" class="block text-sm font-medium text-base-content mb-1">CV</label>
+                        <input type="file" name="cin_attachment" id="cin_attachment" class=" file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('cin_attachment') border-red-500  @enderror">
+                        @error('cin_attachment')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="cin_attachment" class="block text-sm font-medium text-base-content mb-1">Attestation CNSS</label>
+                        <input type="file" name="cin_attachment" id="cin_attachment" class=" file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('cin_attachment') border-red-500  @enderror">
+                        @error('cin_attachment')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
 
+                <div x-show="freelancer==='trainee'" class="col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <div>
+                        <label for="cin_attachment" class="block text-sm font-medium text-base-content mb-1">Convention de stage</label>
+                        <input type="file" name="cin_attachment" id="cin_attachment" class=" file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('cin_attachment') border-red-500  @enderror">
+                        @error('cin_attachment')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="cin_attachment" class="block text-sm font-medium text-base-content mb-1">Demande de Stage</label>
+                        <input type="file" name="cin_attachment" id="cin_attachment" class=" file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('cin_attachment') border-red-500  @enderror">
+                        @error('cin_attachment')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="cin_attachment" class="block text-sm font-medium text-base-content mb-1">Assurance</label>
+                        <input type="file" name="cin_attachment" id="cin_attachment" class=" file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('cin_attachment') border-red-500  @enderror">
+                        @error('cin_attachment')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="cin_attachment" class="block text-sm font-medium text-base-content mb-1">CV</label>
+                        <input type="file" name="cin_attachment" id="cin_attachment" class=" file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('cin_attachment') border-red-500  @enderror">
+                        @error('cin_attachment')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="cin_attachment" class="block text-sm font-medium text-base-content mb-1">Relevait de notes</label>
+                        <input type="file" name="cin_attachment" id="cin_attachment" class=" file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('cin_attachment') border-red-500  @enderror">
+                        @error('cin_attachment')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
             </div>
 
             <div class="mt-6 flex items-center justify-end">

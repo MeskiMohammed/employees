@@ -12,14 +12,14 @@
             <i class="fas fa-plus mr-2"></i> Add Project
         </a>
     </div>
-    
+
     <div class="p-6 border-b">
         <form action="{{ route('freelancer-projects.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
                 <label for="search" class="block text-sm font-medium text-base-content mb-1">Search</label>
                 <input type="text" name="search" id="search" value="{{ request('search') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Search projects...">
             </div>
-            
+
             <div>
                 <label for="employee_id" class="block text-sm font-medium text-base-content mb-1">Employee</label>
                 <select name="employee_id" id="employee_id" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
@@ -29,17 +29,17 @@
                     @endforeach
                 </select>
             </div>
-            
+
             <div>
                 <label for="price_min" class="block text-sm font-medium text-base-content mb-1">Min Price</label>
                 <input type="number" name="price_min" id="price_min" value="{{ request('price_min') }}" min="0" step="0.01" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Min price">
             </div>
-            
+
             <div>
                 <label for="price_max" class="block text-sm font-medium text-base-content mb-1">Max Price</label>
                 <input type="number" name="price_max" id="price_max" value="{{ request('price_max') }}" min="0" step="0.01" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Max price">
             </div>
-            
+
             <div class="flex items-end">
                 <button type="submit" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                     <i class="fas fa-search mr-2"></i> Filter
@@ -50,7 +50,7 @@
             </div>
         </form>
     </div>
-    
+
     <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-base-200">
@@ -122,9 +122,9 @@
             </tbody>
         </table>
     </div>
-    
+
     <div class="px-6 py-4 border-t">
-        {{ $projects->withQueryString()->links() }}
+        {{ $projects->withQueryString()->links('vendor.pagination.tailwind') }}
     </div>
 </div>
 @endsection
