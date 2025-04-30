@@ -44,7 +44,7 @@
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-base-content">{{ $reason->id }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-base-content">{{ $reason->reason }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $reason->created_at->format('M d, Y') }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-base-content">{{ $reason->created_at->format('M d, Y') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         
                         <a href="{{ route('reasons.edit', $reason) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">
