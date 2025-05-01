@@ -182,7 +182,6 @@ class EmployeeController extends Controller
             ];
 
             Attachment::insert($data);
-            Attachment::save();
 
         }else{
 
@@ -190,18 +189,17 @@ class EmployeeController extends Controller
             $iapPath = $request->file('internship_application')->storeAs('attachments',uniqid().'_'.$request->file('internship_application')->getClientOriginalName(),'public');
             $iPath = $request->file('insurance_int')->storeAs('attachments',uniqid().'_'.$request->file('insurance_int')->getClientOriginalName(),'public');
             $rPath = $request->file('resume_int')->storeAs('attachments',uniqid().'_'.$request->file('resume_int')->getClientOriginalName(),'public');
-            $ccPath = $request->file('transcript')->storeAs('attachments',uniqid().'_'.$request->file('transcript')->getClientOriginalName(),'public');
+            $tPath = $request->file('transcript')->storeAs('attachments',uniqid().'_'.$request->file('transcript')->getClientOriginalName(),'public');
 
             $data = [
-                ['name'=>'internship_agreement','attachment'=>$ecPath,'type_employee_id'=>$typeEmployee->id],
-                ['name'=>'internship_application','attachment'=>$jaPath,'type_employee_id'=>$typeEmployee->id],
+                ['name'=>'internship_agreement','attachment'=>$iagPath,'type_employee_id'=>$typeEmployee->id],
+                ['name'=>'internship_application','attachment'=>$iapPath,'type_employee_id'=>$typeEmployee->id],
                 ['name'=>'insurance','attachment'=>$iPath,'type_employee_id'=>$typeEmployee->id],
                 ['name'=>'resume','attachment'=>$rPath,'type_employee_id'=>$typeEmployee->id],
-                ['name'=>'cnss_certificate','attachment'=>$ccPath,'type_employee_id'=>$typeEmployee->id],
+                ['name'=>'cnss_certificate','attachment'=>$tPath,'type_employee_id'=>$typeEmployee->id],
             ];
 
             Attachment::insert($data);
-            Attachment::save();
         }
 
         DB::commit();
