@@ -5,24 +5,24 @@
 @section('header', 'Employees')
 
 @section('content')
-<div class="bg-base-200 shadow rounded-lg">
-    <div class="flex justify-between items-center p-6 border-b">
+<div class="bg-base-200 border border-base-300 shadow rounded-lg">
+    <div class="flex justify-between items-center p-6 border-base-300 border-b">
         <h2 class="text-xl font-semibold text-base-content">Employees List</h2>
         <a href="{{ route('employees.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <i class="fas fa-plus mr-2"></i> Add Employee
         </a>
     </div>
 
-    <div class="p-6 border-b bg-base-200">
+    <div class="p-6 border-base-300 border-b bg-base-200">
         <form action="{{ route('employees.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
                 <label for="search" class="block text-sm font-medium text-base-content mb-1">Search</label>
-                <input type="text" name="search" id="search" value="{{ request('search') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-base-100" placeholder="Search employees...">
+                <input type="text" name="search" id="search" value="{{ request('search') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md bg-base-100" placeholder="Search employees...">
             </div>
 
             <div>
                 <label for="department" class="block text-sm font-medium text-base-content mb-1">Department</label>
-                <select name="department" id="department" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-base-100">
+                <select name="department" id="department" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md bg-base-100">
                     <option value="">All Departments</option>
                     @foreach($departments as $department)
                         <option value="{{ $department->id }}" {{ request('department') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
@@ -32,7 +32,7 @@
 
             <div>
                 <label for="status" class="block text-sm font-medium  mb-1 text-base-content">Status</label>
-                <select name="status" id="status" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-base-100">
+                <select name="status" id="status" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md bg-base-100">
                     <option value="">All Statuses</option>
                     @foreach($statuses as $status)
                         <option value="{{ $status->id }}" {{ request('status') == $status->id ? 'selected' : '' }}>{{ $status->status }}</option>
@@ -52,8 +52,8 @@
     </div>
 
     <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200 ">
-            <thead class="bg-base-100 ">
+        <table class="min-w-full divide-y divide-base-300 ">
+            <thead class="bg-base-200 ">
 
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Employee</th>
@@ -63,7 +63,7 @@
                     <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-base-content uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
-            <tbody class=" divide-y divide-gray-200 bg-base-100 ">
+            <tbody class=" divide-y divide-base-300 bg-base-200 ">
                 @forelse($employees as $employee)
                 <tr >
                     <td class="px-6 py-4 whitespace-nowrap  ">
@@ -134,7 +134,7 @@
         </table>
     </div>
 
-    <div class="px-6 py-4 border-t">
+    <div class="px-6 py-4 border-t border-base-300">
         {{ $employees->withQueryString()->links('vendor.pagination.tailwind') }}
     </div>
 </div>
