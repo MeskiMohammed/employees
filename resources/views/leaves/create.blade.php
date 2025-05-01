@@ -7,7 +7,7 @@
 @section('content')
 <div class="max-w-4xl mx-auto">
     <div class="bg-base-200 shadow rounded-lg">
-        <div class="p-6 border-b">
+        <div class="p-6 border-b border-base-300">
             <h2 class="text-xl font-semibold text-base-content">Create New Leave</h2>
         </div>
         
@@ -17,7 +17,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="employee_id" class="block text-sm font-medium text-base-content mb-1">Employee</label>
-                    <select name="employee_id" id="employee_id" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('employee_id') border-red-500 @enderror" required>
+                    <select name="employee_id" id="employee_id" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('employee_id') border-red-500 @enderror" required>
                         <option value="">Select Employee</option>
                         @foreach($employees as $employee)
                             <option value="{{ $employee->id }}" {{ old('employee_id') == $employee->id ? 'selected' : '' }}>
@@ -32,7 +32,7 @@
                 
                 <div>
                     <label for="status" class="block text-sm font-medium text-base-content mb-1">Status</label>
-                    <select name="status" id="status" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('status') border-red-500 @enderror" required>
+                    <select name="status" id="status" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('status') border-red-500 @enderror" required>
                         <option value="">Select Status</option>
                         @foreach($statuses as $status)
                             <option value="{{ $status }}" {{ old('status') == $status ? 'selected' : '' }}>{{ ucfirst($status) }}</option>
@@ -45,7 +45,7 @@
                 
                 <div>
                     <label for="start_date" class="block text-sm font-medium text-base-content mb-1">Start Date</label>
-                    <input type="date" name="start_date" id="start_date" value="{{ old('start_date') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('start_date') border-red-500 @enderror" required>
+                    <input type="date" name="start_date" id="start_date" value="{{ old('start_date') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('start_date') border-red-500 @enderror" required>
                     @error('start_date')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
@@ -53,7 +53,7 @@
                 
                 <div>
                     <label for="end_date" class="block text-sm font-medium text-base-content mb-1">End Date</label>
-                    <input type="date" name="end_date" id="end_date" value="{{ old('end_date') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('end_date') border-red-500 @enderror" required>
+                    <input type="date" name="end_date" id="end_date" value="{{ old('end_date') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('end_date') border-red-500 @enderror" required>
                     @error('end_date')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
@@ -61,7 +61,7 @@
                 
                 <div class="md:col-span-2">
                     <label for="reason" class="block text-sm font-medium text-base-content mb-1">Reason</label>
-                    <textarea name="reason" id="reason" rows="4" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('reason') border-red-500 @enderror" required>{{ old('reason') }}</textarea>
+                    <textarea name="reason" id="reason" rows="4" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('reason') border-red-500 @enderror" required>{{ old('reason') }}</textarea>
                     @error('reason')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror

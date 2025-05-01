@@ -37,7 +37,7 @@
                 <div class="grid grid-cols-1 gap-6">
                     <div>
                         <label for="name" class=" block text-sm font-medium text-base-content">Enterprise Name</label>
-                        <input type="text" name="name" id="name" value="{{ old('name', $enterprise->name) }}" class=" bg-base-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md @error('name') border-red-500 @enderror">
+                        <input type="text" name="name" id="name" value="{{ old('name', $enterprise->name) }}" class=" bg-base-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-base-300 rounded-md @error('name') border-red-500 @enderror">
                         @error('name')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -51,7 +51,7 @@
                                     <img src="{{ asset('storage/' . $enterprise->logo) }}" alt="{{ $enterprise->name }}" class="h-16 w-auto object-contain">
                                 </div>
                             @endif
-                            <input type="file" name="logo" id="logo" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md @error('logo') border-red-500 @enderror">
+                            <input type="file" name="logo" id="logo" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-base-300 rounded-md @error('logo') border-red-500 @enderror">
                         </div>
                         <p class="mt-1 text-sm text-base-content">Recommended size: 200x200 pixels. JPG, PNG or GIF.</p>
                         @error('logo')

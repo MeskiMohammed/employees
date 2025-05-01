@@ -30,7 +30,7 @@
 
     <div class="bg-base-200 shadow overflow-hidden sm:rounded-lg">
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
+            <table class="min-w-full divide-y divide-base-200">
                 <thead class="bg-base-200">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">ID</th>
@@ -39,7 +39,7 @@
                         <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-base-content uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="bg-base-200 divide-y divide-gray-200">
+                <tbody class="bg-base-200 divide-y divide-base-200">
                     @forelse($reasons as $reason)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-base-content">{{ $reason->id }}</td>
@@ -68,13 +68,13 @@
                 </tbody>
             </table>
         </div>
-        <div class="px-4 py-3 bg-white border-t border-gray-200 sm:px-6 bg-base-200">
+        <div class="px-4 py-3  border-t border-base-300 sm:px-6 bg-base-200">
             {{ $reasons->links() }}
         </div>
     </div>
 
 
-    <div class="px-6 py-4 border-t">
+    <div class="px-6 py-4 border-t border-base-300">
         {{ $reasons->withQueryString()->links('vendor.pagination.tailwind') }}
     </div>
 </div>

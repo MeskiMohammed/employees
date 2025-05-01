@@ -6,18 +6,18 @@
 
 @section('content')
 <div class="bg-base-200 shadow rounded-lg">
-    <div class="flex justify-between items-center p-6 border-b">
+    <div class="flex justify-between items-center p-6 border-b border-base-300">
         <h2 class="text-xl font-semibold text-base-content">Statuses List</h2>
         <a href="{{ route('statuses.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <i class="fas fa-plus mr-2"></i> Add Status
         </a>
     </div>
 
-    <div class="p-6 border-b">
+    <div class="p-6 border-b border-base-300">
         <form action="{{ route('statuses.index') }}" method="GET" class="flex gap-4">
             <div class="flex-1">
                 <label for="search" class="block text-sm font-medium text-base-content mb-1">Search</label>
-                <input type="text" name="search" id="search" value="{{ request('search') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Search statuses...">
+                <input type="text" name="search" id="search" value="{{ request('search') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md" placeholder="Search statuses...">
             </div>
 
             <div class="flex items-end">
@@ -35,7 +35,7 @@
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-        <table class="min-w-full divide-y divide-gray-200">
+        <table class="min-w-full divide-y divide-base-200">
             <thead class="bg-base-200">
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">ID</th>
@@ -45,7 +45,7 @@
                     <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-base-content uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
-            <tbody class="bg-base-200 divide-y divide-gray-200">
+            <tbody class="bg-base-200 divide-y divide-base-200">
                 @forelse($statuses as $status)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
@@ -90,7 +90,7 @@
         </table>
     </div>
 
-    <div class="px-6 py-4 border-t">
+    <div class="px-6 py-4 border-t border-base-300">
         {{ $statuses->withQueryString()->links('vendor.pagination.tailwind') }}
     </div>
 </div>

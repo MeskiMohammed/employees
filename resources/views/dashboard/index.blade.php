@@ -148,9 +148,9 @@
                 <h3 class="text-lg leading-6 font-medium text-base-content">Recent Employees</h3>
                 <p class="mt-1 max-w-2xl text-sm text-base-content">Latest employees added to the system.</p>
             </div>
-            <div class="border-t border-gray-200 ">
+            <div class="border-t border-base-300 ">
                 <div class="overflow-hidden overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
+                    <table class="min-w-full divide-y divide-base-300">
                         <thead class=" bg-base-200">
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Name</th>
@@ -158,7 +158,7 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Status</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-base-200 divide-y divide-gray-200">
+                        <tbody class="bg-base-200 divide-y divide-base-300">
                             @foreach($recentEmployees as $employee)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -205,7 +205,7 @@
                 <h3 class="text-lg leading-6 font-medium text-base-content">Recent Leaves</h3>
                 <p class="mt-1 max-w-2xl text-sm text-base-content">Latest leave requests.</p>
             </div>
-            <div class="border-t border-gray-200 ">
+            <div class="border-t border-base-300 ">
                 <div class="overflow-hidden overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200 ">
                         <thead class="  bg-base-200 ">
@@ -216,7 +216,7 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">To</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-base-200 divide-y divide-gray-200">
+                        <tbody class="bg-base-200 divide-y divide-base-300">
                             @foreach($recentLeaves as $leave)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">

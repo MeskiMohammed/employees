@@ -20,7 +20,7 @@
                 <div class="grid grid-cols-1 gap-6">
                     <div>
                         <label for="reason" class="block text-sm font-medium text-base-content">Reason</label>
-                        <input type="text" name="reason" id="reason" value="{{ old('reason') }}" class="bg-base-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md @error('reason') border-red-500 @enderror">
+                        <input type="text" name="reason" id="reason" value="{{ old('reason') }}" class="bg-base-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-base-300 rounded-md @error('reason') border-red-500 @enderror">
                         @error('reason')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
