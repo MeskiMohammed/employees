@@ -154,7 +154,7 @@ class EmployeeController extends Controller
         $typeEmployee->type()->associate($type);
         $typeEmployee->save();
 
-        if(is_freelancer === 'freelancer'){
+        /*if(is_freelancer === 'freelancer'){
 
             $eicPath = $request->file('eic')->storeAs(
                 'attachments',
@@ -173,7 +173,7 @@ class EmployeeController extends Controller
         }else{
 
         }
-
+        */
         DB::commit();
 
         return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
