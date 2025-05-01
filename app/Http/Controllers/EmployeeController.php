@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\StoreEmployeeRequest;
+use App\Models\Attachment;
 
 class EmployeeController extends Controller
 {
@@ -154,13 +155,9 @@ class EmployeeController extends Controller
         $typeEmployee->type()->associate($type);
         $typeEmployee->save();
 
-        /*if(is_freelancer === 'freelancer'){
+        if($request->is_freelancer === 'freelancer'){
 
-            $eicPath = $request->file('eic')->storeAs(
-                'attachments',
-                uniqid().'_'.$request->file('eic')->getClientOriginalName(),
-                'public'
-            );
+            $eicPath = $request->file('eic')->storeAs('attachments',uniqid().'_'.$request->file('eic')->getClientOriginalName(),'public');
 
             Attachment::create([
                 'name' => 'Entrepreneur Identification Card',
@@ -168,12 +165,45 @@ class EmployeeController extends Controller
                 'type_employee_id' => $typeEmployee->id,
             ]);
 
-        }elseif(is_freelancer === 'employee'){
+        }elseif($request->is_freelancer === 'employee'){
+
+            $ecPath = $request->file('employment_contract')->storeAs('attachments',uniqid().'_'.$request->file('employment_contract')->getClientOriginalName(),'public');
+            $jaPath = $request->file('job_application')->storeAs('attachments',uniqid().'_'.$request->file('job_application')->getClientOriginalName(),'public');
+            $iPath = $request->file('insurance')->storeAs('attachments',uniqid().'_'.$request->file('insurance')->getClientOriginalName(),'public');
+            $rPath = $request->file('resume')->storeAs('attachments',uniqid().'_'.$request->file('resume')->getClientOriginalName(),'public');
+            $ccPath = $request->file('cnss_certificate')->storeAs('attachments',uniqid().'_'.$request->file('cnss_certificate')->getClientOriginalName(),'public');
+
+            $data = [
+                ['name'=>'employment_contract','attachment'=>$ecPath,'type_employee_id'=>$typeEmployee->id],
+                ['name'=>'job_application','attachment'=>$jaPath,'type_employee_id'=>$typeEmployee->id],
+                ['name'=>'insurance','attachment'=>$iPath,'type_employee_id'=>$typeEmployee->id],
+                ['name'=>'resume','attachment'=>$rPath,'type_employee_id'=>$typeEmployee->id],
+                ['name'=>'cnss_certificate','attachment'=>$ccPath,'type_employee_id'=>$typeEmployee->id],
+            ];
+
+            Attachment::insert($data);
+            Attachment::save();
 
         }else{
 
+            $iagPath = $request->file('internship_agreement')->storeAs('attachments',uniqid().'_'.$request->file('internship_agreement')->getClientOriginalName(),'public');
+            $iapPath = $request->file('internship_application')->storeAs('attachments',uniqid().'_'.$request->file('internship_application')->getClientOriginalName(),'public');
+            $iPath = $request->file('insurance_int')->storeAs('attachments',uniqid().'_'.$request->file('insurance_int')->getClientOriginalName(),'public');
+            $rPath = $request->file('resume_int')->storeAs('attachments',uniqid().'_'.$request->file('resume_int')->getClientOriginalName(),'public');
+            $ccPath = $request->file('transcript')->storeAs('attachments',uniqid().'_'.$request->file('transcript')->getClientOriginalName(),'public');
+
+            $data = [
+                ['name'=>'internship_agreement','attachment'=>$ecPath,'type_employee_id'=>$typeEmployee->id],
+                ['name'=>'internship_application','attachment'=>$jaPath,'type_employee_id'=>$typeEmployee->id],
+                ['name'=>'insurance','attachment'=>$iPath,'type_employee_id'=>$typeEmployee->id],
+                ['name'=>'resume','attachment'=>$rPath,'type_employee_id'=>$typeEmployee->id],
+                ['name'=>'cnss_certificate','attachment'=>$ccPath,'type_employee_id'=>$typeEmployee->id],
+            ];
+
+            Attachment::insert($data);
+            Attachment::save();
         }
-        */
+
         DB::commit();
 
         return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
