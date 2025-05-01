@@ -197,7 +197,7 @@ class EmployeeController extends Controller
                 ['name'=>'internship_application','attachment'=>$jaPath,'type_employee_id'=>$typeEmployee->id],
                 ['name'=>'insurance','attachment'=>$iPath,'type_employee_id'=>$typeEmployee->id],
                 ['name'=>'resume','attachment'=>$rPath,'type_employee_id'=>$typeEmployee->id],
-                ['name'=>'cnss_certificate','attachment'=>$ccPath,'type_employee_id'=>$typeEmployee->id],
+                ['name'=>'transcript','attachment'=>$ccPath,'type_employee_id'=>$typeEmployee->id],
             ];
 
             Attachment::insert($data);

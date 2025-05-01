@@ -191,6 +191,8 @@ class StoreEmployeeRequest extends FormRequest
             'cnss' => 'CNSS Number',
             'assurance' => 'Insurance',
             'type_id' => 'Employee Type',
+            'insurance_int' => 'Insurance',
+            'resume_int' => 'Resume',
     ];
     }
 
