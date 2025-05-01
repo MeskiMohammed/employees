@@ -59,13 +59,13 @@ class EmployeeController extends Controller
         return view('employees.create', compact('departments', 'operators', 'types'));
     }
 
-    public function store(StoreEmployeeRequest $request){
+    /*public function store(StoreEmployeeRequest $request){
         dd($request);
-    }
+    }*/
 
 
 
-    /*public function store(StoreEmployeeRequest $request)
+    public function store(StoreEmployeeRequest $request)
     {
         DB::beginTransaction();
 
@@ -177,7 +177,7 @@ class EmployeeController extends Controller
         DB::commit();
 
         return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
-    }*/
+    }
 
 
     public function show(Employee $employee)
