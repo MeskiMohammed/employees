@@ -46,20 +46,39 @@ class StoreEmployeeRequest extends FormRequest
     {
         $validator->sometimes([
                 'professional_num',
-                'pin', 
-                'puk', 
-                'operator_id', 
-                'professional_email', 
-                'cnss', 
-                'assurance', 
-                'type_id', 
-                'salary'
+                'pin',
+                'puk',
+                'operator_id',
+                'professional_email',
+                'cnss',
+                'assurance',
+                'type_id',
+                'salary',
+                'employment_contract',
+                'job_application',
+                'insurance',
+                'resume',
+                'cnss_certificate',
             ], 'required', function ($input) {return $input->is_freelancer === 'employee';}
         );
 
-        $validator->sometimes('ice', 'required|string|max:255', function ($input) {
+        $validator->sometimes(['ice','eic'], 'required', function ($input) {
             return $input->is_freelancer === 'freelancer';
         });
+
+
+        $validator->sometimes('salary_free', 'required', function ($input) {
+            return $input->is_freelancer === 'freelancer' && !$input->has('is_project');
+        });
+
+        $validator->sometimes([
+                'internship_agreement',
+                'internship_application',
+                'insurance_int',
+                'resume_int',
+                'transcript',
+            ], 'required', function ($input) {return $input->is_freelancer === 'trainee';}
+        );
     }
 
     public function messages()

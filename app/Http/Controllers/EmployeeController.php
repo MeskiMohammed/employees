@@ -59,13 +59,13 @@ class EmployeeController extends Controller
         return view('employees.create', compact('departments', 'operators', 'types'));
     }
 
-    // public function store(Request $request){
-    //     dd($request);
-    // }
+    public function store(StoreEmployeeRequest $request){
+        dd($request);
+    }
 
 
 
-    public function store(StoreEmployeeRequest $request)
+    /*public function store(StoreEmployeeRequest $request)
     {
         DB::beginTransaction();
 
@@ -154,10 +154,30 @@ class EmployeeController extends Controller
         $typeEmployee->type()->associate($type);
         $typeEmployee->save();
 
+        if(is_freelancer === 'freelancer'){
+
+            $eicPath = $request->file('eic')->storeAs(
+                'attachments',
+                uniqid().'_'.$request->file('eic')->getClientOriginalName(),
+                'public'
+            );
+
+            Attachment::create([
+                'name' => 'Entrepreneur Identification Card',
+                'attachment' => $eicPath,
+                'type_employee_id' => $typeEmployee->id,
+            ]);
+
+        }elseif(is_freelancer === 'employee'){
+
+        }else{
+
+        }
+
         DB::commit();
 
         return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
-    }
+    }*/
 
 
     public function show(Employee $employee)
