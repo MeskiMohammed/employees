@@ -6,23 +6,23 @@
 
 @section('content')
 <div class="bg-base-200 shadow rounded-lg">
-    <div class="flex justify-between items-center p-6 border-b">
+    <div class="flex justify-between items-center p-6 border-b border-base-300">
         <h2 class="text-xl font-semibold text-base-content">Leaves List</h2>
         <a href="{{ route('leaves.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <i class="fas fa-plus mr-2"></i> Add Leave
         </a>
     </div>
 
-    <div class="p-6 border-b">
+    <div class="p-6 border-b border-base-300">
         <form action="{{ route('leaves.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
                 <label for="search" class="block text-sm font-medium text-base-content mb-1">Search</label>
-                <input type="text" name="search" id="search" value="{{ request('search') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Search leaves...">
+                <input type="text" name="search" id="search" value="{{ request('search') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md" placeholder="Search leaves...">
             </div>
 
             <div>
                 <label for="employee_id" class="block text-sm font-medium text-base-content mb-1">Employee</label>
-                <select name="employee_id" id="employee_id" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                <select name="employee_id" id="employee_id" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md">
                     <option value="">All Employees</option>
                     @foreach($employees as $employee)
                         <option value="{{ $employee->id }}" {{ request('employee_id') == $employee->id ? 'selected' : '' }}>{{ $employee->user->full_name ?? 'N/A' }}</option>
@@ -32,7 +32,7 @@
 
             <div>
                 <label for="status" class="block text-sm font-medium text-base-content mb-1">Status</label>
-                <select name="status" id="status" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                <select name="status" id="status" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md">
                     <option value="">All Statuses</option>
                     @foreach($statuses as $status)
                         <option value="{{ $status }}" {{ request('status') == $status ? 'selected' : '' }}>{{ ucfirst($status) }}</option>
@@ -42,12 +42,12 @@
 
             <div>
                 <label for="start_date" class="block text-sm font-medium text-base-content mb-1">Start Date</label>
-                <input type="date" name="start_date" id="start_date" value="{{ request('start_date') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                <input type="date" name="start_date" id="start_date" value="{{ request('start_date') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md">
             </div>
 
             <div>
                 <label for="end_date" class="block text-sm font-medium text-base-content mb-1">End Date</label>
-                <input type="date" name="end_date" id="end_date" value="{{ request('end_date') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                <input type="date" name="end_date" id="end_date" value="{{ request('end_date') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md">
             </div>
 
             <div class="flex items-end">
@@ -62,8 +62,8 @@
     </div>
 
     <div class="overflow-x-auto">
-        <table class=" min-w-full divide-y divide-gray-200">
-            <thead class=" bg-base-200">
+        <table class=" min-w-full divide-y divide-base-300 ">
+            <thead class=" bg-base-200 ">
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Employee</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Period</th>
@@ -73,12 +73,12 @@
                     <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-base-content uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
-            <tbody class="bg-base-200 divide-y divide-gray-200">
+            <tbody class="bg-base-200 divide-y divide-base-300 ">
                 @forelse($leaves as $leave)
-                <tr>
+                <tr >
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
-                            <div class="flex-shrink-0 h-10 w-10">
+                            <div class="flex-shrink-0 h-10 w-10 ">
                                 @if($leave->employee->profile_picture)
                                     <img class="h-10 w-10 rounded-full" src="{{ Storage::url($leave->employee->profile_picture) }}" alt="">
                                 @else
@@ -87,7 +87,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="ml-4">
+                            <div class="ml-4 ">
                                 <div class="text-sm font-medium text-gray-900">
                                     {{ $leave->employee->user->full_name ?? 'N/A' }}
                                 </div>
@@ -146,7 +146,7 @@
         </table>
     </div>
 
-    <div class="px-6 py-4 border-t">
+    <div class="px-6 py-4 border-base-300 border-t">
         {{ $leaves->withQueryString()->links('vendor.pagination.tailwind') }}
     </div>
 </div>

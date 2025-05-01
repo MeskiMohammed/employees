@@ -7,7 +7,7 @@
 @section('content')
 <div class="max-w-4xl mx-auto">
     <div class="bg-base-200 shadow rounded-lg">
-        <div class="p-6 border-b">
+        <div class="p-6 border-b border-base-300">
             <h2 class="text-xl font-semibold text-base-content">Edit Department</h2>
         </div>
         
@@ -17,7 +17,7 @@
             
             <div class="mb-6">
                 <label for="name" class="block text-sm font-medium text-base-content mb-1">Department Name</label>
-                <input type="text" name="name" id="name" value="{{ old('name', $department->name) }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('name') border-red-500 @enderror" required>
+                <input type="text" name="name" id="name" value="{{ old('name', $department->name) }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('name') border-red-500 @enderror" required>
                 @error('name')
                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                 @enderror
@@ -25,7 +25,7 @@
             
             <div class="mb-6">
                 <label for="description" class="block text-sm font-medium text-base-content mb-1">Description</label>
-                <textarea name="description" id="description" rows="4" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('description') border-red-500 @enderror">{{ old('description', $department->description) }}</textarea>
+                <textarea name="description" id="description" rows="4" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('description') border-red-500 @enderror">{{ old('description', $department->description) }}</textarea>
                 @error('description')
                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                 @enderror
