@@ -3,7 +3,7 @@
 @section('title', 'Employee Dashboard')
 
 @section('content')
-        
+
 <div class=" text-black pb-6 pt-4 relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center">
@@ -20,18 +20,21 @@
                 <h1 class="text-3xl font-bold">{{ $employee->user->first_name }} {{ $employee->user->last_name }}</h1>
                 <p class="">{{  $employee->typeEmployees->last()->type->type ?? 'No Position' }}</p>
             </div>
-            
+
         </div>
-        
+
         <div class="mt-6 border-b  flex justify-between">
             <nav class="-mb-px flex space-x-8">
                 <a href="#personal"  class="whitespace-nowrap py-4 px-1 border-b-2 border-black font-medium text-sm text-black">Profile</a>
                 <a href="#job"       class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-black ">Leave Request</a>
                 <a href="#time-off"  class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-black ">Documents</a>
-                <a href="#pay-info"  class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-black ">Payments</a>
+                <a href="#benefits"  class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-black ">Payments</a>
             </nav>
-            
-            <a href="#benefits"  class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-black ">  <i class="fa-solid fa-right-from-bracket"></i>  Log out </a>
+
+            <form action='{{route('logout')}}' method='post'>
+                @csrf
+                <button class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-black "><i class="fa-solid fa-right-from-bracket"></i>  Log out </a>
+            </form>
         </div>
     </div>
 </div>
@@ -56,7 +59,7 @@
                                 <span class="text-sm text-gray-500">{{ $employee->professional_num }}</span>
                             </div>
                             @endif
-                            
+
                             <div class="py-3 sm:py-4 sm:px-6 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -72,14 +75,14 @@
                                 </svg>
                                 <span class="text-sm text-gray-500">{{ $employee->personal_num }}</span>
                             </div>
-                    
+
                             <div class="py-3 sm:py-4 sm:px-6 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
                                 <span class="text-sm text-gray-500">{{ $employee->user->email }}</span>
                             </div>
-                            
+
                             @if($employee->address)
                             <div class="py-3 sm:py-4 sm:px-6 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -89,14 +92,14 @@
                                 <span class="text-sm text-gray-500">{{ $employee->address }}</span>
                             </div>
                             @endif
-                            
+
                             <div class="py-3 sm:py-4 sm:px-6 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
                                 <span class="text-sm text-gray-500">{{ $employee->typeEmployees->last()->type->type  ?? 'No Position' }}</span>
                             </div>
-                            
+
                             @if($employee->department)
                             <div class="py-3 sm:py-4 sm:px-6 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -108,7 +111,7 @@
                         </dl>
                     </div>
                 </div>
-                
+
                 @if($employee->manager)
                 <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
                     <div class="px-4 py-5 sm:px-6">
@@ -131,10 +134,10 @@
                     </div>
                 </div>
                 @endif
-                
-                
+
+
             </div>
-            
+
             <!-- Main content -->
             <div class="flex-1">
                 <!-- Job Section -->
@@ -162,7 +165,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Employment Status Section -->
                 <div class="bg-white rounded-lg shadow mb-8">
                     <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
@@ -208,7 +211,7 @@
                         </table>
                     </div>
                 </div>
-                
+
                 <!-- Job Information Section -->
                 <div class="bg-white rounded-lg shadow mb-8">
                     <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
@@ -274,7 +277,7 @@
                         </table>
                     </div>
                 </div>
-                
+
                 <!-- Compensation Section -->
                 <div class="bg-white rounded-lg shadow">
                     <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
