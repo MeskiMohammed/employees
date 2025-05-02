@@ -48,17 +48,17 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('operators', OperatorController::class);
     Route::resource('statuses', StatusController::class);
     Route::resource('reasons', ReasonController::class);
-    
+
     Route::get('attachments/{attachment}/download', [AttachmentController::class, 'download'])->name('attachments.download');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('profile.settings');
     Route::patch('/profile/settings', [ProfileController::class, 'updateSettings'])->name('profile.settings.update');
-    
+
     Route::get('/enterprise', [EnterpriseController::class, 'edit'])->name('enterprise.edit');
-    Route::put('/enterprise', [EnterpriseController::class, 'update'])->name('enterprise.update');   
-    
+    Route::put('/enterprise', [EnterpriseController::class, 'update'])->name('enterprise.update');
+
 
 
     // Route::get('/employee/dashboard', function(){return view('employee.dashboard');});
