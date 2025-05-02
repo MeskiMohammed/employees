@@ -10,7 +10,7 @@
 
 
 
-        <div class="flex flex-col md:flex-row items-center justify-between  mb-6">
+        <div class="flex flex-col xl:flex-row items-center justify-between  mb-6">
             {{-- Profile Picture and Status --}}
             <div class="flex flex-col md:flex-row items-center gap-6">
 
@@ -53,23 +53,23 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-8 mr-4">
+            <div class="grid grid-cols-2 gap-8">
 
                 <div for='cin' class="mt-2 cursor-pointer flex justify-center bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
                     <template x-if="show !== 'cin'">
-                        <button @click="show = 'cin'" id='cin' class='w-full py-2 px-4'>Show CIN</button>
+                        <button @click="show = 'cin'" id='cin' class='w-full py-2 px-4 text-sm'>Show CIN</button>
                     </template>
                     <template x-if="show === 'cin'">
-                        <button @click="show = null" id='cin' class='w-full py-2 px-4'>Hide CIN</button>
+                        <button @click="show = null" id='cin' class='w-full py-2 px-4 text-sm'>Hide CIN</button>
                     </template>
                 </div>
                 @foreach($employee->typeEmployees->last()->attachments as $place=>$attachment)
                 <div class="mt-2 cursor-pointer flex justify-center bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
                     <template x-if="show !== {{$place}}">
-                        <button @click="show = {{$place}}" class='w-full py-2 px-4'>Show {{str_replace('_',' ',$attachment->name)}}</button>
+                        <button @click="show = {{$place}}" class='w-full py-2 px-4 text-sm'>Show {{str_replace('_',' ',$attachment->name)}}</button>
                     </template>
                     <template x-if="show === {{$place}}">
-                        <button @click="show = null" class='w-full py-2 px-4'>Hide {{str_replace('_',' ',$attachment->name)}}</button>
+                        <button @click="show = null" class='w-full py-2 px-4 text-sm'>Hide {{str_replace('_',' ',$attachment->name)}}</button>
                     </template>
                 </div>
                 @endforeach
