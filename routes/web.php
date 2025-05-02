@@ -14,6 +14,7 @@ use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReasonController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\UserStatusController;
@@ -48,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('operators', OperatorController::class);
     Route::resource('statuses', StatusController::class);
     Route::resource('reasons', ReasonController::class);
+    Route::resource('types', TypeController::class);
     
     Route::get('attachments/{attachment}/download', [AttachmentController::class, 'download'])->name('attachments.download');
 
