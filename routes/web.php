@@ -14,9 +14,8 @@ use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReasonController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserRoleController;
-use App\Http\Controllers\UserStatusController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('operators', OperatorController::class);
     Route::resource('statuses', StatusController::class);
     Route::resource('reasons', ReasonController::class);
+    Route::resource('types', TypeController::class);
 
     Route::get('attachments/{attachment}/download', [AttachmentController::class, 'download'])->name('attachments.download');
 
@@ -64,15 +64,9 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/employee/dashboard', function(){return view('employee.dashboard');});
 
     Route::get('/employee/dashboard', [EmployeeProfileController::class, 'dashboard'])->name('employee.dashboard');
-    Route::get('/employee/profile', [EmployeeProfileController::class, 'profile'])->name('employee.profile');
     Route::get('/employee/leaves', [EmployeeProfileController::class, 'leaves'])->name('employee.leaves');
-    Route::get('/employee/attendance', [EmployeeProfileController::class, 'attendance'])->name('employee.attendance');
     Route::get('/employee/documents', [EmployeeProfileController::class, 'documents'])->name('employee.documents');
     Route::get('/employee/payments', [EmployeeProfileController::class, 'payments'])->name('employee.payments');
-    Route::get('/employee/performance', [EmployeeProfileController::class, 'performance'])->name('employee.performance');
-    Route::get('/employee/settings', [EmployeeProfileController::class, 'settings'])->name('employee.settings');
-    Route::get('/employee/profile/edit', [EmployeeProfileController::class, 'edit'])->name('employee.profile.edit');
-    Route::put('/employee/profile/update', [EmployeeProfileController::class, 'update'])->name('employee.profile.update');
 });
 
 require __DIR__.'/auth.php';
