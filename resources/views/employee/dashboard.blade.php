@@ -1,50 +1,37 @@
-@extends('layout.app')
+@extends('layout.employee')
 
 @section('title', 'Employee Dashboard')
 
 @section('content')
-<div class="bg-emerald-700 text-white pb-6 pt-4 relative">
+        
+<div class=" text-black pb-6 pt-4 relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center">
             <div class="mr-6">
                 @if($employee->profile_picture)
-                    <img src="{{ asset('storage/' . $employee->profile_picture) }}" alt="{{ $employee->first_name }} {{ $employee->last_name }}" class="h-36 w-36 rounded-md object-cover border-4 border-white">
+                    <img src="{{ asset('storage/' . $employee->profile_picture) }}" alt="{{ $employee->first_name }} {{ $employee->last_name }}" class="h-36 w-36 rounded-md object-cover border-4 border-white rounded-3xl">
                 @else
-                    <div class="h-36 w-36 rounded-md bg-emerald-600 flex items-center justify-center border-4 border-white">
-                        <span class="text-4xl font-bold text-white">{{ substr($employee->first_name, 0, 1) }}{{ substr($employee->last_name, 0, 1) }}</span>
+                    <div class="h-36 w-36 rounded-md  flex items-center justify-center border-4 border-white">
+                        <span class="text-4xl font-bold text-black">{{ substr($employee->user->first_name, 0, 1) }}{{ substr($employee->user->last_name, 0, 1) }}</span>
                     </div>
                 @endif
             </div>
             <div class="flex-1">
-                <h1 class="text-3xl font-bold">{{ $employee->first_name }} {{ $employee->last_name }}</h1>
-                <p class="text-emerald-100">{{ $employee->post->post ?? 'No Position' }}</p>
+                <h1 class="text-3xl font-bold">{{ $employee->user->first_name }} {{ $employee->user->last_name }}</h1>
+                <p class="">{{  $employee->typeEmployees->last()->type->type ?? 'No Position' }}</p>
             </div>
-            <div class="flex space-x-2">
-                <a href="{{ route('employee.profile.edit') }}" class="inline-flex items-center px-4 py-2 bg-white text-emerald-700 rounded-md hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
-                    <span>Request a Change</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </a>
-                <button class="inline-flex items-center p-2 bg-white text-emerald-700 rounded-md hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                    </svg>
-                </button>
-            </div>
+            
         </div>
         
-        <div class="mt-6 border-b border-emerald-600">
+        <div class="mt-6 border-b  flex justify-between">
             <nav class="-mb-px flex space-x-8">
-                <a href="#personal" class="whitespace-nowrap py-4 px-1 border-b-2 border-white font-medium text-sm text-white">Personal</a>
-                <a href="#job" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-emerald-100 hover:text-white hover:border-emerald-300">Job</a>
-                <a href="#time-off" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-emerald-100 hover:text-white hover:border-emerald-300">Time Off</a>
-                <a href="#pay-info" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-emerald-100 hover:text-white hover:border-emerald-300">Pay Info</a>
-                <a href="#documents" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-emerald-100 hover:text-white hover:border-emerald-300">Documents</a>
-                <a href="#benefits" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-emerald-100 hover:text-white hover:border-emerald-300">Benefits</a>
-
-                
+                <a href="#personal"  class="whitespace-nowrap py-4 px-1 border-b-2 border-black font-medium text-sm text-black">Profile</a>
+                <a href="#job"       class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-black ">Leave Request</a>
+                <a href="#time-off"  class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-black ">Documents</a>
+                <a href="#pay-info"  class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-black ">Payments</a>
             </nav>
+            
+            <a href="#benefits"  class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-black ">  <i class="fa-solid fa-right-from-bracket"></i>  Log out </a>
         </div>
     </div>
 </div>
@@ -60,6 +47,7 @@
                     </div>
                     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                         <dl class="sm:divide-y sm:divide-gray-200">
+                            <div class="py-3 sm:py-4 sm:px-6 flex items-center  text-gray-400 text-sm">Professional</div>
                             @if($employee->professional_num)
                             <div class="py-3 sm:py-4 sm:px-6 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -69,19 +57,27 @@
                             </div>
                             @endif
                             
-                    
-                            <div class="py-3 sm:py-4 sm:px-6 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                </svg>
-                                <span class="text-sm text-gray-500">{{ $employee->user->email }}</span>
-                            </div>
-                            
                             <div class="py-3 sm:py-4 sm:px-6 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
                                 <span class="text-sm text-gray-500">{{ $employee->professional_email }}</span>
+                            </div>
+
+                            <div class="py-3 sm:py-4 sm:px-6 flex items-center text-gray-400 text-sm">Personal</div>
+
+                            <div class="py-3 sm:py-4 sm:px-6 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                </svg>
+                                <span class="text-sm text-gray-500">{{ $employee->personal_num }}</span>
+                            </div>
+                    
+                            <div class="py-3 sm:py-4 sm:px-6 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                <span class="text-sm text-gray-500">{{ $employee->user->email }}</span>
                             </div>
                             
                             @if($employee->address)
@@ -98,7 +94,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
-                                <span class="text-sm text-gray-500">{{ $employee->post->post ?? 'No Position' }}</span>
+                                <span class="text-sm text-gray-500">{{ $employee->typeEmployees->last()->type->type  ?? 'No Position' }}</span>
                             </div>
                             
                             @if($employee->department)
@@ -123,8 +119,8 @@
                             @if($employee->manager->profile_picture)
                                 <img src="{{ asset('storage/' . $employee->manager->profile_picture) }}" alt="{{ $employee->manager->first_name }} {{ $employee->manager->last_name }}" class="h-10 w-10 rounded-full mr-3">
                             @else
-                                <div class="h-10 w-10 rounded-full bg-emerald-600 flex items-center justify-center mr-3">
-                                    <span class="text-sm font-bold text-white">{{ substr($employee->manager->first_name, 0, 1) }}{{ substr($employee->manager->last_name, 0, 1) }}</span>
+                                <div class="h-10 w-10 rounded-full  flex items-center justify-center mr-3">
+                                    <span class="text-sm font-bold text-black">{{ substr($employee->manager->first_name, 0, 1) }}{{ substr($employee->manager->last_name, 0, 1) }}</span>
                                 </div>
                             @endif
                             <div>
@@ -145,7 +141,7 @@
                 <div class="bg-white rounded-lg shadow mb-8">
                     <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6  mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                             <h3 class="text-lg font-medium leading-6 text-gray-900">Job</h3>
@@ -171,7 +167,7 @@
                 <div class="bg-white rounded-lg shadow mb-8">
                     <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6  mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             <h3 class="text-lg font-medium leading-6 text-gray-900">Employment Status</h3>
@@ -194,7 +190,7 @@
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
-                                            <div class="h-2 w-2 rounded-full bg-emerald-600 mr-2"></div>
+                                            <div class="h-2 w-2 rounded-full  mr-2"></div>
                                             <span class="text-sm text-gray-900">{{ $employee->created_at->format('m/d/Y') }}</span>
                                         </div>
                                     </td>
@@ -217,7 +213,7 @@
                 <div class="bg-white rounded-lg shadow mb-8">
                     <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6  mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             <h3 class="text-lg font-medium leading-6 text-gray-900">Job Information</h3>
@@ -243,7 +239,7 @@
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
-                                            <div class="h-2 w-2 rounded-full bg-emerald-600 mr-2"></div>
+                                            <div class="h-2 w-2 rounded-full  mr-2"></div>
                                             <span class="text-sm text-gray-900">{{ $employee->created_at->format('m/d/Y') }}</span>
                                         </div>
                                     </td>
@@ -283,7 +279,7 @@
                 <div class="bg-white rounded-lg shadow">
                     <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6  mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             <h3 class="text-lg font-medium leading-6 text-gray-900">Compensation</h3>
@@ -310,7 +306,7 @@
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
-                                            <div class="h-2 w-2 rounded-full bg-emerald-600 mr-2"></div>
+                                            <div class="h-2 w-2 rounded-full  mr-2"></div>
                                             <span class="text-sm text-gray-900">{{ $employee->created_at->format('m/d/Y') }}</span>
                                         </div>
                                     </td>

@@ -37,7 +37,7 @@ class DashboardController extends Controller
             
         $departmentEmployees = Department::withCount('employeeDepartments')
             ->get()
-            ->pluck('employees_count', 'name')
+            ->pluck('employee_departments_count', 'name')
             ->toArray();
             
         $monthlyPayments = Payment::select(
