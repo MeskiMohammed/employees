@@ -233,18 +233,6 @@ class EmployeeProfileController extends Controller
         return view('employee.attendance', compact('employee', 'attendances'));
     }
     
-    public function performance()
-    {
-        $user = Auth::user();
-        $employee = Employee::where('users_id', $user->id)->firstOrFail();
-        
-        $evaluations = $employee->evaluations()
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-            
-        return view('employee.performance', compact('employee', 'evaluations'));
-    }
-    
     public function settings()
     {
         $user = Auth::user();

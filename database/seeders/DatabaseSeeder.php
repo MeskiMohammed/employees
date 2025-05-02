@@ -10,7 +10,6 @@ use App\Models\PaymentType;
 use App\Models\Status;
 use App\Models\Type;
 use App\Models\User;
-use App\Models\UserStatus;
 use App\Models\Enterprise;
 
 class DatabaseSeeder extends Seeder
@@ -115,21 +114,6 @@ class DatabaseSeeder extends Seeder
         }
 
 
-
-        // Postes employés
-        $posts = [
-            ['status' => 'Software Engineer'],
-            ['status' => 'Project Manager'],
-            ['status' => 'HR Specialist'],
-            ['status' => 'Accountant'],
-            ['status' => 'IT Support'],
-            ['status' => 'UX Designer'],
-            ['status' => 'Marketing Lead'],
-            ['status' => 'Data Analyst'],
-        ];
-        foreach ($posts as $post) {
-            UserStatus::create($post);
-        }
 
 
         // super admin creation

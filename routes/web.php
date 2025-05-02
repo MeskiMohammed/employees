@@ -6,7 +6,6 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeProfileController;
 use App\Http\Controllers\EnterpriseController;
-use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\FreelancerProjectController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\OperatorController;
@@ -44,13 +43,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('payments', PaymentController::class);
     Route::resource('leaves', LeaveController::class);
-    Route::resource('evaluations', EvaluationController::class);
     Route::resource('freelancer-projects', FreelancerProjectController::class);
     Route::resource('payment-types', PaymentTypeController::class);
     Route::resource('operators', OperatorController::class);
     Route::resource('statuses', StatusController::class);
-    Route::resource('user-roles', UserRoleController::class);
-    Route::resource('user-statuses', UserStatusController::class);
     Route::resource('reasons', ReasonController::class);
     
     Route::get('attachments/{attachment}/download', [AttachmentController::class, 'download'])->name('attachments.download');

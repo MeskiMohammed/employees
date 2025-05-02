@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use App\Models\Employee;
-use App\Models\Evaluation;
 use App\Models\Leave;
 use App\Models\Payment;
 use App\Models\User;
@@ -26,11 +25,6 @@ class DashboardController extends Controller
             ->get();
             
         $recentLeaves = Leave::with('employee')
-            ->latest()
-            ->take(5)
-            ->get();
-            
-        $recentEvaluations = Evaluation::with('employee')
             ->latest()
             ->take(5)
             ->get();
@@ -57,7 +51,6 @@ class DashboardController extends Controller
             'totalPayments',
             'recentEmployees',
             'recentLeaves',
-            'recentEvaluations',
             'departmentEmployees',
             'monthlyPayments'
         ));
