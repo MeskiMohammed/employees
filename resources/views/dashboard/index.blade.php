@@ -151,7 +151,7 @@
                     <thead class="  bg-base-200 ">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Employee</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Type</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Reason</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">From</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">To</th>
                         </tr>
@@ -161,17 +161,17 @@
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <div class="text-sm font-medium text-gray-900">{{ $leave->employee->first_name }} {{ $leave->employee->last_name }}</div>
+                                    <div class="text-sm font-medium text-base-content">{{ $leave->employee->user->first_name }} {{ $leave->employee->last_name }}</div>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $leave->type }}</div>
+                                <div class="text-sm text-base-content">{{ $leave->reason->reason }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $leave->from_date->format('M d, Y') }}</div>
+                                <div class="text-sm text-base-content">{{ $leave->start_date->format('M d, Y') }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $leave->to_date->format('M d, Y') }}</div>
+                                <div class="text-sm text-base-content">{{ $leave->end_date->format('M d, Y') }}</div>
                             </td>
                         </tr>
                         @endforeach
