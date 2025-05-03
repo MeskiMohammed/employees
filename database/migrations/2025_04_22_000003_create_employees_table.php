@@ -20,7 +20,6 @@ return new class extends Migration {
             $table->double('salary')->nullable();
             $table->double('hourly_salary')->nullable();
             $table->boolean('is_project')->nullable()->default(false);
-            $table->boolean('is_admin')->default(false);
             $table->string('hours')->nullable();
             $table->string('ice')->nullable();
             $table->string('professional_email')->nullable();

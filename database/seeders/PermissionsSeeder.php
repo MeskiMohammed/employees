@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionsSeeder extends Seeder
 {
@@ -13,16 +14,19 @@ class PermissionsSeeder extends Seeder
      */
     public function run(): void
     {
+        Role::create(['name'=>'employee']);
+        Role::create(['name'=>'admin']);
+        Role::create(['name'=>'super_admin']);
         $tables = [
-            'employees', 
-            'departments', 
-            'payments', 
-            'leaves', 
-            'freelancer_projects', 
-            'type_employees', 
-            'employee_departments', 
-            'statuses', 
-            'reasons', 
+            'employees',
+            'departments',
+            'payments',
+            'leaves',
+            'freelancer_projects',
+            'type_employees',
+            'employee_departments',
+            'statuses',
+            'reasons',
             'users',
         ];
         foreach ($tables as $table) {
