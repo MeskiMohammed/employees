@@ -8,8 +8,6 @@
         <div class="p-6 rounded-lg shadow-md border border-base-300 bg-base-200" >
             <h2 class="text-2xl font-semibold mb-6 text-base-content border-b border-base-300 pb-2">General Information <span class="p-2 rounded text-center text-sm text-base-100 bg-base-content"> {{ ucfirst($employee->typeEmployees->last()->type->type) }}</span> </h2>
 
-
-
             <div class="flex flex-col xl:flex-row items-center justify-between  mb-6">
                 {{-- Profile Picture and Status --}}
                 <div class="flex flex-col md:flex-row items-center gap-6">
@@ -98,8 +96,8 @@
                     </div>
                 </div>
             @endforeach
-            @if($employee->user->hasRole('admin'))
-                <h2 class="text-2xl font-semibold mb-6 text-base-content border-b border-base-300 pb-2">Permissions</h2>
+            @if(!$employee->user->hasRole('admin'))
+                <h2 class="text-2xl mt-6 font-semibold mb-6 text-base-content border-b border-base-300 pb-2">Permissions</h2>
 
             @endif
         </div>
