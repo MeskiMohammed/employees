@@ -11,7 +11,7 @@
         <p class="mt-1 text-sm text-gray-500">Please fill out the form below to submit your leave request.</p>
     </div>
     <div class="p-6">
-        <form action="{{ route('employee.leaves.store') }}" method="POST">
+        <form action="{{ route('leaves.store') }}" method="POST">
             @csrf
             
             @if ($errors->any())
@@ -40,21 +40,7 @@
 
           
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="leave_type" class="block text-sm font-medium text-gray-700 mb-1"> Reason Leaves</label>
-                    <select id="leave_type" name="leave_type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md">
-                        <option value="">Select a leave type</option>
-                        <option value="annual">Annual Leave</option>
-                        <option value="sick">Sick Leave</option>
-                        <option value="personal">Personal Leave</option>
-                        <option value="bereavement">Bereavement Leave</option>
-                        <option value="maternity">Maternity Leave</option>
-                        <option value="paternity">Paternity Leave</option>
-                        <option value="unpaid">Unpaid Leave</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
                 <div class="hidden" id="other_leave_type_container">
                     <label for="other_leave_type" class="block text-sm font-medium text-gray-700 mb-1">Specify Leave Type</label>
@@ -63,14 +49,23 @@
                 
                 <div>
                     <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
-                    <input type="date" name="start_date" id="start_date" class="mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <input type="date" name="start_date" id="start_date" class="mt-1 focus:ring-emerald-500  text-black focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-base-300 rounded-md">
                 </div>
                 
                 <div>
                     <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
-                    <input type="date" name="end_date" id="end_date" class="mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <input type="date" name="end_date" id="end_date" class="mt-1 focus:ring-emerald-500  text-black focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-base-300 rounded-md">
                 </div>
                 
+                <div>
+                    <label for="reason_id" class="block text-sm font-medium text-gray-700 mb-1">Reason Leaves</label>
+                    <select id="reason_id" name="reason_id" class="mt-1 block w-full pl-3 pr-10 py-2 text-black border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md">
+                        <option value="">Select a Reason</option>
+                        @foreach(\App\Models\Reason::all() as $reason)
+                            <option value="{{ $reason->id }}">{{ $reason->reason }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
             
             <div class="mt-8 border-t border-gray-200 pt-5">
@@ -93,8 +88,7 @@
 
 <div class="bg-white rounded-lg shadow">
     <div class="p-6 border-b border-gray-200">
-        <h2 class="text-lg font-semibold text-gray-700">New Leave Request</h2>
-        <p class="mt-1 text-sm text-gray-500">Please fill out the form below to submit your leave request.</p>
+        <h2 class="text-lg font-semibold text-gray-700">  Recent Leaves</h2>
     </div>
     <div class="p-6">
         <form action="{{ route('employee.leaves.store') }}" method="POST">
@@ -123,53 +117,51 @@
             @endif
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="leave_type" class="block text-sm font-medium text-gray-700 mb-1"> Reason Leaves</label>
-                    <select id="leave_type" name="leave_type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md">
-                        <option value="">Select a leave type</option>
-                        <option value="annual">Annual Leave</option>
-                        <option value="sick">Sick Leave</option>
-                        <option value="personal">Personal Leave</option>
-                        <option value="bereavement">Bereavement Leave</option>
-                        <option value="maternity">Maternity Leave</option>
-                        <option value="paternity">Paternity Leave</option>
-                        <option value="unpaid">Unpaid Leave</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                
-                <div class="hidden" id="other_leave_type_container">
-                    <label for="other_leave_type" class="block text-sm font-medium text-gray-700 mb-1">Specify Leave Type</label>
-                    <input type="text" name="other_leave_type" id="other_leave_type" class="mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-                
-                <div>
-                    <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
-                    <input type="date" name="start_date" id="start_date" class="mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-                
-                <div>
-                    <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
-                    <input type="date" name="end_date" id="end_date" class="mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-                
-            </div>
-            
-            <div class="mt-8 border-t border-gray-200 pt-5">
-                <div class="flex justify-end">
-                    <a href="{{ route('employee.leaves') }}" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
-                        Cancel
-                    </a>
-                    <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
-                        Submit Request
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
+               
 </div>
 
 
 
+    <table class="min-w-full bg-white border border-gray-200">
+        <thead>
+            <tr class="bg-gray-100 text-left text-sm uppercase text-gray-600">
+                <th class="px-4 py-2">Date de début</th>
+                <th class="px-4 py-2">Date de fin</th>
+                <th class="px-4 py-2">Durée</th>
+                <th class="px-4 py-2">Reason</th>
+                <th class="px-4 py-2">Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($employee->leaves as $leave)
+            <tr class="border-t text-sm text-gray-700">
+                <!-- <td class="px-4 py-2">{{ $loop->iteration }}</td> -->
+                <td class="px-4 py-2">{{ $leave->start_date->format('d/m/Y') }}</td>
+                <td class="px-4 py-2">{{ $leave->end_date->format('d/m/Y') }}</td>
+                <td class="px-4 py-2">
+                    {{ $leave->start_date->diffInDays($leave->end_date) + 1 }} jours
+                </td>
+                <td class="px-4 py-2">{{ $leave->reason->reason }}</td>
+                <td class="px-4 py-2">
+                    <span class="@if($leave->status == 'approved') text-green-600 
+                                  @elseif($leave->status == 'pending') text-yellow-600 
+                                  @else text-red-600 @endif font-semibold">
+                        {{ ucfirst($leave->status) }}
+                    </span>
+                </td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="6" class="text-center py-4 text-gray-500">Aucun congé trouvé.</td>
+            </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
+
+
 
 @endsection
+
+
+

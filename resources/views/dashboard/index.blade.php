@@ -232,6 +232,14 @@
                         beginAtZero: true,
                         ticks: {
                             precision: 0
+                        },
+                        grid: {
+                            display: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
                         }
                     }
                 }

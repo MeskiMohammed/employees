@@ -8,9 +8,6 @@
 <div class="bg-base-200 shadow rounded-lg">
     <div class="flex justify-between items-center p-6 border-b border-base-300">
         <h2 class="text-xl font-semibold text-base-content">Leaves List</h2>
-        <a href="{{ route('leaves.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <i class="fas fa-plus mr-2"></i> Add Leave
-        </a>
     </div>
 
     <div class="p-6 border-b border-base-300">
@@ -25,7 +22,7 @@
                 <select name="employee_id" id="employee_id" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md">
                     <option value="">All Employees</option>
                     @foreach($employees as $employee)
-                        <option value="{{ $employee->id }}" {{ request('employee_id') == $employee->id ? 'selected' : '' }}>{{ $employee->user->full_name ?? 'N/A' }}</option>
+                    <option value="{{ $employee->id }}" {{ request('employee_id') == $employee->id ? 'selected' : '' }}>{{ $employee->user->full_name ?? 'N/A' }}</option>
                     @endforeach
                 </select>
             </div>
@@ -35,7 +32,7 @@
                 <select name="status" id="status" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md">
                     <option value="">All Statuses</option>
                     @foreach($statuses as $status)
-                        <option value="{{ $status }}" {{ request('status') == $status ? 'selected' : '' }}>{{ ucfirst($status) }}</option>
+                    <option value="{{ $status }}" {{ request('status') == $status ? 'selected' : '' }}>{{ ucfirst($status) }}</option>
                     @endforeach
                 </select>
             </div>
@@ -75,36 +72,36 @@
             </thead>
             <tbody class="bg-base-200 divide-y divide-base-300 ">
                 @forelse($leaves as $leave)
-                <tr >
+                <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                             <div class="flex-shrink-0 h-10 w-10 ">
                                 @if($leave->employee->profile_picture)
-                                    <img class="h-10 w-10 rounded-full" src="{{ Storage::url($leave->employee->profile_picture) }}" alt="">
+                                <img class="h-10 w-10 rounded-full" src="{{ Storage::url($leave->employee->profile_picture) }}" alt="">
                                 @else
-                                    <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700">
-                                        <i class="fas fa-user"></i>
-                                    </div>
+                                <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700">
+                                    <i class="fas fa-user"></i>
+                                </div>
                                 @endif
                             </div>
                             <div class="ml-4 ">
-                                <div class="text-sm font-medium text-gray-900">
-                                    {{ $leave->employee->user->full_name ?? 'N/A' }}
+                                <div class="text-sm font-medium text-base-content">
+                                    {{ $leave->employee->user->first_name .' ' . $leave->employee->user->last_name ?? 'N/A' }}
                                 </div>
-                                <div class="text-sm text-gray-500">
+                                <div class="text-sm text-base-content">
                                     {{ $leave->employee->employee_code ?? 'N/A' }}
                                 </div>
                             </div>
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">{{ $leave->start_date->format('M d, Y') }} - {{ $leave->end_date->format('M d, Y') }}</div>
+                        <div class="text-sm text-base-content">{{ $leave->start_date->format('M d, Y') }} - {{ $leave->end_date->format('M d, Y') }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">{{ $leave->start_date->diffInDays($leave->end_date) + 1 }} days</div>
+                        <div class="text-sm text-base-content">{{ $leave->start_date->diffInDays($leave->end_date) + 1 }} days</div>
                     </td>
                     <td class="px-6 py-4">
-                        <div class="text-sm text-gray-900 truncate max-w-xs">{{ $leave->reason }}</div>
+                        <div class="text-sm text-base-content truncate max-w-xs">{{ $leave->reason->reason }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
@@ -119,20 +116,20 @@
                             {{ ucfirst($leave->status) }}
                         </span>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="{{ route('leaves.show', $leave) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">
-                            <i class="fas fa-eye"></i>
+                    <td class="px-6 flex justify-end items-center py-4 whitespace-nowrap text-right text-sm font-medium">
+                        @if($leave->status === 'pending')
+                        <a href="{{ route('leaves.update', ['leave' => $leave->id, 'status' => 'approved']) }}"
+                            class="inline-block flex justify-center items-center text-green-600 font-medium mr-2 w-5 aspect-square bg-green-300 border rounded border-green-600"
+                            onclick="return confirm('Confirmer l\'acceptation de ce congé ?')">
+                            <i class="fa-solid fa-check"></i>
                         </a>
-                        <a href="{{ route('leaves.edit', $leave) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">
-                            <i class="fas fa-edit"></i>
+
+                        <a href="{{ route('leaves.update', ['leave' => $leave->id, 'status' => 'rejected']) }}"
+                            class="inline-block flex justify-center items-center text-red-600 font-medium w-5 aspect-square bg-red-300 border rounded border-red-600"
+                            onclick="return confirm('Confirmer l\'annulation de ce congé ?')">
+                            <i class="fa-solid fa-x "></i>
                         </a>
-                        <form action="{{ route('leaves.destroy', $leave) }}" method="POST" class="inline-block">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this leave?')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
+                        @endif
                     </td>
                 </tr>
                 @empty
