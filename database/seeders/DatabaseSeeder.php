@@ -113,18 +113,18 @@ class DatabaseSeeder extends Seeder
             Type::create(['type' => $type]);
         }
 
-
+        $this->call([PermissionsSeeder::class]);
 
 
         // super admin creation
-        User::create([
+        $usr = User::create([
             'first_name' => 'salma',
             'last_name' => 'salhi',
             'email' => 'salmasalhi@gmail.com',
             'password' => Hash::make('salma'),
-            'is_super_admin' => 1,
         ]);
 
+        $usr->assignRole('super_admin');
 
         Enterprise::create([
             'name'=>'hi',

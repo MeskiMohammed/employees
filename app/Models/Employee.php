@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Permission\Traits\HasRoles;
 
 class Employee extends Model
 {
-    use HasRoles;
 
     protected $fillable = [
         'employee_code', 'cin', 'cin_attachment','profile_picture', 'address', 'personal_num',
