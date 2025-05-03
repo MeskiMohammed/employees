@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Models\Leave;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LeaveController extends Controller
 {
@@ -55,18 +56,21 @@ class LeaveController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'reason' => 'required|string',
-            'status' => 'required|in:pending,approved,rejected',
-            'employee_id' => 'required|exists:employees,id',
+            'end_date' => 'required|date|after:start_date',
+            'reason_id' => 'required|exists:reasons,id',
         ]);
         
-        Leave::create($validated);
+        Leave::create([
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'reason_id' => $request->reason_id,
+            'status' => 'pending',
+            'employee_id' => Auth::user()->employee->id,
+        ]);
         
-        return redirect()->route('leaves.index')
-            ->with('success', 'Leave created successfully.');
+        return redirect()->back()->with('success', 'Leave Has been requested successfully.');
     }
 
     public function show(Leave $leave)
@@ -86,18 +90,13 @@ class LeaveController extends Controller
 
     public function update(Request $request, Leave $leave)
     {
-        $validated = $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'reason' => 'required|string',
+        $request->validate([
             'status' => 'required|in:pending,approved,rejected',
-            'employee_id' => 'required|exists:employees,id',
         ]);
         
-        $leave->update($validated);
+        $leave->update($request->only('status'));
         
-        return redirect()->route('leaves.index')
-            ->with('success', 'Leave updated successfully.');
+        return redirect()->back()->with('success', 'Leave updated successfully.');
     }
 
     public function destroy(Leave $leave)
@@ -107,4 +106,6 @@ class LeaveController extends Controller
         return redirect()->route('leaves.index')
             ->with('success', 'Leave deleted successfully.');
     }
+   
+
 }

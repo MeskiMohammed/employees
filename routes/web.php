@@ -41,13 +41,20 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('departments', DepartmentController::class);
     Route::resource('users', UserController::class);
     Route::resource('payments', PaymentController::class);
-    Route::resource('leaves', LeaveController::class);
     Route::resource('freelancer-projects', FreelancerProjectController::class);
     Route::resource('payment-types', PaymentTypeController::class);
     Route::resource('operators', OperatorController::class);
     Route::resource('statuses', StatusController::class);
     Route::resource('reasons', ReasonController::class);
     Route::resource('types', TypeController::class);
+
+    Route::get('leaves', [LeaveController::class,'index'])->name('leaves.index');
+    Route::post('leaves', [LeaveController::class,'store'])->name('leaves.store');
+    Route::get('leaves/{leave}', [LeaveController::class,'update'])->name('leaves.update');
+
+
+
+
 
     Route::get('attachments/{attachment}/download', [AttachmentController::class, 'download'])->name('attachments.download');
 
@@ -69,6 +76,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/employee/payments', [EmployeeProfileController::class, 'payments'])->name('employee.payments');
     Route::get('/employee/leaves/request', [EmployeeProfileController::class, 'leaveRequest'])->name('employee.leaves.request');
     Route::post('/employee/leaves/store', [EmployeeProfileController::class, 'storeLeave'])->name('employee.leaves.store');
+
+
 
 });
 

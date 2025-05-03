@@ -10,4 +10,6 @@ class Reason extends Model
     use HasFactory;
 
     protected $fillable = ['reason'];
+    public function leaves() { return $this->hasMany(Leave::class); }
+
 }
