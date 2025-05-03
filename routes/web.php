@@ -33,7 +33,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','role:super_admin'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -49,12 +49,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('types', TypeController::class);
 
     Route::get('leaves', [LeaveController::class,'index'])->name('leaves.index');
-    Route::post('leaves', [LeaveController::class,'store'])->name('leaves.store');
     Route::get('leaves/{leave}', [LeaveController::class,'update'])->name('leaves.update');
-
-
-
-
 
     Route::get('attachments/{attachment}/download', [AttachmentController::class, 'download'])->name('attachments.download');
 
@@ -65,20 +60,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/enterprise', [EnterpriseController::class, 'edit'])->name('enterprise.edit');
     Route::put('/enterprise', [EnterpriseController::class, 'update'])->name('enterprise.update');
+});
 
 
-
-    // Route::get('/employee/dashboard', function(){return view('employee.dashboard');});
-
+Route::middleware(['auth','role:employee'])->group(function () {
     Route::get('/employee/dashboard', [EmployeeProfileController::class, 'dashboard'])->name('employee.dashboard');
     Route::get('/employee/leaves', [EmployeeProfileController::class, 'leaves'])->name('employee.leaves');
     Route::get('/employee/documents', [EmployeeProfileController::class, 'documents'])->name('employee.documents');
-    Route::get('/employee/payments', [EmployeeProfileController::class, 'payments'])->name('employee.payments');
-    Route::get('/employee/leaves/request', [EmployeeProfileController::class, 'leaveRequest'])->name('employee.leaves.request');
-    Route::post('/employee/leaves/store', [EmployeeProfileController::class, 'storeLeave'])->name('employee.leaves.store');
-
-
-
+    Route::get('/employee/payments', [EmployeeProfileController::class, 'payments'])->name('employee.payments');    
+    Route::post('/employee/leaves/store', [LeaveController::class,'store'])->name('employee.leaves.store');
 });
-
 require __DIR__.'/auth.php';
