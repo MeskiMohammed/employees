@@ -168,10 +168,10 @@
                                 <div class="text-sm text-gray-900">{{ $leave->type }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $leave->from_date->format('M d, Y') }}</div>
+                                <div class="text-sm text-gray-900">{{ $leave->start_date->format('M d, Y') }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $leave->to_date->format('M d, Y') }}</div>
+                                <div class="text-sm text-gray-900">{{ $leave->end_date->format('M d, Y') }}</div>
                             </td>
                         </tr>
                         @endforeach

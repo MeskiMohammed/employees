@@ -17,6 +17,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+        $reasons = [
+            'Annual leave',
+            'Sick leave',
+            'Maternity leave',
+            'Family emergency',
+            'Personal trip',
+            'Unpaid leave',
+            'Training leave',];
+        foreach ($reasons as $reason) {
+            \App\Models\Reason::create(['reason' => $reason]);
+        }
+
         $departments = [
             ['name' => 'IT', 'description' => 'Information Technology Department'],
             ['name' => 'Human Resources', 'description' => 'Personnel and Talent Management'],
