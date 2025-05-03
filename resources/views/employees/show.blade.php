@@ -98,7 +98,9 @@
                     </div>
                 </div>
             @endforeach
-            @if($employee->hasRole('admin'))
+            @if($employee->user->hasRole('admin'))
+                <h2 class="text-2xl font-semibold mb-6 text-base-content border-b border-base-300 pb-2">Permissions</h2>
+
             @endif
         </div>
 

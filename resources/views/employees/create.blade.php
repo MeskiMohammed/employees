@@ -172,7 +172,7 @@
                         <select name="type_id" id="type_id" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('type_id') border-red-500 @enderror" >
                             <option value="">Select Type</option>
                             @foreach($types as $type)
-                                @if($type->type === 'stagiaire' || $type->type === 'freelancer')
+                                @if($type->type === 'trainee' || $type->type === 'freelancer')
                                     @continue
                                 @endif
                                     <option value="{{ $type->id }}" {{ old('type_id') == $type->type ? 'selected' : '' }}>

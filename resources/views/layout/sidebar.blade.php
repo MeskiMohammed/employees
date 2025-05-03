@@ -81,7 +81,7 @@
                     -->
                 </div>
             </div>
-            @if(Auth::user()->is_super_admin)
+            @if(Auth::user()->hasRole('super_admin'))
             <div class="mb-4">
                 <p class="text-xs font-semibold text-base-content/60 uppercase tracking-wider mb-4 px-3">super admin only</p>
                 <div class="space-y-1">

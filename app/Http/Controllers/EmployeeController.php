@@ -125,6 +125,7 @@ class EmployeeController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
+        $user->assignRole('employee');
 
         $data['user_id'] = $user->id;
 

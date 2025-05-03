@@ -60,7 +60,7 @@
                         <img class="h-8 w-8 rounded-full border border-base-200" src="{{ Auth::user()->employee->profile_picture ?? 'https://img.freepik.com/premium-vector/character-avatar-isolated_729149-194801.jpg?semt=ais_hybrid&w=740' }}" alt="User avatar">
                         <div class="hidden md:block text-left">
                             <h6 class="text-sm font-medium">{{ Auth::user()->first_name." ".Auth::user()->last_name }}</h6>
-                            <p class="text-xs text-base-content/60">{{ Auth::user()->is_super_admin?'super admin':Auth::user()->employee->typeEmployee->type->type }}</p>
+                            <p class="text-xs text-base-content/60">{{ Auth::user()->hasRole('super_admin')?'super admin':Auth::user()->employee->typeEmployee->type->type }}</p>
                         </div>
                         <span class="iconify w-4 h-4 text-base-content/60" data-icon="solar:alt-arrow-down-bold-duotone"></span>
                     </button>
