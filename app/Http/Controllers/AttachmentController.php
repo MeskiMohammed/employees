@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Attachment;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class AttachmentController extends Controller
@@ -12,7 +13,7 @@ class AttachmentController extends Controller
     public function index(Request $request)
     {
         $query = Attachment::with('employee.user');
-        
+
         if ($request->has('search')) {
             $search = $request->search;
             $query->where('name', 'like', "%{$search}%")
@@ -23,21 +24,21 @@ class AttachmentController extends Controller
                       });
                   });
         }
-        
+
         if ($request->has('employee_id')) {
             $query->where('employee_id', $request->employee_id);
         }
-        
+
         $attachments = $query->paginate(10);
         $employees = Employee::with('user')->get();
-        
+
         return view('attachments.index', compact('attachments', 'employees'));
     }
 
     public function create()
     {
         $employees = Employee::with('user')->get();
-        
+
         return view('attachments.create', compact('employees'));
     }
 
@@ -48,14 +49,14 @@ class AttachmentController extends Controller
             'attachment' => 'required|file|max:10240',
             'employee_id' => 'required|exists:employees,id',
         ]);
-        
+
         if ($request->hasFile('attachment')) {
             $path = $request->file('attachment')->store('attachments', 'public');
             $validated['attachment'] = $path;
         }
-        
+
         Attachment::create($validated);
-        
+
         return redirect()->route('attachments.index')
             ->with('success', 'Attachment created successfully.');
     }
@@ -63,14 +64,14 @@ class AttachmentController extends Controller
     public function show(Attachment $attachment)
     {
         $attachment->load('employee.user');
-        
+
         return view('attachments.show', compact('attachment'));
     }
 
     public function edit(Attachment $attachment)
     {
         $employees = Employee::with('user')->get();
-        
+
         return view('attachments.edit', compact('attachment', 'employees'));
     }
 
@@ -81,7 +82,7 @@ class AttachmentController extends Controller
             'attachment' => 'nullable|file|max:10240',
             'employee_id' => 'required|exists:employees,id',
         ]);
-        
+
         if ($request->hasFile('attachment')) {
             if ($attachment->attachment) {
                 Storage::disk('public')->delete($attachment->attachment);
@@ -89,9 +90,9 @@ class AttachmentController extends Controller
             $path = $request->file('attachment')->store('attachments', 'public');
             $validated['attachment'] = $path;
         }
-        
+
         $attachment->update($validated);
-        
+
         return redirect()->route('attachments.index')
             ->with('success', 'Attachment updated successfully.');
     }
@@ -101,15 +102,17 @@ class AttachmentController extends Controller
         if ($attachment->attachment) {
             Storage::disk('public')->delete($attachment->attachment);
         }
-        
+
         $attachment->delete();
-        
+
         return redirect()->route('attachments.index')
             ->with('success', 'Attachment deleted successfully.');
     }
-    
+
     public function download(Attachment $attachment)
     {
-        return Storage::disk('public')->download($attachment->attachment, $attachment->name);
+        $usr = $attachment->typeEmployee->employee->user;
+        $name = $usr->first_name.' '.$usr->last_name;
+        return Storage::disk('public')->download($attachment->attachment, $name.' '.$attachment->name.'.'.pathinfo($attachment->attachment,PATHINFO_EXTENSION));
     }
 }

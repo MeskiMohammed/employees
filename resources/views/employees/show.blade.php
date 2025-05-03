@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-    <div class="container mx-auto p-6" x-data="{ show: null, imageUrl:null }">
+    <div class="container mx-auto p-6" x-data="{ show: null, imageUrl:null, id:null, baseUrl:'{{route('attachments.download',':id')}}'}">
         <h1 class="text-3xl font-bold mb-6">Employee Details</h1>
 
         {{-- General Information --}}
@@ -68,25 +68,35 @@
             </div>
 
 
-            <h2 class="text-2xl font-semibold mb-6 text-base-content border-b border-base-300 pb-2">Posts</h2>
+            <h2 class="flex justify-between mb-6 border-b border-base-300 pb-2">
+                <span class='text-2xl font-semibold'>Posts</span>
+                @if(\App\Models\TypeEmployee::where('employee_id',$employee->id)->where('out_date',null)->count() === 0 )
+                    <a href='' class='rounded px-4 py-2 bg-blue-600 cursor-pointer hover:bg-blue-700 text-white'>Add New Post</a>
+                @endif
+            </h2>
             @foreach($employee->typeEmployees as $typeEmployee)
                 <div x-data="{isOpen : false}" x-transition>
-                    <button @click='isOpen=!isOpen' class='flex justify-between w-full p-4 bg-base-100 border border-base-300 rounded @if($typeEmployee->out_date === null) bg-green-400 text-black border-green-600 @endif'>
+                    <div class='flex gap-4'>
+                    <button @click='isOpen=!isOpen' class='flex flex-1 justify-between p-4 bg-base-100 border border-base-300 rounded @if($typeEmployee->out_date === null) bg-green-400 text-black border-green-600 @endif'>
                         <div class='flex flex-col items-start'>
                             <p class='font-semibold'>{{$typeEmployee->type->type}}</p>
                             <p class='text-xs'>{{$typeEmployee->description}}</p>
                         </div>
                         <div class='flex items-center justify-center'>
-                            {{$typeEmployee->in_date}}
+                            <span>{{$typeEmployee->in_date}}</span>
                             <i class="fa-solid fa-arrow-right mx-2"></i>
-                            {{$typeEmployee->out_date ?? 'now'}}
+                            <span>{{$typeEmployee->out_date ?? 'now'}}</span>
                         </div>
                     </button>
+                    @if($typeEmployee->out_date === null)
+                        <a class='block cursor-pointer flex justify-center items-center bg-red-300 border border-red-600 text-red-600 rounded h-18.5 w-[calc(0.25rem*18.5)] '><i class='fas fa-x'></i></a>
+                    @endif
+                    </div>
                     <div x-show='isOpen'>
                         @foreach($typeEmployee->attachments as $place=>$attachment)
                             <div class="mt-2 cursor-pointer flex justify-center bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
                                 <template x-if="show !== {{$place}}">
-                                    <button @click="show = {{$place}} ; imageUrl='{{asset('storage/'.$attachment->attachment)}}'" class='w-full py-2 px-4 text-sm'>Show {{str_replace('_',' ',$attachment->name)}}</button>
+                                    <button @click="show = {{$place}} ; imageUrl='{{asset('storage/'.$attachment->attachment)}}'; id={{$attachment->id}}" class='w-full py-2 px-4 text-sm'>Show {{str_replace('_',' ',$attachment->name)}}</button>
                                 </template>
                                 <template x-if="show === {{$place}}">
                                     <button @click="show = null ; imageUrl=null" class='w-full py-2 px-4 text-sm'>Hide {{str_replace('_',' ',$attachment->name)}}</button>
@@ -96,9 +106,69 @@
                     </div>
                 </div>
             @endforeach
-            @if(!$employee->user->hasRole('admin'))
+            @if($employee->user->hasRole('admin'))
                 <h2 class="text-2xl mt-6 font-semibold mb-6 text-base-content border-b border-base-300 pb-2">Permissions</h2>
+                <form class='grid grid-cols-5 justify-center gap-y-4'>
+                    <span></span>
+                    <span>Read</span>
+                    <span>Create</span>
+                    <span>Update</span>
+                    <span>Delete</span>
 
+                    <span>Employees</span>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+
+                    <span>Departments</span>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+
+                    <span>Leaves</span>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+
+                    <span>Freelancer Projects</span>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+
+                    <span>Employee Types</span>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+
+                    <span>Payment Types</span>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+
+                    <span>Operators</span>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+
+                    <span>Statuses</span>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+
+                    <span>Reasons</span>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                    <input type='checkbox'>
+                </form>
             @endif
         </div>
 
@@ -113,9 +183,12 @@
             class="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-75 p-6 z-50"
             style="display: none;">  {{-- Hidden by default --}}
 
-            <div class="px-4 flex items-center justify-end">
+            <div class="px-4 flex gap-6 items-center justify-end">
+                <a :href="baseUrl.replace(':id',id)">
+                    <i class="fa-solid fa-download scale-150 text-white"></i>
+                </a>
                 <button @click="show = null; imageUrl = null" class="text-white">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
                 </button>
