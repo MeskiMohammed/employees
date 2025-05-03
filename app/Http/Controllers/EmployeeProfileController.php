@@ -110,11 +110,9 @@ class EmployeeProfileController extends Controller
         $user = Auth::user();
         $employee = Employee::where('user_id', $user->id)->firstOrFail();
         
-        $documents = $employee->attachments()
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+       
             
-        return view('employee.documents', compact('employee', 'documents'));
+        return view('employee.documents', compact('employee'));
     }
     
     public function payments()

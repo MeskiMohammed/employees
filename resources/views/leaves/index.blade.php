@@ -95,7 +95,10 @@
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-base-content">{{ $leave->start_date->format('M d, Y') }} - {{ $leave->end_date->format('M d, Y') }}</div>
+                    <div class="text-sm text-base-content">
+                          {{ $leave->start_date->format('d/m/Y') }} - {{ $leave->end_date->format('d/m/Y') }}
+                    </div>
+
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-base-content">{{ $leave->start_date->diffInDays($leave->end_date) + 1 }} days</div>
@@ -111,8 +114,8 @@
                                 bg-red-100 text-red-800
                             @else
                                 bg-yellow-100 text-yellow-800
-                            @endif
-                        ">
+                            @endif 
+                            ">
                             {{ ucfirst($leave->status) }}
                         </span>
                     </td>

@@ -11,7 +11,7 @@ class LeaveController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Leave::with('employee.user');
+        $query = Leave::with('employee.user')->latest();
         
         if ($request->has('search')) {
             $search = $request->search;
