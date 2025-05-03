@@ -24,6 +24,7 @@ class StoreEmployeeRequest extends FormRequest
             'address' => 'required|string|max:255',
             'cin' => 'required|string|max:8|unique:employees',
             'cin_attachment' => 'required|image|mimes:jpeg,png,jpg',
+            'description' => 'required|string|max:255',
 
             'is_freelancer' => 'required|string',
             'is_project' => 'nullable|boolean',
@@ -191,8 +192,8 @@ class StoreEmployeeRequest extends FormRequest
             'cnss' => 'CNSS Number',
             'assurance' => 'Insurance',
             'type_id' => 'Employee Type',
-            'insurance_int' => 'Insurance',
-            'resume_int' => 'Resume',
+            'insurance_int' => 'Employee Type',
+            'type_id' => 'Employee Type',
     ];
     }
 
