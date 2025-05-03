@@ -60,13 +60,14 @@ Route::middleware(['auth','role:super_admin'])->group(function () {
 
     Route::get('/enterprise', [EnterpriseController::class, 'edit'])->name('enterprise.edit');
     Route::put('/enterprise', [EnterpriseController::class, 'update'])->name('enterprise.update');
+    
 });
 
 
 Route::middleware(['auth','role:employee'])->group(function () {
     Route::get('/employee/dashboard', [EmployeeProfileController::class, 'dashboard'])->name('employee.dashboard');
+    Route::get('/employee/attachments', [EmployeeProfileController::class, 'attachments'])->name('employee.attachments');
     Route::get('/employee/leaves', [EmployeeProfileController::class, 'leaves'])->name('employee.leaves');
-    Route::get('/employee/documents', [EmployeeProfileController::class, 'documents'])->name('employee.documents');
     Route::get('/employee/payments', [EmployeeProfileController::class, 'payments'])->name('employee.payments');    
     Route::post('/employee/leaves/store', [LeaveController::class,'store'])->name('employee.leaves.store');
 });
