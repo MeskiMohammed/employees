@@ -16,6 +16,7 @@ use App\Http\Controllers\ReasonController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,7 +31,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    if(Auth::user()){
+        if(Auth::user()->hasRole('super_admin')){
+            return redirect()->route('dashboard');
+        }else{
+            return redirect()->route('employee.dashboard');
+        }
+    }else{
+        return redirect()->route('login');
+    }
 });
 
 Route::middleware(['auth','role:super_admin|admin'])->group(function () {

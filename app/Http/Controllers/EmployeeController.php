@@ -308,10 +308,8 @@ class EmployeeController extends Controller
     public function toggleAdmin(Employee $employee){
         $usr = $employee->user;
         if($usr->hasRole('admin')){
-            $usr->syncRoles([]);
-            $usr->assignRole('employee');
+            $usr->removeRole('admin');
         }else{
-            $usr->syncRoles([]);
             $usr->assignRole('admin');
         }
         return redirect()->back()->with('success','User has been modifier successfully');
