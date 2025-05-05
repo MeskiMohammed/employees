@@ -217,7 +217,21 @@ class EmployeeController extends Controller
             'operator',
         ]);
 
-        return view('employees.show', compact('employee'));
+        $modules = [
+            'employees',
+            'departments',
+
+            'leaves',
+            'freelancer_projects',
+            'types',
+
+            'payment_types',
+            'operators',
+            'statuses',
+            'reasons',
+        ];
+
+        return view('employees.show', compact('employee','modules'));
     }
 
     public function edit(Employee $employee)
@@ -291,4 +305,22 @@ class EmployeeController extends Controller
         return $number;
     }
 
+    public function toggleAdmin(Employee $employee){
+        $usr = $employee->user;
+        if($usr->hasRole('admin')){
+            $usr->syncRoles([]);
+            $usr->assignRole('employee');
+        }else{
+            $usr->syncRoles([]);
+            $usr->assignRole('admin');
+        }
+        return redirect()->back()->with('success','User has been modifier successfully');
+    }
+
+    public function assignPermissions(Request $request,Employee $employee){
+        $usr = $employee->user;
+        $permissions = $request->permissions;
+        $employee->user->syncPermissions($permissions);
+        return redirect()->back()->with('success','permissions has been assigned successfully');
+    }
 }
