@@ -16,12 +16,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Models\Attachment;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Employee::with(['status', 'user']);
+        $query = Employee::with(['status', 'user'])->where('user_id','<>',Auth::id());
 
         if ($request->has('search')) {
             $search = $request->search;

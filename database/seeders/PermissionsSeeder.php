@@ -16,7 +16,9 @@ class PermissionsSeeder extends Seeder
     {
         Role::create(['name'=>'employee']);
         Role::create(['name'=>'admin']);
-        Role::create(['name'=>'super_admin']);
+        $role = Role::create(['name'=>'super_admin']);
+        $role->syncPermissions(Permission::all());
+
         $tables = [
             'employees',
             'departments',

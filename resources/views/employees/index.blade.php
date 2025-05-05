@@ -8,9 +8,11 @@
 <div class="bg-base-200 border border-base-300 shadow rounded-lg">
     <div class="flex justify-between items-center p-6 border-base-300 border-b">
         <h2 class="text-xl font-semibold text-base-content">Employees List</h2>
+        @if(Auth::user()->can('create employees'))
         <a href="{{ route('employees.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <i class="fas fa-plus mr-2"></i> Add Employee
         </a>
+        @endif
     </div>
 
     <div class="p-6 border-base-300 border-b bg-base-200">
@@ -111,16 +113,11 @@
                         <a href="{{ route('employees.show', $employee) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">
                             <i class="fas fa-eye"></i>
                         </a>
+                        @if(Auth::user()->can('edit employees'))
                         <a href="{{ route('employees.edit', $employee) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form action="{{ route('employees.destroy', $employee) }}" method="POST" class="inline-block">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this employee?')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
+                        @endif
                     </td>
                 </tr>
                 @empty
