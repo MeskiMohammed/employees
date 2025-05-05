@@ -20,14 +20,15 @@ class PermissionsSeeder extends Seeder
         $tables = [
             'employees',
             'departments',
-            'payments',
+
             'leaves',
             'freelancer_projects',
-            'type_employees',
-            'employee_departments',
+            'types',
+
+            'payment_types',
+            'operators',
             'statuses',
             'reasons',
-            'users',
         ];
         foreach ($tables as $table) {
             Permission::create(['name' => "view $table"]);

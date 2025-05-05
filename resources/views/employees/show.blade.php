@@ -60,6 +60,17 @@
                             </ul>
                         </div>
                     </div>
+                    <form action='{{route('employees.toggleAdmin',$employee)}}' method='post' onsubmit="return confirm('Are you sure to give/remove admin to this user?')">
+                        @csrf
+                        @method('put')
+                        <button class='rounded px-4 py-2 bg-red-600 text-white'>
+                            @if($employee->user->hasRole('admin'))
+                                Remove Admin
+                            @else
+                                Add Admin
+                            @endif
+                        </button>
+                    </form>
                 </div>
 
                 <div class="grid grid-cols-2 gap-8">
@@ -108,66 +119,23 @@
             @endforeach
             @if($employee->user->hasRole('admin'))
                 <h2 class="text-2xl mt-6 font-semibold mb-6 text-base-content border-b border-base-300 pb-2">Permissions</h2>
-                <form class='grid grid-cols-5 justify-center gap-y-4'>
+                <form action='{{route('employees.assignPermissions',$employee)}}' method='post' class='grid grid-cols-5 justify-center gap-y-4'>
+                    @csrf
+                    @method('put')
                     <span></span>
                     <span>Read</span>
                     <span>Create</span>
                     <span>Update</span>
                     <span>Delete</span>
-
-                    <span>Employees</span>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-
-                    <span>Departments</span>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-
-                    <span>Leaves</span>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-
-                    <span>Freelancer Projects</span>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-
-                    <span>Employee Types</span>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-
-                    <span>Payment Types</span>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-
-                    <span>Operators</span>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-
-                    <span>Statuses</span>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-
-                    <span>Reasons</span>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
-                    <input type='checkbox'>
+                    @foreach($modules as $module)
+                        <span>{{ucfirst(str_replace('_',' ',$module))}}</span>
+                        @foreach(['view','create','edit','delete'] as $action)
+                            <input type='checkbox' name='permissions[]' value="{{$action . ' ' . strtolower($module)}}" {{in_array($action . ' ' . strtolower($module), $employee->user->getPermissionNames()->toArray()) ? 'checked' : ''}}>
+                        @endforeach
+                    @endforeach
+                    <div class='col-span-5 flex justify-end'>
+                        <button class='rounded bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white'>Save</button>
+                    </div>
                 </form>
             @endif
         </div>

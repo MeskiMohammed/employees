@@ -33,11 +33,15 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::middleware(['auth','role:super_admin'])->group(function () {
+Route::middleware(['auth','role:super_admin|admin'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('employees', EmployeeController::class);
+    Route::put('employees/{employee}/toggle-admin',[EmployeeController::class,'toggleAdmin'])->name('employees.toggleAdmin');
+    Route::put('employees/{employee}/assign-permissions',[EmployeeController::class,'assignPermissions'])->name('employees.assignPermissions');
+
+
     Route::resource('departments', DepartmentController::class);
     Route::resource('users', UserController::class);
     Route::resource('payments', PaymentController::class);
@@ -60,7 +64,7 @@ Route::middleware(['auth','role:super_admin'])->group(function () {
 
     Route::get('/enterprise', [EnterpriseController::class, 'edit'])->name('enterprise.edit');
     Route::put('/enterprise', [EnterpriseController::class, 'update'])->name('enterprise.update');
-    
+
 });
 
 
@@ -68,7 +72,7 @@ Route::middleware(['auth','role:employee'])->group(function () {
     Route::get('/employee/dashboard', [EmployeeProfileController::class, 'dashboard'])->name('employee.dashboard');
     Route::get('/employee/attachments', [EmployeeProfileController::class, 'attachments'])->name('employee.attachments');
     Route::get('/employee/leaves', [EmployeeProfileController::class, 'leaves'])->name('employee.leaves');
-    Route::get('/employee/payments', [EmployeeProfileController::class, 'payments'])->name('employee.payments');    
+    Route::get('/employee/payments', [EmployeeProfileController::class, 'payments'])->name('employee.payments');
     Route::post('/employee/leaves/store', [LeaveController::class,'store'])->name('employee.leaves.store');
 });
 require __DIR__.'/auth.php';
