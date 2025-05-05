@@ -193,7 +193,6 @@ class StoreEmployeeRequest extends FormRequest
             'assurance' => 'Insurance',
             'type_id' => 'Employee Type',
             'insurance_int' => 'Employee Type',
-            'type_id' => 'Employee Type',
     ];
     }
 

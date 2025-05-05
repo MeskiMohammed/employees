@@ -8,9 +8,11 @@
 <div class="bg-base-200 shadow rounded-lg">
     <div class="flex justify-between items-center p-6 border-b border-base-300">
         <h2 class="text-xl font-semibold text-base-content">Operators List</h2>
+        @if(Auth::user()->can('create operators'))
         <a href="{{ route('operators.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <i class="fas fa-plus mr-2"></i> Add Operator
         </a>
+        @endif
     </div>
 
     <div class="p-6 border-b border-base-300">
@@ -59,12 +61,12 @@
                         <div class="text-sm text-base-content">{{ $operator->created_at->format('h:i A') }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <!-- <a href="{{ route('operators.show', $operator) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">
-                            <i class="fas fa-eye"></i>
-                        </a> -->
+                        @if(Auth::user()->can('edit operators'))
                         <a href="{{ route('operators.edit', $operator) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">
                             <i class="fas fa-edit"></i>
                         </a>
+                        @endif
+                        @if(Auth::user()->can('delete operators'))
                         <form action="{{ route('operators.destroy', $operator) }}" method="POST" class="inline-block">
                             @csrf
                             @method('DELETE')
@@ -72,6 +74,7 @@
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
+                        @endif
                     </td>
                 </tr>
                 @empty

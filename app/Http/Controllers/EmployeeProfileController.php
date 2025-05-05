@@ -11,9 +11,8 @@ class EmployeeProfileController extends Controller
 {
     public function dashboard()
     {
-        $user = Auth::user();
-        $employee = Employee::where('user_id', $user->id)->firstOrFail();
-        
+        $employee = Auth::user()->employee;
+
         // Get clock in status (mock data)
         $clockedIn = rand(0, 1) == 1;
         $clockedInTime = $clockedIn ? now()->subHours(rand(1, 8))->format('h:i A') : null;
@@ -87,9 +86,8 @@ class EmployeeProfileController extends Controller
     
     public function leaves()
     {
-        $user = Auth::user();
-        $employee = Employee::where('user_id', $user->id)->firstOrFail();
-        
+        $employee = Auth::user()->employee;
+
         $leaves = Leave::where('employee_id', $employee->id)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
@@ -99,26 +97,19 @@ class EmployeeProfileController extends Controller
     
     public function leaveRequest()
     {
-        $user = Auth::user();
-        $employee = Employee::where('user_id', $user->id)->firstOrFail();
-        
+        $employee = Auth::user()->employee;
         return view('employee.leaves.request', compact('employee'));
     }
     
     public function attachments()
     {
-        $user = Auth::user();
-        $employee = Employee::where('user_id', $user->id)->firstOrFail();
-        
-       
-            
+        $employee = Auth::user()->employee;
         return view('employee.attachments', compact('employee'));
     }
     
     public function payments()
     {
-        $user = Auth::user();
-        $employee = Employee::where('user_id', $user->id)->firstOrFail();
+        $employee = Auth::user()->employee;
         
         $payments = Payment::where('employee_id', $employee->id)
             ->orderBy('created_at', 'desc')

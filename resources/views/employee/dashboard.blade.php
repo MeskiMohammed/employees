@@ -17,6 +17,7 @@
                     </div>
                     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                         <dl class="sm:divide-y sm:divide-gray-200">
+                            @if ($employee->typeEmployees->last()->type->type !== 'freelancer' && $employee->typeEmployees->last()->type->type !== 'trainee')
                             <div class="py-3 sm:py-4 sm:px-6 flex items-center  text-gray-400 text-sm">Professional</div>
                             @if($employee->professional_num)
                             <div class="py-3 sm:py-4 sm:px-6 flex items-center">
@@ -33,6 +34,7 @@
                                 </svg>
                                 <span class="text-sm text-gray-500">{{ $employee->professional_email }}</span>
                             </div>
+                            @endif
 
                             <div class="py-3 sm:py-4 sm:px-6 flex items-center text-gray-400 text-sm">Personal</div>
 

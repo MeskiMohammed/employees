@@ -22,18 +22,18 @@ class EmployeeController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Employee::with(['status', 'user'])->where('user_id','<>',Auth::id());
+        $query = Employee::with(['status', 'user'])->where('user_id', '<>', Auth::id());
 
         if ($request->has('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('employee_code', 'like', "%{$search}%")
-                ->orWhere('cin', 'like', "%{$search}%")
-                ->orWhere('professional_email', 'like', "%{$search}%")
-                ->orWhereHas('user', function ($qu) use ($search) {
-                    $qu->where('first_name', 'like', "%{$search}%")
-                    ->orWhere('last_name', 'like', "%{$search}%");
-                });
+                    ->orWhere('cin', 'like', "%{$search}%")
+                    ->orWhere('professional_email', 'like', "%{$search}%")
+                    ->orWhereHas('user', function ($qu) use ($search) {
+                        $qu->where('first_name', 'like', "%{$search}%")
+                            ->orWhere('last_name', 'like', "%{$search}%");
+                    });
             });
             if ($request->department != null) {
                 $query->where('department_id', $request->department);
@@ -74,13 +74,13 @@ class EmployeeController extends Controller
         // Store Files with uniqid
         $picPath = $request->file('profile_picture')->storeAs(
             'profile_pictures',
-            uniqid().'_'.$request->file('profile_picture')->getClientOriginalName(),
+            uniqid() . '_' . $request->file('profile_picture')->getClientOriginalName(),
             'public'
         );
 
         $cinPath = $request->file('cin_attachment')->storeAs(
             'cin_attachments',
-            uniqid().'_'.$request->file('cin_attachment')->getClientOriginalName(),
+            uniqid() . '_' . $request->file('cin_attachment')->getClientOriginalName(),
             'public'
         );
 
@@ -142,9 +142,9 @@ class EmployeeController extends Controller
         }
 
         // Determine Type
-        $type = match($request->is_freelancer) {
-        'freelancer', 'trainee' => Type::where('type', $request->is_freelancer)->first(),
-        default => Type::find($request->type_id),
+        $type = match ($request->is_freelancer) {
+            'freelancer', 'trainee' => Type::where('type', $request->is_freelancer)->first(),
+            default => Type::find($request->type_id),
         };
 
         // Create TypeEmployee
@@ -156,48 +156,46 @@ class EmployeeController extends Controller
         $typeEmployee->type()->associate($type);
         $typeEmployee->save();
 
-        if($request->is_freelancer === 'freelancer'){
+        if ($request->is_freelancer === 'freelancer') {
 
-            $eicPath = $request->file('eic')->storeAs('attachments',uniqid().'_'.$request->file('eic')->getClientOriginalName(),'public');
+            $eicPath = $request->file('eic')->storeAs('attachments', uniqid() . '_' . $request->file('eic')->getClientOriginalName(), 'public');
 
             Attachment::create([
                 'name' => 'Entrepreneur Identification Card',
                 'attachment' => $eicPath,
                 'type_employee_id' => $typeEmployee->id,
             ]);
+        } elseif ($request->is_freelancer === 'employee') {
 
-        }elseif($request->is_freelancer === 'employee'){
-
-            $ecPath = $request->file('employment_contract')->storeAs('attachments',uniqid().'_'.$request->file('employment_contract')->getClientOriginalName(),'public');
-            $jaPath = $request->file('job_application')->storeAs('attachments',uniqid().'_'.$request->file('job_application')->getClientOriginalName(),'public');
-            $iPath = $request->file('insurance')->storeAs('attachments',uniqid().'_'.$request->file('insurance')->getClientOriginalName(),'public');
-            $rPath = $request->file('resume')->storeAs('attachments',uniqid().'_'.$request->file('resume')->getClientOriginalName(),'public');
-            $ccPath = $request->file('cnss_certificate')->storeAs('attachments',uniqid().'_'.$request->file('cnss_certificate')->getClientOriginalName(),'public');
+            $ecPath = $request->file('employment_contract')->storeAs('attachments', uniqid() . '_' . $request->file('employment_contract')->getClientOriginalName(), 'public');
+            $jaPath = $request->file('job_application')->storeAs('attachments', uniqid() . '_' . $request->file('job_application')->getClientOriginalName(), 'public');
+            $iPath = $request->file('insurance')->storeAs('attachments', uniqid() . '_' . $request->file('insurance')->getClientOriginalName(), 'public');
+            $rPath = $request->file('resume')->storeAs('attachments', uniqid() . '_' . $request->file('resume')->getClientOriginalName(), 'public');
+            $ccPath = $request->file('cnss_certificate')->storeAs('attachments', uniqid() . '_' . $request->file('cnss_certificate')->getClientOriginalName(), 'public');
 
             $data = [
-                ['name'=>'employment_contract','attachment'=>$ecPath,'type_employee_id'=>$typeEmployee->id],
-                ['name'=>'job_application','attachment'=>$jaPath,'type_employee_id'=>$typeEmployee->id],
-                ['name'=>'insurance','attachment'=>$iPath,'type_employee_id'=>$typeEmployee->id],
-                ['name'=>'resume','attachment'=>$rPath,'type_employee_id'=>$typeEmployee->id],
-                ['name'=>'cnss_certificate','attachment'=>$ccPath,'type_employee_id'=>$typeEmployee->id],
+                ['name' => 'employment_contract', 'attachment' => $ecPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'job_application', 'attachment' => $jaPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'insurance', 'attachment' => $iPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'resume', 'attachment' => $rPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'cnss_certificate', 'attachment' => $ccPath, 'type_employee_id' => $typeEmployee->id],
             ];
 
             Attachment::insert($data);
+        } else {
 
-        }else{
-
-            $iagPath = $request->file('internship_agreement')->storeAs('attachments',uniqid().'_'.$request->file('internship_agreement')->getClientOriginalName(),'public');
-            $iapPath = $request->file('internship_application')->storeAs('attachments',uniqid().'_'.$request->file('internship_application')->getClientOriginalName(),'public');
-            $iPath = $request->file('insurance_int')->storeAs('attachments',uniqid().'_'.$request->file('insurance_int')->getClientOriginalName(),'public');
-            $rPath = $request->file('resume_int')->storeAs('attachments',uniqid().'_'.$request->file('resume_int')->getClientOriginalName(),'public');
-            $tPath = $request->file('transcript')->storeAs('attachments',uniqid().'_'.$request->file('transcript')->getClientOriginalName(),'public');
+            $iagPath = $request->file('internship_agreement')->storeAs('attachments', uniqid() . '_' . $request->file('internship_agreement')->getClientOriginalName(), 'public');
+            $iapPath = $request->file('internship_application')->storeAs('attachments', uniqid() . '_' . $request->file('internship_application')->getClientOriginalName(), 'public');
+            $iPath = $request->file('insurance_int')->storeAs('attachments', uniqid() . '_' . $request->file('insurance_int')->getClientOriginalName(), 'public');
+            $rPath = $request->file('resume_int')->storeAs('attachments', uniqid() . '_' . $request->file('resume_int')->getClientOriginalName(), 'public');
+            $tPath = $request->file('transcript')->storeAs('attachments', uniqid() . '_' . $request->file('transcript')->getClientOriginalName(), 'public');
 
             $data = [
-                ['name'=>'internship_agreement','attachment'=>$iagPath,'type_employee_id'=>$typeEmployee->id],
-                ['name'=>'internship_application','attachment'=>$iapPath,'type_employee_id'=>$typeEmployee->id],
-                ['name'=>'insurance','attachment'=>$iPath,'type_employee_id'=>$typeEmployee->id],
-                ['name'=>'resume','attachment'=>$rPath,'type_employee_id'=>$typeEmployee->id],
-                ['name'=>'transcript','attachment'=>$tPath,'type_employee_id'=>$typeEmployee->id],
+                ['name' => 'internship_agreement', 'attachment' => $iagPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'internship_application', 'attachment' => $iapPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'insurance', 'attachment' => $iPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'resume', 'attachment' => $rPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'transcript', 'attachment' => $tPath, 'type_employee_id' => $typeEmployee->id],
             ];
 
             Attachment::insert($data);
@@ -232,7 +230,7 @@ class EmployeeController extends Controller
             'reasons',
         ];
 
-        return view('employees.show', compact('employee','modules'));
+        return view('employees.show', compact('employee', 'modules'));
     }
 
     public function edit(Employee $employee)
@@ -306,20 +304,46 @@ class EmployeeController extends Controller
         return $number;
     }
 
-    public function toggleAdmin(Employee $employee){
+    public function toggleAdmin(Employee $employee)
+    {
         $usr = $employee->user;
-        if($usr->hasRole('admin')){
+        if ($usr->hasRole('admin')) {
             $usr->removeRole('admin');
-        }else{
+        } else {
             $usr->assignRole('admin');
         }
-        return redirect()->back()->with('success','User has been modifier successfully');
+        return redirect()->back()->with('success', 'User has been modifier successfully');
     }
 
-    public function assignPermissions(Request $request,Employee $employee){
-        $usr = $employee->user;
+    public function assignPermissions(Request $request, Employee $employee)
+    {
         $permissions = $request->permissions;
         $employee->user->syncPermissions($permissions);
-        return redirect()->back()->with('success','permissions has been assigned successfully');
+        return redirect()->back()->with('success', 'permissions has been assigned successfully');
+    }
+
+    public function calculateNetSalary(float $grossSalary): float
+    {
+        // Step 1: CNSS deduction (6.74%)
+        $cnssRate = 0.0674;
+        $cnss = $grossSalary * $cnssRate;
+
+        // Step 2: Estimate income tax rate based on gross salary
+        $taxRate = match (true) {
+            $grossSalary <= 3000 => 0,
+            $grossSalary <= 5000 => 0.10,
+            $grossSalary <= 10000 => 0.20,
+            $grossSalary <= 15000 => 0.30,
+            $grossSalary <= 20000 => 0.34,
+            default => 0.38,
+        };
+
+        // Step 3: Income tax amount
+        $incomeTax = $grossSalary * $taxRate;
+
+        // Step 4: Calculate net salary
+        $netSalary = $grossSalary - $cnss - $incomeTax;
+
+        return round($netSalary, 2);
     }
 }

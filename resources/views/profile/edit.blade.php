@@ -38,30 +38,6 @@
 
             <div class="px-4 py-5 sm:p-6">
                 <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-                    <div class="sm:col-span-6">
-                        <div class="flex items-center">
-                            @if(auth()->user()->avatar)
-                                <div class="relative">
-                                    <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="{{ auth()->user()->name }}" class="h-24 w-24 rounded-full object-cover">
-                                    <div class="absolute inset-0 rounded-full shadow-inner"></div>
-                                </div>
-                            @else
-                                <div class="h-24 w-24 rounded-full bg-indigo-600 flex items-center justify-center">
-                                    <span class="text-2xl font-bold text-white">{{ substr(auth()->user()->name, 0, 1) }}</span>
-                                </div>
-                            @endif
-                            <div class="ml-5">
-                                <div class="relative rounded-md shadow-sm">
-                                    <input type="file" name="avatar" id="avatar" class="sr-only">
-                                    <label for="avatar" class="cursor-pointer py-2 px-3 border border-base-300 rounded-md text-sm leading-4 font-medium text-base-content hover:text-primary-content focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800">
-                                        Change photo
-                                    </label>
-                                </div>
-                                <p class="mt-2 text-xs text-gray-500">JPG, PNG, GIF up to 10MB</p>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="sm:col-span-2">
                         <label for="first_name" class="block text-sm text-base-content font-medium">First Name</label>
                         <div class="mt-1">

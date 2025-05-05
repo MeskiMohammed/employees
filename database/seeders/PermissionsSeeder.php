@@ -14,10 +14,7 @@ class PermissionsSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::create(['name'=>'employee']);
-        Role::create(['name'=>'admin']);
-        $role = Role::create(['name'=>'super_admin']);
-        $role->syncPermissions(Permission::all());
+        
 
         $tables = [
             'employees',
@@ -38,5 +35,10 @@ class PermissionsSeeder extends Seeder
             Permission::create(['name' => "edit $table"]);
             Permission::create(['name' => "delete $table"]);
         }
+
+        Role::create(['name'=>'employee']);
+        Role::create(['name'=>'admin']);
+        $role = Role::create(['name'=>'super_admin']);
+        $role->syncPermissions(Permission::all());
     }
 }

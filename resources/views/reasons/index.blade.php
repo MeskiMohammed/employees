@@ -8,9 +8,11 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-semibold text-base-content">Reasons</h1>
+        @if (Auth::user()->can('create reasons'))
         <a href="{{ route('reasons.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Add New Reason
         </a>
+        @endif
     </div>
 
     @if(session('success'))
@@ -46,10 +48,13 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-base-content">{{ $reason->reason }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-base-content">{{ $reason->created_at->format('M d, Y') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-
+                        @if (Auth::user()->can('create reasons'))
                         <a href="{{ route('reasons.edit', $reason) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">
                             <i class="fas fa-edit"></i>
                         </a>
+                        @endif
+                        
+                        @if (Auth::user()->can('delete reasons'))
                         <form action="{{ route('reasons.destroy',$reason) }}" method="POST" class="inline-block">
                             @csrf
                             @method('DELETE')
@@ -57,6 +62,7 @@
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
+                        @endif
 
                         </td>
                     </tr>

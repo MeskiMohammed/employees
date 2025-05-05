@@ -60,6 +60,7 @@
                             </ul>
                         </div>
                     </div>
+                    @if(Auth::user()->hasRole('super_admin'))
                     <form action='{{route('employees.toggleAdmin',$employee)}}' method='post' onsubmit="return confirm('Are you sure to give/remove admin to this user?')">
                         @csrf
                         @method('put')
@@ -71,6 +72,7 @@
                             @endif
                         </button>
                     </form>
+                    @endif
                 </div>
 
                 <div class="grid grid-cols-2 gap-8">
@@ -117,7 +119,7 @@
                     </div>
                 </div>
             @endforeach
-            @if($employee->user->hasRole('admin'))
+            @if($employee->user->hasRole('admin')&& Auth::user()->hasRole('super_admin'))
                 <h2 class="text-2xl mt-6 font-semibold mb-6 text-base-content border-b border-base-300 pb-2">Permissions</h2>
                 <form action='{{route('employees.assignPermissions',$employee)}}' method='post' class='grid grid-cols-5 justify-center gap-y-4'>
                     @csrf
@@ -129,9 +131,21 @@
                     <span>Delete</span>
                     @foreach($modules as $module)
                         <span>{{ucfirst(str_replace('_',' ',$module))}}</span>
-                        @foreach(['view','create','edit','delete'] as $action)
-                            <input type='checkbox' name='permissions[]' value="{{$action . ' ' . strtolower($module)}}" {{in_array($action . ' ' . strtolower($module), $employee->user->getPermissionNames()->toArray()) ? 'checked' : ''}}>
-                        @endforeach
+                        @if ($module === 'employees')
+                            <input type='checkbox' name='permissions[]' value="{{'view' . ' ' . strtolower($module)}}" {{in_array('view' . ' ' . strtolower($module), $employee->user->getPermissionNames()->toArray()) ? 'checked' : ''}}>
+                            <input type='checkbox' name='permissions[]' value="{{'create' . ' ' . strtolower($module)}}" {{in_array('create' . ' ' . strtolower($module), $employee->user->getPermissionNames()->toArray()) ? 'checked' : ''}}>
+                            <input type='checkbox' name='permissions[]' value="{{'edit' . ' ' . strtolower($module)}}" {{in_array('edit' . ' ' . strtolower($module), $employee->user->getPermissionNames()->toArray()) ? 'checked' : ''}}>
+                            <span></span>
+                        @elseif ($module === 'leaves')
+                            <input type='checkbox' name='permissions[]' value="{{'view' . ' ' . strtolower($module)}}" {{in_array('view' . ' ' . strtolower($module), $employee->user->getPermissionNames()->toArray()) ? 'checked' : ''}}>
+                            <span></span>
+                            <input type='checkbox' name='permissions[]' value="{{'edit' . ' ' . strtolower($module)}}" {{in_array('edit' . ' ' . strtolower($module), $employee->user->getPermissionNames()->toArray()) ? 'checked' : ''}}>
+                            <span></span>
+                        @else
+                            @foreach(['view','create','edit','delete'] as $action)
+                                <input type='checkbox' name='permissions[]' value="{{$action . ' ' . strtolower($module)}}" {{in_array($action . ' ' . strtolower($module), $employee->user->getPermissionNames()->toArray()) ? 'checked' : ''}}>
+                            @endforeach
+                        @endif
                     @endforeach
                     <div class='col-span-5 flex justify-end'>
                         <button class='rounded bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white'>Save</button>

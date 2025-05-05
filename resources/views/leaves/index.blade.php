@@ -89,7 +89,7 @@
                                     {{ $leave->employee->user->first_name .' ' . $leave->employee->user->last_name ?? 'N/A' }}
                                 </div>
                                 <div class="text-sm text-base-content">
-                                    {{ $leave->employee->employee_code ?? 'N/A' }}
+                                    {{ $leave->employee->cin }}
                                 </div>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                         </span>
                     </td>
                     <td class="px-6 flex justify-end items-center py-4 whitespace-nowrap text-right text-sm font-medium">
-                        @if($leave->status === 'pending')
+                        @if($leave->status === 'pending' && Auth::user()->can('edit leaves'))
                         <a href="{{ route('leaves.update', ['leave' => $leave->id, 'status' => 'approved']) }}"
                             class="inline-block flex justify-center items-center text-green-600 font-medium mr-2 w-5 aspect-square bg-green-300 border rounded border-green-600"
                             onclick="return confirm('Confirmer l\'acceptation de ce congé ?')">
