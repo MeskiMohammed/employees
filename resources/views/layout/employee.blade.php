@@ -37,9 +37,11 @@
                         </a>
 
                     </div>
-
-
-                    <div class="flex items-center">
+                    @if (Auth::user()->hasRole('admin'))
+                    <a href="{{ route('dashboard') }}" class="whitespace font-medium text-sm hover:text-black px-4 py-2 text-gray-700 rounded-md flex items-center "><i class="fa-solid fa-repeat mr-2"></i> Switch To AdminPanel</a>
+                    @endif
+                </div>
+            </div>
 
         </nav>
 
@@ -78,6 +80,10 @@
                                         <a href="{{ route('employee.attachments') }}" class="py-4 px-1 border-b-2  {{ request()->is('employee/attachments') ? 'border-black' : 'border-transparent' }} font-medium text-sm text-black">Documents</a>
                                         <a href="{{ route('employee.payments') }}" class="py-4 px-1 border-b-2  {{ request()->is('employee/payments') ? 'border-black' : 'border-transparent' }} font-medium text-sm text-black">Payments</a>
                                     </nav>
+
+
+
+
 
                                     <form action='{{route('logout')}}' method='post'>
                                         @csrf
