@@ -8,7 +8,6 @@
 <div class="bg-white rounded-lg shadow">
     <div class="p-6 border-b border-gray-200">
         <h2 class="text-lg font-semibold text-gray-700">Payment History</h2>
-        <p class="mt-1 text-sm text-gray-500">View your payment history and download pay slips</p>
     </div>
     
     <div class="p-6">
@@ -42,16 +41,7 @@
                     </select>
                 </div>
                 
-                <div class="relative">
-                    <select id="type-filter" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md">
-                        <option value="all">All Types</option>
-                        <option value="Salary">Salary</option>
-                        <option value="Bonus">Bonus</option>
-                        <option value="Commission">Commission</option>
-                        <option value="Reimbursement">Reimbursement</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
+               
             </div>
             
             <div class="relative">
@@ -149,128 +139,8 @@
     </div>
 </div>
 
-<div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-    <!-- Payment Summary -->
-    <div class="bg-white rounded-lg shadow">
-        <div class="p-6 border-b border-gray-200">
-            <h2 class="text-lg font-semibold text-gray-700">Payment Summary</h2>
-            <p class="mt-1 text-sm text-gray-500">Summary of your payments for the current year</p>
-        </div>
-        <div class="p-6">
-            <div class="space-y-6">
-                <div>
-                    <h3 class="text-sm font-medium text-gray-500">Total Earnings (YTD)</h3>
-                    <p class="mt-1 text-3xl font-semibold text-gray-900">${{ number_format($yearToDateTotal, 2) }}</p>
-                </div>
-                
-                <div class="border-t border-gray-200 pt-4">
-                    <div class="flex justify-between items-center mb-2">
-                        <h3 class="text-sm font-medium text-gray-500">Earnings by Type</h3>
-                    </div>
-                    <div class="space-y-2">
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Salary</span>
-                            <span class="text-sm font-medium text-gray-900">${{ number_format($earningsByType->salary ?? 0, 2) }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Bonus</span>
-                            <span class="text-sm font-medium text-gray-900">${{ number_format($earningsByType->bonus ?? 0, 2) }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Commission</span>
-                            <span class="text-sm font-medium text-gray-900">${{ number_format($earningsByType->commission ?? 0, 2) }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Reimbursement</span>
-                            <span class="text-sm font-medium text-gray-900">${{ number_format($earningsByType->reimbursement ?? 0, 2) }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Other</span>
-                            <span class="text-sm font-medium text-gray-900">${{ number_format($earningsByType->other ?? 0, 2) }}</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="border-t border-gray-200 pt-4">
-                    <div class="flex justify-between items-center mb-2">
-                        <h3 class="text-sm font-medium text-gray-500">Deductions (YTD)</h3>
-                        <span class="text-sm font-medium text-gray-900">${{ number_format($yearToDateDeductions, 2) }}</span>
-                    </div>
-                    <div class="space-y-2">
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Tax</span>
-                            <span class="text-sm font-medium text-gray-900">${{ number_format($deductionsByType->tax ?? 0, 2) }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Insurance</span>
-                            <span class="text-sm font-medium text-gray-900">${{ number_format($deductionsByType->insurance ?? 0, 2) }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Retirement</span>
-                            <span class="text-sm font-medium text-gray-900">${{ number_format($deductionsByType->retirement ?? 0, 2) }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Other</span>
-                            <span class="text-sm font-medium text-gray-900">${{ number_format($deductionsByType->other ?? 0, 2) }}</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="border-t border-gray-200 pt-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-sm font-medium text-gray-500">Net Pay (YTD)</h3>
-                        <span class="text-sm font-medium text-gray-900">${{ number_format($yearToDateTotal - $yearToDateDeductions, 2) }}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Payment Chart -->
-    <div class="bg-white rounded-lg shadow">
-        <div class="p-6 border-b border-gray-200">
-            <h2 class="text-lg font-semibold text-gray-700">Monthly Earnings</h2>
-            <p class="mt-1 text-sm text-gray-500">Your earnings for the current year</p>
-        </div>
-        <div class="p-6">
-            <canvas id="earnings-chart" height="300"></canvas>
-        </div>
-    </div>
-</div>
 
-<!-- Payment Details Modal -->
-<div id="payment-details-modal" class="fixed inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div class="sm:flex sm:items-start">
-                    <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
-                        <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                    </div>
-                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                            Payment Details
-                        </h3>
-                        <div class="mt-4">
-                            <div id="payment-details-content" class="space-y-4">
-                                <!-- Payment details will be loaded here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button type="button" id="close-payment-details" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 sm:mt-0 sm:w-auto sm:text-sm">
-                    Close
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+
 @endsection
 
 @section('scripts')

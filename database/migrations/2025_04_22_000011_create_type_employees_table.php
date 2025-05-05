@@ -8,7 +8,6 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('type_employees', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
             $table->date('in_date')->nullable();
             $table->date('out_date')->nullable();
             $table->foreignId('employee_id')->constrained();

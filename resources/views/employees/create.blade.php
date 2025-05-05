@@ -185,13 +185,7 @@
                         @enderror
                     </div>
 
-                    <div>
-                        <label for="description" class="block text-sm font-medium text-base-content mb-1">Type Description</label>
-                        <input type="text" name="description" id="salary" value="{{ old('description') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('description') border-red-500 @enderror">
-                        @error('description')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    
 
                     <div>
                         <label for="salary" class="block text-sm font-medium text-base-content mb-1">Salary</label>

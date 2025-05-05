@@ -73,10 +73,10 @@
 
                                 <div class="mt-6 border-b  flex justify-between">
                                     <nav class="-mb-px flex space-x-8">
-                                        <a href="{{ route('employee.dashboard') }}" class="whitespace-nowrap py-4 px-1 border-b-2 border-black font-medium text-sm text-black">Profile</a>
-                                        <a href="{{ route('employee.leaves') }}" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-black ">Leave Request</a>
-                                        <a href="{{ route('employee.attachmments') }}" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-black ">Documents</a>
-                                        <a href="{{ route('employee.payments') }}" class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-black ">Payments</a>
+                                        <a href="{{ route('employee.dashboard') }}" class="py-4 px-1 border-b-2  {{ request()->is('employee/dashboard') ? 'border-black' : 'border-transparent' }} font-medium text-sm text-black">Profile</a>
+                                        <a href="{{ route('employee.leaves') }}" class="py-4 px-1 border-b-2  {{ request()->is('employee/leaves') ? 'border-black' : 'border-transparent' }} font-medium text-sm text-black">Leave Request</a>
+                                        <a href="{{ route('employee.attachments') }}" class="py-4 px-1 border-b-2  {{ request()->is('employee/attachments') ? 'border-black' : 'border-transparent' }} font-medium text-sm text-black">Documents</a>
+                                        <a href="{{ route('employee.payments') }}" class="py-4 px-1 border-b-2  {{ request()->is('employee/payments') ? 'border-black' : 'border-transparent' }} font-medium text-sm text-black">Payments</a>
                                     </nav>
 
                                     <form action='{{route('logout')}}' method='post'>

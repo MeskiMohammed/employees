@@ -105,7 +105,7 @@ class EmployeeProfileController extends Controller
         return view('employee.leaves.request', compact('employee'));
     }
     
-    public function attachment()
+    public function attachments()
     {
         $user = Auth::user();
         $employee = Employee::where('user_id', $user->id)->firstOrFail();

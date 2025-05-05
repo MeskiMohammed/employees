@@ -148,7 +148,6 @@ class EmployeeController extends Controller
 
         // Create TypeEmployee
         $typeEmployee = new TypeEmployee([
-            'description' => $request->description,
             'in_date' => now(),
         ]);
 

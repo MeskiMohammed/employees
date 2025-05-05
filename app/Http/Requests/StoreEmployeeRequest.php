@@ -24,7 +24,7 @@ class StoreEmployeeRequest extends FormRequest
             'address' => 'required|string|max:255',
             'cin' => 'required|string|max:8|unique:employees',
             'cin_attachment' => 'required|image|mimes:jpeg,png,jpg',
-            'description' => 'required|string|max:255',
+            
 
             'is_freelancer' => 'required|string',
             'is_project' => 'nullable|boolean',
