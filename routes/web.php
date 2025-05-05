@@ -46,9 +46,14 @@ Route::middleware(['auth','role:super_admin|admin'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::resource('employees', EmployeeController::class);
-    Route::put('employees/{employee}/toggle-admin',[EmployeeController::class,'toggleAdmin'])->name('employees.toggleAdmin');
-    Route::put('employees/{employee}/assign-permissions',[EmployeeController::class,'assignPermissions'])->name('employees.assignPermissions');
+    Route::get('employees',[EmployeeController::class,'index'])->name('employees.index')->middleware('permission:view employees');
+    Route::post('employees',[EmployeeController::class,'store'])->name('employees.store')->middleware('permission:create employees');
+    Route::get('employees/create',[EmployeeController::class,'create'])->name('employees.create')->middleware('permission:create employees');
+    Route::get('employees/{employee}',[EmployeeController::class,'show'])->name('employees.show')->middleware('permission:view employees');
+    Route::get('employees/{employee}/edit',[EmployeeController::class,'edit'])->name('employees.edit')->middleware('permission:edit employees');
+    Route::put('employees/{employee}',[EmployeeController::class,'update'])->name('employees.update')->middleware('permission:edit employees');
+    Route::put('employees/{employee}/toggle-admin',[EmployeeController::class,'toggleAdmin'])->name('employees.toggleAdmin')->middleware('role:super_admin');
+    Route::put('employees/{employee}/assign-permissions',[EmployeeController::class,'assignPermissions'])->name('employees.assignPermissions')->middleware('role:super_admin');
 
 
     Route::resource('departments', DepartmentController::class);
@@ -66,13 +71,13 @@ Route::middleware(['auth','role:super_admin|admin'])->group(function () {
 
     Route::get('attachments/{attachment}/download', [AttachmentController::class, 'download'])->name('attachments.download');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('role:super_admin');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('role:super_admin');
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('profile.settings');
     Route::patch('/profile/settings', [ProfileController::class, 'updateSettings'])->name('profile.settings.update');
 
-    Route::get('/enterprise', [EnterpriseController::class, 'edit'])->name('enterprise.edit');
-    Route::put('/enterprise', [EnterpriseController::class, 'update'])->name('enterprise.update');
+    Route::get('/enterprise', [EnterpriseController::class, 'edit'])->name('enterprise.edit')->middleware('role:super_admin');
+    Route::put('/enterprise', [EnterpriseController::class, 'update'])->name('enterprise.update')->middleware('role:super_admin');
 
 });
 
