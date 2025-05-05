@@ -1,0 +1,147 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class UpdateEmployeeRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        $employeeId = $this->route('employee');
+        $userId = $this->employee->user_id;
+
+        return [
+            // User information
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($userId),
+            ],
+            'password' => 'nullable|string|min:8|confirmed',
+            
+            // Basic employee information
+            'personal_num' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'cin' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('employees', 'cin')->ignore($employeeId),
+            ],
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'cin_attachment' => 'nullable|file|mimes:pdf,jpeg,png,jpg|max:2048',
+            'department_ids' => 'required|array',
+            'department_ids.*' => 'exists:departments,id',
+            'is_freelancer' => 'required|in:employee,freelancer,trainee',
+            
+            // Employee specific fields
+            'employee_code' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::unique('employees', 'employee_code')->ignore($employeeId),
+            ],
+            'salary' => 'nullable|numeric|min:0',
+            'professional_num' => 'nullable|string|max:255',
+            'professional_email' => [
+                'nullable',
+                'email',
+                Rule::unique('employees', 'professional_email')->ignore($employeeId),
+            ],
+            'pin' => 'nullable|string|max:255',
+            'puk' => 'nullable|string|max:255',
+            'operator_id' => 'nullable|exists:operators,id',
+            'cnss' => 'nullable|string|max:255',
+            'assurance' => 'nullable|string|max:255',
+            'type_id' => 'nullable|exists:types,id',
+            
+            // Freelancer specific fields
+            'ice' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::requiredIf(fn() => $this->is_freelancer === 'freelancer'),
+                Rule::unique('employees', 'ice')->ignore($employeeId),
+            ],
+            'is_project' => 'nullable|boolean',
+            'hours' => 'nullable|numeric|min:0',
+            
+            // Attachments for employee
+            'employment_contract' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'job_application' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'insurance' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'resume' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'cnss_certificate' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            
+            // Attachments for freelancer
+            'eic' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            
+            // Attachments for trainee
+            'internship_agreement' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'internship_application' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'insurance_int' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'resume_int' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'transcript' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'department_ids.*' => 'department',
+            'employment_contract' => 'employment contract',
+            'job_application' => 'job application',
+            'cnss_certificate' => 'CNSS certificate',
+            'eic' => 'entrepreneur identification card',
+            'internship_agreement' => 'internship agreement',
+            'internship_application' => 'internship application',
+            'insurance_int' => 'insurance',
+            'resume_int' => 'resume',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'department_ids.required' => 'Please select at least one department.',
+            'ice.required_if' => 'The ICE field is required for freelancers.',
+        ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'is_project' => $this->has('is_project'),
+        ]);
+    }
+}

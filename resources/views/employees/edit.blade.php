@@ -15,18 +15,18 @@
             @csrf
             @method('PUT')
             @php
-                $lastType = $employee->typeEmployees->last()->type->type;
+            $lastType = $employee->typeEmployees->last()->type->type;
 
-                $typeValue = match($lastType) {
-                'freelancer' => 'freelancer',
-                'trainee' => 'trainee',
-                default => 'employee'
-                };
+            $typeValue = match($lastType) {
+            'freelancer' => 'freelancer',
+            'trainee' => 'trainee',
+            default => 'employee'
+            };
 
-                $selectedType = old('is_freelancer', $typeValue);
+            $selectedType = old('is_freelancer', $typeValue);
             @endphp
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" x-data="{freelancer : '{{ $selectedType }}'">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" x-data="{freelancer : '{{ $selectedType }}' }">
                 <div class="md:col-span-3">
                     <h3 class="text-lg font-medium text-base-content mb-4">Basic Information</h3>
                 </div>
@@ -138,13 +138,30 @@
                 </div>
 
                 <span>
-                    <input type='radio' @click="freelancer='employee'" value="employee" name="is_freelancer" @if(old('is_freelancer', $employee->is_freelancer))@if(old('is_freelancer', $employee->is_freelancer) == 'employee') checked @endif @else checked @endif > Employee
+                    <input type="radio"
+                        @click="freelancer = 'employee'"
+                        value="employee"
+                        name="is_freelancer"
+                        {{ $selectedType === 'employee' ? 'checked' : '' }}>
+                    Employee
                 </span>
+
                 <span>
-                    <input type='radio' @click="freelancer='freelancer'" value="freelancer" name="is_freelancer" @if(old('is_freelancer', $employee->is_freelancer))@if(old('is_freelancer', $employee->is_freelancer) == 'freelancer') checked @endif @endif > FreeLancer
+                    <input type="radio"
+                        @click="freelancer = 'freelancer'"
+                        value="freelancer"
+                        name="is_freelancer"
+                        {{ $selectedType === 'freelancer' ? 'checked' : '' }}>
+                    FreeLancer
                 </span>
+
                 <span>
-                    <input type='radio' @click="freelancer='trainee'" value="trainee" name="is_freelancer" @if(old('is_freelancer', $employee->is_freelancer))@if(old('is_freelancer', $employee->is_freelancer) == 'trainee') checked @endif @endif > Trainee
+                    <input type="radio"
+                        @click="freelancer = 'trainee'"
+                        value="trainee"
+                        name="is_freelancer"
+                        {{ $selectedType === 'trainee' ? 'checked' : '' }}>
+                    Trainee
                 </span>
 
                 <div x-show="freelancer==='freelancer'" class="col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6" x-data="{salary:{{ old('is_project', $employee->is_project) ? 'false' : 'true' }}}">

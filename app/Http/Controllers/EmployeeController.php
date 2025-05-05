@@ -13,8 +13,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Attachment;
 use Illuminate\Support\Facades\Auth;
 
@@ -242,42 +242,248 @@ class EmployeeController extends Controller
         return view('employees.edit', compact('employee', 'departments', 'operators', 'types'));
     }
 
-    public function update(Request $request, Employee $employee)
+    public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
-        $validated = $request->validate([
-            'employee_code' => ['required', 'string', 'max:255', Rule::unique('employees')->ignore($employee->id)],
-            'cin' => ['required', 'string', 'max:255', Rule::unique('employees')->ignore($employee->id)],
-            'profile_picture' => 'nullable|image|max:2048',
-            'adress' => 'nullable|string|max:255',
-            'personal_num' => 'nullable|string|max:255',
-            'professional_num' => 'nullable|string|max:255',
-            'pin' => 'nullable|string|max:255',
-            'puk' => 'nullable|string|max:255',
-            'salary' => 'nullable|numeric',
-            'is_project' => 'boolean',
-            'houres' => 'nullable|integer',
-            'ice' => 'nullable|string|max:255',
-            'professional_email' => 'nullable|email|max:255',
-            'cnss' => 'nullable|string|max:255',
-            'assurance' => 'nullable|string|max:255',
-            'users_id' => 'required|exists:users,id',
-            'operator_id' => 'nullable|exists:operators,id',
-            'department_id' => 'required|exists:departments,id',
-            'status_id' => 'required|exists:status,id',
-        ]);
+        DB::beginTransaction();
 
-        if ($request->hasFile('profile_picture')) {
-            if ($employee->profile_picture) {
-                Storage::disk('public')->delete($employee->profile_picture);
+        try {
+            // Get the associated user
+            $user = User::findOrFail($employee->user_id);
+
+            // Update user data
+            $user->update([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+            ]);
+
+            // Update password only if provided
+            if ($request->filled('password')) {
+                $user->password = bcrypt($request->password);
+                $user->save();
             }
-            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
-            $validated['profile_picture'] = $path;
+
+            // Prepare employee data for update
+            $data = [
+                'personal_num' => $request->personal_num,
+                'address' => $request->address,
+            ];
+
+            // Handle profile picture update if provided
+            if ($request->hasFile('profile_picture')) {
+                // Delete old file if exists
+                if ($employee->profile_picture && Storage::disk('public')->exists($employee->profile_picture)) {
+                    Storage::disk('public')->delete($employee->profile_picture);
+                }
+
+                $picPath = $request->file('profile_picture')->storeAs(
+                    'profile_pictures',
+                    uniqid() . '_' . $request->file('profile_picture')->getClientOriginalName(),
+                    'public'
+                );
+
+                $data['profile_picture'] = $picPath;
+            }
+
+            // Handle CIN attachment update if provided
+            if ($request->hasFile('cin_attachment')) {
+                // Delete old file if exists
+                if ($employee->cin_attachment && Storage::disk('public')->exists($employee->cin_attachment)) {
+                    Storage::disk('public')->delete($employee->cin_attachment);
+                }
+
+                $cinPath = $request->file('cin_attachment')->storeAs(
+                    'cin_attachments',
+                    uniqid() . '_' . $request->file('cin_attachment')->getClientOriginalName(),
+                    'public'
+                );
+
+                $data['cin_attachment'] = $cinPath;
+                $data['cin'] = $request->cin;
+            }
+
+            // Freelancer Specific
+            if ($request->is_freelancer === 'freelancer') {
+                $data['ice'] = $request->ice;
+                $data['is_project'] = $request->has('is_project') ? true : false;
+
+                if (!$data['is_project']) {
+                    $data['salary'] = $request->salary;
+                    $data['hours'] = 0;
+                }
+            }
+            // Employee Specific
+            elseif ($request->is_freelancer === 'employee') {
+                $data = array_merge($data, [
+                    'salary' => $request->salary,
+                    'professional_num' => $request->professional_num,
+                    'professional_email' => $request->professional_email,
+                    'pin' => $request->pin,
+                    'puk' => $request->puk,
+                    'operator_id' => $request->operator_id,
+                    'cnss' => $request->cnss,
+                    'assurance' => $request->assurance,
+                ]);
+            }
+
+            // Update Employee
+            $employee->update($data);
+
+            // Update Departments - first delete existing relationships
+            EmployeeDepartment::where('employee_id', $employee->id)->delete();
+
+            // Then create new department relationships
+            foreach ($request->department_ids as $id) {
+                EmployeeDepartment::create([
+                    'employee_id' => $employee->id,
+                    'department_id' => $id,
+                ]);
+            }
+
+            // Get current TypeEmployee
+            $typeEmployee = TypeEmployee::where('employee_id', $employee->id)
+                ->orderBy('in_date', 'desc')
+                ->first();
+
+            // Determine Type
+            $type = match ($request->is_freelancer) {
+                'freelancer', 'trainee' => Type::where('type', $request->is_freelancer)->first(),
+                default => Type::find($request->type_id),
+            };
+
+            // If type has changed, create a new TypeEmployee record
+            if ($typeEmployee->type_id != $type->id) {
+                // Set out_date for the old record
+                $typeEmployee->out_date = now();
+                $typeEmployee->save();
+
+                // Create new TypeEmployee
+                $newTypeEmployee = new TypeEmployee([
+                    'in_date' => now(),
+                ]);
+
+                $newTypeEmployee->employee()->associate($employee);
+                $newTypeEmployee->type()->associate($type);
+                $newTypeEmployee->save();
+
+                $typeEmployee = $newTypeEmployee;
+            }
+
+            // Handle attachments based on employee type
+            if ($request->is_freelancer === 'freelancer' && $request->hasFile('eic')) {
+                // Find existing attachment or create new one
+                $attachment = Attachment::where('type_employee_id', $typeEmployee->id)
+                    ->where('name', 'Entrepreneur Identification Card')
+                    ->first();
+
+                // Delete old file if exists
+                if ($attachment && Storage::disk('public')->exists($attachment->attachment)) {
+                    Storage::disk('public')->delete($attachment->attachment);
+                }
+
+                $eicPath = $request->file('eic')->storeAs(
+                    'attachments',
+                    uniqid() . '_' . $request->file('eic')->getClientOriginalName(),
+                    'public'
+                );
+
+                if ($attachment) {
+                    $attachment->update(['attachment' => $eicPath]);
+                } else {
+                    Attachment::create([
+                        'name' => 'Entrepreneur Identification Card',
+                        'attachment' => $eicPath,
+                        'type_employee_id' => $typeEmployee->id,
+                    ]);
+                }
+            } elseif ($request->is_freelancer === 'employee') {
+                // Handle employee attachments
+                $attachmentTypes = [
+                    'employment_contract' => 'employment_contract',
+                    'job_application' => 'job_application',
+                    'insurance' => 'insurance',
+                    'resume' => 'resume',
+                    'cnss_certificate' => 'cnss_certificate'
+                ];
+
+                foreach ($attachmentTypes as $fileKey => $attachmentName) {
+                    if ($request->hasFile($fileKey)) {
+                        // Find existing attachment
+                        $attachment = Attachment::where('type_employee_id', $typeEmployee->id)
+                            ->where('name', $attachmentName)
+                            ->first();
+
+                        // Delete old file if exists
+                        if ($attachment && Storage::disk('public')->exists($attachment->attachment)) {
+                            Storage::disk('public')->delete($attachment->attachment);
+                        }
+
+                        $filePath = $request->file($fileKey)->storeAs(
+                            'attachments',
+                            uniqid() . '_' . $request->file($fileKey)->getClientOriginalName(),
+                            'public'
+                        );
+
+                        if ($attachment) {
+                            $attachment->update(['attachment' => $filePath]);
+                        } else {
+                            Attachment::create([
+                                'name' => $attachmentName,
+                                'attachment' => $filePath,
+                                'type_employee_id' => $typeEmployee->id,
+                            ]);
+                        }
+                    }
+                }
+            } else { // Trainee
+                // Handle trainee attachments
+                $attachmentTypes = [
+                    'internship_agreement' => 'internship_agreement',
+                    'internship_application' => 'internship_application',
+                    'insurance_int' => 'insurance',
+                    'resume_int' => 'resume',
+                    'transcript' => 'transcript'
+                ];
+
+                foreach ($attachmentTypes as $fileKey => $attachmentName) {
+                    if ($request->hasFile($fileKey)) {
+                        // Find existing attachment
+                        $attachment = Attachment::where('type_employee_id', $typeEmployee->id)
+                            ->where('name', $attachmentName)
+                            ->first();
+
+                        // Delete old file if exists
+                        if ($attachment && Storage::disk('public')->exists($attachment->attachment)) {
+                            Storage::disk('public')->delete($attachment->attachment);
+                        }
+
+                        $filePath = $request->file($fileKey)->storeAs(
+                            'attachments',
+                            uniqid() . '_' . $request->file($fileKey)->getClientOriginalName(),
+                            'public'
+                        );
+
+                        if ($attachment) {
+                            $attachment->update(['attachment' => $filePath]);
+                        } else {
+                            Attachment::create([
+                                'name' => $attachmentName,
+                                'attachment' => $filePath,
+                                'type_employee_id' => $typeEmployee->id,
+                            ]);
+                        }
+                    }
+                }
+            }
+
+            DB::commit();
+            return redirect()->route('employees.index')->with('success', 'Employee updated successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Error updating employee: ' . $e->getMessage())->withInput();
         }
-
-        $employee->update($validated);
-
-        return redirect()->route('employees.index')->with('success', 'Employee updated successfully.');
     }
+
 
     public function destroy(Employee $employee)
     {

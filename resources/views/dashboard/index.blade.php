@@ -79,11 +79,73 @@
     </div>
 
     <!-- Monthly Payments Chart -->
-    <div class="bg-base-200 overflow-hidden shadow rounded-lg">
-        <div class="px-4 py-5 sm:p-6">
-            <h3 class="text-lg leading-6 font-medium text-base -content">Monthly Payments</h3>
-            <div class="mt-4 h-80">
-                <canvas id="monthlyPaymentsChart"></canvas>
+    <div class="bg-base-200 overflow-hidden shadow rounded-lg mb-8">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-base-content">Employees To Pay Soon</h3>
+            <p class="mt-1 max-w-2xl text-sm text-base-content">Employees who need to be paid in 2 days.</p>
+        </div>
+        <div class="border-t border-base-300">
+            <div class="overflow-hidden overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-base-200">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Employee</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Department</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Salary</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Payment Date</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-base-200 divide-y divide-base-300">
+                        @if($employeesToPay->count() > 0)
+                        @foreach($employeesToPay as $employee)
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10">
+                                        <img class="h-10 w-10 rounded-full object-cover" src="{{ asset('storage/' . $employee->profile_picture) }}" alt="{{ $employee->user->first_name }} {{ $employee->user->last_name }}">
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-base-content">{{ $employee->user->first_name }} {{ $employee->user->last_name }}</div>
+                                        <div class="text-sm text-base-content opacity-70">{{ $employee->user->email }}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-base-content">
+                                    @foreach($employee->departments as $department)
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        {{ $department->name }}
+                                    </span>
+                                    @endforeach
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-base-content">{{ number_format($employee->salary, 2) }}</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-base-content">{{ $employee->created_at->addDays(2)->format('M d, Y') }}</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a href="{{ route('payments.create', ['employee_id' => $employee->id]) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Create Payment</a>
+                                <a href="{{ route('employees.show', $employee->id) }}" class="text-indigo-600 hover:text-indigo-900">View</a>
+                            </td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            <td colspan="5" class="px-6 py-4 whitespace-nowrap text-center text-sm text-base-content">
+                                No employees need to be paid in the next 2 days.
+                            </td>
+                        </tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="px-4 py-4 sm:px-6 bg-base-200">
+            <div class="text-sm">
+                <a href="{{ route('payments.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">View all payments</a>
             </div>
         </div>
     </div>
@@ -97,7 +159,7 @@
         <div class="border-t border-base-300 ">
             <div class="overflow-hidden overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200 ">
-                    <thead class="  bg-base-200 ">
+                    <thead class="bg-base-200">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Employee</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Reason</th>
