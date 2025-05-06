@@ -130,6 +130,7 @@ Route::middleware(['auth','role:employee'])->group(function () {
     Route::get('/employee/attachments', [EmployeeProfileController::class, 'attachments'])->name('employee.attachments');
     Route::get('/employee/leaves', [EmployeeProfileController::class, 'leaves'])->name('employee.leaves');
     Route::get('/employee/payments', [EmployeeProfileController::class, 'payments'])->name('employee.payments');
+    Route::get('/employee/projects', [EmployeeProfileController::class, 'projects'])->name('employee.projects');
     Route::post('/employee/leaves/store', [LeaveController::class,'store'])->name('employee.leaves.store');
 });
 require __DIR__.'/auth.php';
