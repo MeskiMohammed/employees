@@ -8,12 +8,13 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('payment_type_id')->nullable()->constrained();
-            $table->double('salary')->default(0);
             $table->foreignId('employee_id')->constrained();
-            $table->date('date');
-            $table->double('tax')->default(0);
-            $table->double('net')->default(0);
+            $table->foreignId('payment_type_id')->constrained();
+            $table->double('gross');
+            $table->date('cnss');
+            $table->double('tax_rate');
+            $table->double('income_tax');
+            $table->double('net');
             $table->timestamps();
         });
     }

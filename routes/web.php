@@ -54,6 +54,8 @@ Route::middleware(['auth','role:super_admin|admin'])->group(function () {
     Route::put('employees/{employee}',[EmployeeController::class,'update'])->name('employees.update')->middleware('permission:edit employees');
     Route::put('employees/{employee}/toggle-admin',[EmployeeController::class,'toggleAdmin'])->name('employees.toggleAdmin')->middleware('role:super_admin');
     Route::put('employees/{employee}/assign-permissions',[EmployeeController::class,'assignPermissions'])->name('employees.assignPermissions')->middleware('role:super_admin');
+    Route::get('employees/{employee}/pay', [EmployeeController::class, 'payment'])->name('employees.payment');
+    Route::post('employees/{employee}/pay', [EmployeeController::class, 'pay'])->name('employees.pay');
 
     Route::get('departments',[DepartmentController::class,'index'])->name('departments.index')->middleware('permission:view departments');
     Route::get('departments/create',[DepartmentController::class,'create'])->name('departments.create')->middleware('permission:create departments');
@@ -122,6 +124,7 @@ Route::middleware(['auth','role:super_admin|admin'])->group(function () {
     Route::get('/enterprise', [EnterpriseController::class, 'edit'])->name('enterprise.edit')->middleware('role:super_admin');
     Route::put('/enterprise', [EnterpriseController::class, 'update'])->name('enterprise.update')->middleware('role:super_admin');
 
+    
 });
 
 

@@ -10,12 +10,14 @@ use App\Models\Status;
 use App\Models\Type;
 use App\Models\TypeEmployee;
 use App\Models\User;
+use App\Models\PaymentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Attachment;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
@@ -534,14 +536,14 @@ class EmployeeController extends Controller
         $employee->user->syncPermissions($permissions);
         return redirect()->back()->with('success', 'permissions has been assigned successfully');
     }
-
-    public function calculateNetSalary(float $grossSalary): float
+    
+    public function payment(Employee $employee)
     {
-        // Step 1: CNSS deduction (6.74%)
-        $cnssRate = 0.0674;
-        $cnss = $grossSalary * $cnssRate;
+        $grossSalary = $employee->salary;
 
-        // Step 2: Estimate income tax rate based on gross salary
+        $cnssRate = 0.0674;
+        $cnssDeduction = $grossSalary * $cnssRate;
+
         $taxRate = match (true) {
             $grossSalary <= 3000 => 0,
             $grossSalary <= 5000 => 0.10,
@@ -551,12 +553,50 @@ class EmployeeController extends Controller
             default => 0.38,
         };
 
-        // Step 3: Income tax amount
-        $incomeTax = $grossSalary * $taxRate;
+        $incomeTaxDeduction = $employee->salary * $taxRate;
 
-        // Step 4: Calculate net salary
-        $netSalary = $grossSalary - $cnss - $incomeTax;
+        $netSalary = $employee->salary - $cnssDeduction - $incomeTaxDeduction;
 
-        return round($netSalary, 2);
+        $previousPayments = $employee->payments()
+            ->where('date', '>=', now()->startOfMonth())
+            ->where('date', '<=', now()->endOfMonth())
+            ->get();
+
+        $paymentTypes = PaymentType::all();
+
+        return view('employees.pay', compact('employee', 'grossSalary', 'cnssDeduction','taxRate' , 'incomeTaxDeduction', 'netSalary', 'previousPayments', 'paymentTypes'));
+    }
+
+    public function pay(Request $request,Employee $employee)
+    {
+        $grossSalary = $employee->salary;
+
+        $cnssRate = 0.0674;
+        $cnssDeduction = $grossSalary * $cnssRate;
+
+        $taxRate = match (true) {
+            $grossSalary <= 3000 => 0,
+            $grossSalary <= 5000 => 0.10,
+            $grossSalary <= 10000 => 0.20,
+            $grossSalary <= 15000 => 0.30,
+            $grossSalary <= 20000 => 0.34,
+            default => 0.38,
+        };
+
+        $incomeTaxDeduction = $employee->salary * $taxRate;
+
+        $netSalary = $employee->salary - $cnssDeduction - $incomeTaxDeduction;
+
+        Payment::create([
+            'employee_id' => $employee->id,
+            'payment_type_id' => $request->payment_type_id,
+            'gross' => $grossSalary,
+            'cnss' => $cnssDeduction,
+            'tax_rate' => $taxRate,
+            'income_tax' => $incomeTaxDeduction,
+            'net' => $netSalary,
+        ]);
+
+        return redirect()->route('employees.show',$employee)->with('success', 'Payment has been made successfully');
     }
 }
