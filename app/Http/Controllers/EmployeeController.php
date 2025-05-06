@@ -42,7 +42,14 @@ class EmployeeController extends Controller
             if ($request->status != null) {
                 $query->where('status_id', $request->status);
             }
-        }
+
+
+            if ($request->filled('type')) {
+                $query->whereHas('typeEmployees', function ($q) use ($request) {
+                    $q->where('type_id', $request->type);
+                });
+            }
+         }
 
 
         $employees = $query->paginate(10);
@@ -305,10 +312,10 @@ class EmployeeController extends Controller
             // Freelancer Specific
             if ($request->is_freelancer === 'freelancer') {
                 $data['ice'] = $request->ice;
-                $data['is_project'] = $request->has('is_project') ? true : false;
+                $data['is_project'] = $request->has('is_project') ? $request->is_project : false;
 
                 if (!$data['is_project']) {
-                    $data['salary'] = $request->salary;
+                    $data['salary'] = $request->salary_free;
                     $data['hours'] = 0;
                 }
             }

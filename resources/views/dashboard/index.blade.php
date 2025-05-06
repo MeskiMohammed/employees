@@ -90,7 +90,6 @@
                     <thead class="bg-base-200">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Employee</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Department</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Salary</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Payment Date</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Actions</th>
@@ -100,35 +99,27 @@
                         @if($employeesToPay->count() > 0)
                         @foreach($employeesToPay as $employee)
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="py-4 px-2 whitespace-nowrap">
+                                <a href='{{route('employees.show',$employee)}}' class='block cursor-pointer'>
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10">
                                         <img class="h-10 w-10 rounded-full object-cover" src="{{ asset('storage/' . $employee->profile_picture) }}" alt="{{ $employee->user->first_name }} {{ $employee->user->last_name }}">
                                     </div>
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-base-content">{{ $employee->user->first_name }} {{ $employee->user->last_name }}</div>
-                                        <div class="text-sm text-base-content opacity-70">{{ $employee->user->email }}</div>
+                                        <div class="text-sm text-base-content opacity-70">{{ $employee->cin }}</div>
                                     </div>
                                 </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-base-content">
-                                    @foreach($employee->departments as $department)
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                        {{ $department->name }}
-                                    </span>
-                                    @endforeach
-                                </div>
+                                </a>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-base-content">{{ number_format($employee->salary, 2) }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-base-content">{{ $employee->created_at->addDays(2)->format('M d, Y') }}</div>
+                                <div class="text-sm text-base-content">{{ $employee->created_at->format('d M Y') }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <a href="{{ route('payments.create', ['employee_id' => $employee->id]) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Create Payment</a>
-                                <a href="{{ route('employees.show', $employee->id) }}" class="text-indigo-600 hover:text-indigo-900">View</a>
                             </td>
                         </tr>
                         @endforeach

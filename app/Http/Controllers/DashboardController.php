@@ -18,22 +18,22 @@ class DashboardController extends Controller
         $totalDepartments = Department::count();
         $totalUsers = User::count();
         $totalPayments = Payment::count();
-        
+
         $recentEmployees = Employee::with('employeeDepartments', 'status')
             ->latest()
             ->take(5)
             ->get();
-            
+
         $recentLeaves = Leave::with('employee')
             ->latest()
             ->take(5)
             ->get();
-            
+
         $departmentEmployees = Department::withCount('employeeDepartments')
             ->get()
             ->pluck('employee_departments_count', 'name')
             ->toArray();
-            
+
         $monthlyPayments = Payment::select(
                 DB::raw('MONTH(date) as month'),
                 DB::raw('SUM(net) as total')
@@ -49,7 +49,7 @@ class DashboardController extends Controller
 
         $employeesToPay = Employee::whereBetween('created_at', [$startDate, $endDate])->get();
 
-            
+
         return view('dashboard.index', compact(
             'totalEmployees',
             'totalDepartments',

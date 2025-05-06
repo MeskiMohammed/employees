@@ -32,7 +32,8 @@
                 </select>
             </div>
 
-            <div>
+            <div class='grid grid-cols-2 gap-4'>
+                <div>
                 <label for="status" class="block text-sm font-medium  mb-1 text-base-content">Status</label>
                 <select name="status" id="status" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md bg-base-100">
                     <option value="">All Statuses</option>
@@ -40,6 +41,16 @@
                         <option value="{{ $status->id }}" {{ request('status') == $status->id ? 'selected' : '' }}>{{ $status->status }}</option>
                     @endforeach
                 </select>
+                </div>
+                <div>
+                <label for="type" class="block text-sm font-medium  mb-1 text-base-content">Type</label>
+                <select name="type" id="type" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md bg-base-100">
+                    <option value="">All Types</option>
+                    @foreach(\App\Models\Type::all() as $type)
+                        <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>{{ $type->type }}</option>
+                    @endforeach
+                </select>
+                </div>
             </div>
 
             <div class="flex items-end">
@@ -60,7 +71,7 @@
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Employee</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Departments</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Contact</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Type</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider">Status</th>
                     <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-base-content uppercase tracking-wider">Actions</th>
                 </tr>
@@ -101,8 +112,7 @@
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-base-content">{{ $employee->professional_email ?? 'N/A' }}</div>
-                        <div class="text-sm text-base-content">{{ $employee->professional_num ?? 'N/A' }}</div>
+                        <div class="text-sm text-base-content">{{ $employee->typeEmployees->last()->type->type }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-{{ $employee->status ? ($employee->status->status === 'active' ? 'green' : 'red') : 'gray' }}-100 text-{{ $employee->status ? ($employee->status->status === 'active' ? 'green' : 'red') : 'gray' }}-800">
