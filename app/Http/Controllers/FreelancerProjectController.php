@@ -41,6 +41,8 @@ class FreelancerProjectController extends Controller
         $employees = Employee::with('user')->get();
     
         return view('freelancer-projects.index', compact('projects', 'employees'));
+
+        
     }
     
 

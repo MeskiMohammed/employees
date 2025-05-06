@@ -7,7 +7,7 @@
 @section('content')
 <div class="bg-white rounded-lg shadow">
     <div class="p-6 border-b border-gray-200">
-        <h2 class="font-semibold text-2xl text-black mb-6 mt-8">Request Leave</h2>
+    <h2 class="text-lg font-semibold text-gray-700">Request Leave</h2>
     </div>
     <div class="p-6">
         <form action="{{ route('employee.leaves.store') }}" method="POST">
@@ -83,7 +83,7 @@
 <br>
 <div class="bg-white rounded-lg shadow">
     <div class="p-6 border-b border-gray-200">
-        <h2 class="font-semibold text-2xl text-black mb-6 mt-8"> Recent Leaves</h2>
+    <h2 class="text-lg font-semibold text-gray-700">Recent Leaves</h2>
     </div>
     <div class="p-6">
         <form action="{{ route('employee.leaves.store') }}" method="POST">
