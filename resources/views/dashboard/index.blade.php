@@ -98,6 +98,9 @@
                     <tbody class="bg-base-200 divide-y divide-base-300">
                         @if($employeesToPay->count() > 0)
                         @foreach($employeesToPay as $employee)
+                        @if ($employee->payments()->where('created_at', '>=', now()->startOfMonth())->where('created_at', '<=', now()->endOfMonth())->exists())
+                            @continue
+                        @endif
                         <tr>
                             <td class="py-4 px-2 whitespace-nowrap">
                                 <a href='{{route('employees.show',$employee)}}' class='block cursor-pointer'>
@@ -119,7 +122,7 @@
                                 <div class="text-sm text-base-content">{{ $employee->created_at->format('d M Y') }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <a href="{{ route('payments.create', ['employee_id' => $employee->id]) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Create Payment</a>
+                                <a href="{{ route('employees.payment', $employee) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Create Payment</a>
                             </td>
                         </tr>
                         @endforeach

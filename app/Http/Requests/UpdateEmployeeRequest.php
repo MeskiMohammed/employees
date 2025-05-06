@@ -45,8 +45,8 @@ class UpdateEmployeeRequest extends FormRequest
                 'max:255',
                 Rule::unique('employees', 'cin')->ignore($employeeId),
             ],
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'cin_attachment' => 'nullable|file|mimes:pdf,jpeg,png,jpg|max:2048',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'cin_attachment' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'department_ids' => 'required|array',
             'department_ids.*' => 'exists:departments,id',
             'is_freelancer' => 'required|in:employee,freelancer,trainee',
@@ -84,21 +84,21 @@ class UpdateEmployeeRequest extends FormRequest
             'hours' => 'nullable|numeric|min:0',
             
             // Attachments for employee
-            'employment_contract' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-            'job_application' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-            'insurance' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-            'resume' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-            'cnss_certificate' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'employment_contract' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'job_application' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'insurance' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'resume' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'cnss_certificate' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             
             // Attachments for freelancer
-            'eic' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'eic' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             
             // Attachments for trainee
-            'internship_agreement' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-            'internship_application' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-            'insurance_int' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-            'resume_int' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-            'transcript' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'internship_agreement' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'internship_application' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'insurance_int' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'resume_int' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'transcript' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 

@@ -57,6 +57,7 @@
                     <tr>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment Date</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
 
                     </tr>
@@ -66,52 +67,22 @@
                     @foreach($payments as $payment)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">{{ $payment->date->format('M d, Y') }}</div>
-                            <div class="text-sm text-gray-500">{{ $payment->date->format('h:i A') }}</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">{{ $payment->description }}</div>
-                            <div class="text-sm text-gray-500">Ref: {{ $payment->reference_number }}</div>
+                            <div class="text-sm text-gray-900">{{ $payment->created_at->format('M d, Y') }}</div>
+                            <div class="text-sm text-gray-500">{{ $payment->created_at->format('h:i A') }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">{{ $payment->type }}</div>
-                            <div class="text-sm text-gray-500">{{ $payment->payment_method }}</div>
+                            <div class="text-sm text-gray-900">{{ $payment->paymentType->type }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">${{ number_format($payment->amount, 2) }}</div>
+                            <div class="text-sm font-medium text-gray-900">${{ number_format($payment->net, 2) }}</div>
                             @if($payment->tax_amount)
                             <div class="text-xs text-gray-500">Tax: ${{ number_format($payment->tax_amount, 2) }}</div>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            @if($payment->status == 'Paid')
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-gray-800">
                                 Paid
                             </span>
-                            @elseif($payment->status == 'Processing')
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                Processing
-                            </span>
-                            @else
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                                {{ $payment->status }}
-                            </span>
-                            @endif
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <div class="flex justify-end space-x-2">
-                                <a href="{{ route('employee.payments.download', $payment->id) }}" class="text-blue-600 hover:text-blue-900">
-                                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                    </svg>
-                                </a>
-                                <button class="text-gray-600 hover:text-gray-900 view-payment" data-id="{{ $payment->id }}">
-                                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
-                                </button>
-                            </div>
                         </td>
                     </tr>
                     @endforeach

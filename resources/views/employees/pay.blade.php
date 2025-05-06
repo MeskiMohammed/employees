@@ -6,9 +6,6 @@
 <div class="container mx-auto px-4 py-6">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold text-gray-800">Create Payment for {{ $employee->user->first_name }} {{ $employee->user->last_name }}</h1>
-        <a href="{{ route('employees.show', $employee->id) }}" class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded">
-            <i class="fas fa-arrow-left mr-2"></i> Back to Employee Page
-        </a>
     </div>
 
     @if(session('error'))
@@ -90,8 +87,8 @@
                 @foreach($previousPayments as $payment)
                 <div class="border-b border-gray-200 pb-2 last:border-0">
                     <div class="flex justify-between items-center">
-                        <span class="text-gray-600">{{ $payment->payment_date->format('M d, Y') }}</span>
-                        <span class="font-medium">{{ number_format($payment->amount, 2) }} MAD</span>
+                        <span class="text-gray-600">{{ $payment->created_at->format('M d, Y') }}</span>
+                        <span class="font-medium">{{ number_format($payment->net, 2) }} MAD</span>
                     </div>
                     <div class="text-xs text-gray-500">
                         {{ $payment->description ?? $payment->paymentType->name ?? 'Regular Payment' }}
@@ -132,10 +129,15 @@
                 <a href="{{ route('employees.show', $employee->id) }}" class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded">
                     Cancel
                 </a>
-                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">
+                <button type="submit" class="text-white py-2 px-4 rounded {{ $hasBeenPayedThisMonth ? 'bg-gray-500 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700' }}" @if($hasBeenPayedThisMonth) disabled @endif>
                     Create Payment
                 </button>
             </div>
+            @if($hasBeenPayedThisMonth)
+            <div class="flex justify-end">
+                <p class="block text-red-500 text-xs mb-2 self-end">Payment has already been made this month.</p>
+            </div>
+            @endif
         </form>
     </div>
 </div>

@@ -5,6 +5,7 @@
 @section('header', 'Edit Employee')
 
 @section('content')
+
 <div class="max-w-6xl mx-auto">
     <div class="bg-base-200 border-base-300 shadow rounded-lg">
         <div class="p-6 border-b border-base-300">
@@ -213,10 +214,10 @@
                         <select name="type_id" id="type_id" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('type_id') border-red-500 @enderror">
                             <option value="">Select Type</option>
                             @foreach($types as $type)
-                            @if($type->type === 'trainee' || $type->type === 'freelancer')
-                            @continue
-                            @endif
-                            <option value="{{ $type->id }}" {{ old('type_id', $employee->type_id) == $type->id ? 'selected' : '' }}>
+                                @if($type->type === 'trainee' || $type->type === 'freelancer')
+                                    @continue
+                                @endif
+                            <option value="{{ $type->id }}" {{ old('type_id', $employee->typeEmployees->last()->type->id) == $type->id ? 'selected' : '' }}>
                                 {{ $type->type }}
                             </option>
                             @endforeach

@@ -35,10 +35,10 @@ class DashboardController extends Controller
             ->toArray();
 
         $monthlyPayments = Payment::select(
-                DB::raw('MONTH(date) as month'),
+                DB::raw('MONTH(created_at) as month'),
                 DB::raw('SUM(net) as total')
             )
-            ->whereYear('date', date('Y'))
+            ->whereYear('created_at', date('Y'))
             ->groupBy('month')
             ->get()
             ->pluck('total', 'month')
