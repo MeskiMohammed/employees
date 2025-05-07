@@ -9,50 +9,6 @@
         <x-toast></x-toast>
     @endif
 
-    <div class="p-6 border-base-300 border-b bg-base-200">
-        <form action="{{ route('employees.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-                <label for="search" class="block text-sm font-medium text-base-content mb-1">Search</label>
-                <input type="text" name="search" id="search" value="{{ request('search') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md bg-base-100" placeholder="Search employees...">
-            </div>
-
-            <div>
-                <label for="department" class="block text-sm font-medium text-base-content mb-1">Department</label>
-                <select name="department" id="department" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md bg-base-100">
-                    <option value="">All Departments</option>
-                    @foreach($departments as $department)
-                        <option value="{{ $department->id }}" {{ request('department') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class='grid grid-cols-2 gap-4'>
-                <div>
-                <label for="status" class="block text-sm font-medium  mb-1 text-base-content">Status</label>
-                <select name="status" id="status" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md bg-base-100">
-                    <option value="">All Statuses</option>
-                    @foreach($statuses as $status)
-                        <option value="{{ $status->id }}" {{ request('status') == $status->id ? 'selected' : '' }}>{{ $status->status }}</option>
-                    @endforeach
-                </select>
-                </div>
-                <div>
-                <label for="type" class="block text-sm font-medium  mb-1 text-base-content">Type</label>
-                <select name="type" id="type" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md bg-base-100">
-                    <option value="">All Types</option>
-                    @foreach(\App\Models\Type::all() as $type)
-                        <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>{{ $type->type }}</option>
-                    @endforeach
-                </select>
-                </div1>
-            </div>
-
-            <div class="flex items-end">
-                <button type="submit" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                    <i class="fas fa-search mr-2"></i> Filter
-                </button>
-                <a href="{{ route('employees.index') }}" class="ml-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                    <i class="fas fa-times mr-2"></i> Reset
     <div class="bg-base-200 border border-base-300 shadow rounded-lg">
         <div class="flex justify-between items-center p-6 border-base-300 border-b">
             <h2 class="text-xl font-semibold text-base-content">Employees List</h2>
