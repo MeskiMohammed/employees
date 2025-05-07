@@ -24,7 +24,6 @@ class StoreEmployeeRequest extends FormRequest
             'address' => 'required|string|max:255',
             'cin' => 'required|string|max:8|unique:employees',
             'cin_attachment' => 'required|image|mimes:jpeg,png,jpg',
-            
 
             'is_freelancer' => 'required|string',
             'is_project' => 'nullable|boolean',
@@ -73,6 +72,7 @@ class StoreEmployeeRequest extends FormRequest
         });
 
         $validator->sometimes([
+                'training_type',
                 'internship_agreement',
                 'internship_application',
                 'insurance_int',
@@ -80,6 +80,10 @@ class StoreEmployeeRequest extends FormRequest
                 'transcript',
             ], 'required', function ($input) {return $input->is_freelancer === 'trainee';}
         );
+
+        $validator->sometimes('school', 'required', function ($input) {
+            return $input->is_freelancer === 'trainee' && $input->training_type === 'student';
+        });
     }
 
     public function messages()
@@ -193,6 +197,7 @@ class StoreEmployeeRequest extends FormRequest
             'assurance' => 'Insurance',
             'type_id' => 'Employee Type',
             'insurance_int' => 'Employee Type',
+            'type_id' => 'Employee Type',
     ];
     }
 

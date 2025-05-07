@@ -50,7 +50,7 @@
                         <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>{{ $type->type }}</option>
                     @endforeach
                 </select>
-                </div>
+                </div1>
             </div>
 
             <div class="flex items-end">

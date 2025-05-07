@@ -126,6 +126,11 @@ class EmployeeController extends Controller
                 'cnss' => $request->cnss,
                 'assurance' => $request->assurance,
             ]);
+        }else{
+            $data = array_merge($data,[
+                'training_type'=>$request->training_type,
+                'school'=>$request->school
+            ]);
         }
 
         // Create User
@@ -333,6 +338,11 @@ class EmployeeController extends Controller
                 'operator_id' => $request->operator_id,
                 'cnss' => $request->cnss,
                 'assurance' => $request->assurance,
+            ]);
+        }else{
+            $data = array_merge($data,[
+                'training_type'=>$request->training_type,
+                'school'=>$request->school
             ]);
         }
 

@@ -24,6 +24,8 @@ return new class extends Migration {
             $table->string('ice')->nullable();
             $table->string('professional_email')->nullable();
             $table->string('cnss')->nullable();
+            $table->string('training_type')->nullable();
+            $table->string('school')->nullable();
             $table->string('assurance')->nullable();
             $table->foreignId('operator_id')->nullable()->constrained();
             $table->foreignId('user_id')->constrained();
