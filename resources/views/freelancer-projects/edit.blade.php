@@ -6,9 +6,9 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto">
-    <div class="bg-white shadow rounded-lg">
+    <div class="bg-base-200 shadow rounded-lg">
         <div class="p-6 border-b border-base-300">
-            <h2 class="text-xl font-semibold text-gray-800">Edit Freelancer Project</h2>
+            <h2 class="text-xl font-semibold text-base-content">Edit Freelancer Project</h2>
         </div>
         
         <form action="{{ route('freelancer-projects.update', $freelancerProject) }}" method="POST" class="p-6">
@@ -17,16 +17,16 @@
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Project Name</label>
-                    <input type="text" name="name" id="name" value="{{ old('name', $freelancerProject->name) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('name') border-red-500 @enderror" required>
+                    <label for="name" class="block text-sm font-medium text-base-content mb-1">Project Name</label>
+                    <input type="text" name="name" id="name" value="{{ old('name', $freelancerProject->name) }}" class=" bg-base-200 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('name') border-red-500 @enderror" required>
                     @error('name')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
                 
                 <div>
-                    <label for="employee_id" class="block text-sm font-medium text-gray-700 mb-1">Freelancer</label>
-                    <select name="employee_id" id="employee_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('employee_id') border-red-500 @enderror" required>
+                    <label for="employee_id" class="block text-sm font-medium text-base-content mb-1">Freelancer</label>
+                    <select name="employee_id" id="employee_id" class=" bg-base-200 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('employee_id') border-red-500 @enderror" required>
                         <option value="">Select Freelancer</option>
                         @foreach($employees as $employee)
                             <option value="{{ $employee->id }}" {{ old('employee_id', $freelancerProject->employee_id) == $employee->id ? 'selected' : '' }}>
@@ -41,7 +41,7 @@
                 
                 <div>
                     <label for="price" class="block text-sm font-medium text-base-content mb-1">Price</label>
-                    <input type="number" name="price" id="price" min="0" step="0.01" value="{{ old('price', $freelancerProject->price) }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('price') border-red-500 @enderror" required>
+                    <input type="number" name="price" id="price" min="0" step="0.01" value="{{ old('price', $freelancerProject->price) }}" class="bg-base-200 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('price') border-red-500 @enderror" required>
                     @error('price')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror

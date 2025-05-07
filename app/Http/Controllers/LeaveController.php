@@ -46,13 +46,6 @@ class LeaveController extends Controller
         return view('leaves.index', compact('leaves', 'employees', 'statuses'));
     }
 
-    public function create()
-    {
-        $employees = Employee::with('user')->get();
-        $statuses = ['pending', 'approved', 'rejected'];
-        
-        return view('leaves.create', compact('employees', 'statuses'));
-    }
 
     public function store(Request $request)
     {
@@ -73,20 +66,6 @@ class LeaveController extends Controller
         return redirect()->back()->with('success', 'Leave Has been requested successfully.');
     }
 
-    public function show(Leave $leave)
-    {
-        $leave->load('employee.user');
-        
-        return view('leaves.show', compact('leave'));
-    }
-
-    public function edit(Leave $leave)
-    {
-        $employees = Employee::with('user')->get();
-        $statuses = ['pending', 'approved', 'rejected'];
-        
-        return view('leaves.edit', compact('leave', 'employees', 'statuses'));
-    }
 
     public function update(Request $request, Leave $leave)
     {
@@ -99,13 +78,6 @@ class LeaveController extends Controller
         return redirect()->back()->with('success', 'Leave updated successfully.');
     }
 
-    public function destroy(Leave $leave)
-    {
-        $leave->delete();
-        
-        return redirect()->route('leaves.index')
-            ->with('success', 'Leave deleted successfully.');
-    }
    
 
 }

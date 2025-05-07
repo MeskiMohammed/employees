@@ -5,6 +5,9 @@
 @section('header', 'Freelancer Projects')
 
 @section('content')
+@if(session('success'))
+            <x-toast></x-toast>
+        @endif
 <div class="bg-base-200 shadow rounded-lg">
     <div class="flex justify-between items-center p-6 border-b border-base-300">
         <h2 class="text-xl font-semibold text-base-content">Freelancer Projects List</h2>
@@ -69,7 +72,7 @@
                 @forelse($projects as $project)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm font-medium text-gray-900">{{ $project->name }}</div>
+                        <div class="text-sm font-medium text-base-content">{{ $project->name }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
@@ -93,16 +96,28 @@
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm font-medium text-gray-900">{{ number_format($project->price, 2) }}</div>
+                        <div class="text-sm font-medium text-base-content">{{ number_format($project->price, 2) }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">{{ $project->created_at->format('M d, Y') }}</div>
-                        <div class="text-sm text-gray-500">{{ $project->created_at->format('h:i A') }}</div>
+                        <div class="text-sm text-base-content">{{ $project->created_at->format('M d, Y') }}</div>
+                        <div class="text-sm text-bade-content">{{ $project->created_at->format('h:i A') }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">Not Completed</div>
+                        <span class="px-4 py-2 rounded-full text-white text-sm {{ $project->status?'bg-green-600':'bg-gray-500' }}">
+                            {{ ucfirst($project->status?'done':'working on') }}
+                        </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+
+                        <form action="{{ route('freelancer-projects.done',$project) }}" method="POST" onsubmit="return confirm('Confirmer l\'acceptation de ce projet?')" class="inline-block">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="flex justify-center items-center text-green-600 font-medium mr-2 w-5 aspect-square">
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+                        </form>
+                        
+
                         @if(Auth::user()->can('edit freelancer_projects'))
                         <a href="{{ route('freelancer-projects.edit', $project) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">
                             <i class="fas fa-edit"></i>

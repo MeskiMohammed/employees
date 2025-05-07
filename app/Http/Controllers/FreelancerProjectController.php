@@ -55,13 +55,18 @@ class FreelancerProjectController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'employee_id' => 'required|exists:employees,id',
         ]);
 
-        FreelancerProject::create($validated);
+        FreelancerProject::create([
+            'name' => $request->name, 
+            'status' => false, 
+            'price' => $request->price, 
+            'employee_id' => $request->employee_id, 
+        ]);
 
         return redirect()->route('freelancer-projects.index')
             ->with('success', 'Freelancer project created successfully.');
@@ -95,6 +100,8 @@ class FreelancerProjectController extends Controller
             ->with('success', 'Freelancer project updated successfully.');
     }
 
+
+
     public function destroy(FreelancerProject $freelancerProject)
     {
         $freelancerProject->delete();
@@ -102,4 +109,14 @@ class FreelancerProjectController extends Controller
         return redirect()->route('freelancer-projects.index')
             ->with('success', 'Freelancer project deleted successfully.');
     }
+
+
+    public function done(FreelancerProject $freelancerProject)
+    { 
+        $freelancerProject->status = true;
+        $freelancerProject->save();
+
+        return redirect()->back()->with('success', 'Project Updated successfully.');
+    }
+
 }

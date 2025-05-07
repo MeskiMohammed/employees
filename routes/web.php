@@ -74,6 +74,8 @@ Route::middleware(['auth','role:super_admin|admin'])->group(function () {
     Route::get('freelancer-projects/{freelancer_project}/edit',[FreelancerProjectController::class,'edit'])->name('freelancer-projects.edit')->middleware('permission:edit freelancer_projects');
     Route::put('freelancer-projects/{freelancer_project}',[FreelancerProjectController::class,'update'])->name('freelancer-projects.update')->middleware('permission:edit freelancer_projects');
     Route::delete('freelancer-projects/{freelancer_project}',[FreelancerProjectController::class,'destroy'])->name('freelancer-projects.destroy')->middleware('permission:delete freelancer_projects');
+    Route::put('/freelancer-projects/{freelancer_project}', [FreelancerProjectController::class, 'done'])->name('freelancer-projects.done');
+
 
     Route::get('types',[TypeController::class,'index'])->name('types.index')->middleware('permission:view types');
     Route::get('types/create',[TypeController::class,'create'])->name('types.create')->middleware('permission:create types');

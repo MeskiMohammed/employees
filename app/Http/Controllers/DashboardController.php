@@ -44,11 +44,13 @@ class DashboardController extends Controller
             ->pluck('total', 'month')
             ->toArray();
 
-        $startDate = now()->startOfDay(); // Start of today at 00:00:00
-        $endDate = now()->addDays(2)->endOfDay(); // End of the day 2 days from now at 23:59:59
-
-        $employeesToPay = Employee::whereBetween('created_at', [$startDate, $endDate])->get();
-
+        $startDate = now()->format('d'); // Start of today at 00:00:00
+        $endDate = now()->addDays(2)->format('d'); // End of the day 2 days from now at 23:59:59
+        
+        $employeesToPay = Employee::whereDay('created_at','>', $startDate)
+            ->whereDay('created_at','<', $endDate)
+            ->get();
+        
 
         return view('dashboard.index', compact(
             'totalEmployees',

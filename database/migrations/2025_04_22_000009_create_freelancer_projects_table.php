@@ -10,6 +10,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->double('price');
+            $table->boolean('status');
             $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
