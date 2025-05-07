@@ -165,7 +165,6 @@
                 <button @click='isOpen=!isOpen' class='flex flex-1 justify-between p-4 bg-base-300 border border-base-300 rounded @if($typeEmployee->out_date === null) bg-green-400 text-black border-green-600 @endif'>
                     <div class='flex flex-col items-start'>
                         <p class='font-semibold'>{{$typeEmployee->type->type}}</p>
-                        <p class='text-xs'>{{$typeEmployee->description}}</p>
                     </div>
                     <div class='flex items-center justify-center'>
                         <span>{{$typeEmployee->in_date}}</span>

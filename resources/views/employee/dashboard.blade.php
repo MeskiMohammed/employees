@@ -123,7 +123,7 @@
                         <div class="mb-6">
                             <h4 class="text-sm font-medium text-gray-500 mb-2">Hire Date</h4>
                             <div class="flex items-center">
-                                <span class="text-sm text-gray-900">{{ $employee->created_at->format('m/d/Y') }}</span>
+                                <span class="text-sm text-gray-900">{{ $employee->created_at->format('d/m/Y') }}</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>

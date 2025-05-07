@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->foreignId('employee_id')->constrained();
             $table->foreignId('payment_type_id')->constrained();
             $table->double('gross');
-            $table->date('cnss');
+            $table->double('cnss');
             $table->double('tax_rate');
             $table->double('income_tax');
             $table->double('net');

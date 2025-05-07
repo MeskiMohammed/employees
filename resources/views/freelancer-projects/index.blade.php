@@ -19,7 +19,7 @@
     </div>
 
     <div class="p-6 border-b border-base-300">
-        <form action="{{ route('freelancer-projects.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <form action="{{ route('freelancer-projects.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
                 <label for="search" class="block text-sm font-medium text-base-content mb-1">Search</label>
                 <input type="text" name="search" id="search" value="{{ request('search') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md" placeholder="Search projects...">
@@ -108,7 +108,7 @@
                         </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-
+                        @if (!$project->status)
                         <form action="{{ route('freelancer-projects.done',$project) }}" method="POST" onsubmit="return confirm('Confirmer l\'acceptation de ce projet?')" class="inline-block">
                             @csrf
                             @method('PUT')
@@ -116,8 +116,7 @@
                                 <i class="fa-solid fa-check"></i>
                             </button>
                         </form>
-                        
-
+                        @endif
                         @if(Auth::user()->can('edit freelancer_projects'))
                         <a href="{{ route('freelancer-projects.edit', $project) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">
                             <i class="fas fa-edit"></i>

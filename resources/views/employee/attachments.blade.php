@@ -7,7 +7,7 @@
 @section('content')
 @foreach($employee->typeEmployees as $typeEmployee)
 
-<div class="bg-white rounded-lg shadow" x-data="{isOpen : false}" x-transition>
+<div class="bg-white rounded-lg shadow" x-data="{ show: null, imageUrl:null, id:null, baseUrl:'{{route('attachments.download',':id')}}'}" x-transition>
     <div class="p-6 border-b border-gray-200 flex justify-between items-center">
         <div>
             <h2 class="text-lg font-semibold text-gray-700">My Documents {{$typeEmployee->type->type}}</h2>
@@ -81,6 +81,8 @@
     </div>
     @endforeach
 </div>
+
+
 @endsection
 
 @section('scripts')

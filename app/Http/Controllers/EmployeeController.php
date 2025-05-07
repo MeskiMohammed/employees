@@ -623,4 +623,9 @@ class EmployeeController extends Controller
 
         return redirect()->route('employees.show', $employee)->with('success', 'Post has been ended successfully');
     }
+
+    public function badge(Employee $employee)
+    {
+        return view('employees.badge', compact('employee'));
+    }
 }

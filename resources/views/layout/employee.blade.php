@@ -81,7 +81,9 @@
                                         @endif
                                         <a href="{{ route('employee.leaves') }}" class="py-4 px-1 border-b-2  {{ request()->is('employee/leaves') ? 'border-black' : 'border-transparent' }} font-medium text-sm text-black">Leave Request</a>
                                         <a href="{{ route('employee.attachments') }}" class="py-4 px-1 border-b-2  {{ request()->is('employee/attachments') ? 'border-black' : 'border-transparent' }} font-medium text-sm text-black">Documents</a>
+                                        @if ($employee->typeEmployees->last()->type->type !== 'trainee')
                                         <a href="{{ route('employee.payments') }}" class="py-4 px-1 border-b-2  {{ request()->is('employee/payments') ? 'border-black' : 'border-transparent' }} font-medium text-sm text-black">Payments</a>
+                                        @endif
                                     </nav>
 
                                     <form action='{{route('logout')}}' method='post'>

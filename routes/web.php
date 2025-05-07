@@ -57,6 +57,7 @@ Route::middleware(['auth','role:super_admin|admin'])->group(function () {
     Route::get('employees/{employee}/pay', [EmployeeController::class, 'payment'])->name('employees.payment');
     Route::post('employees/{employee}/pay', [EmployeeController::class, 'pay'])->name('employees.pay');
     Route::put('employees/{employee}/end-post', [EmployeeController::class, 'endPost'])->name('employees.end-post');
+    Route::get('employees/{employee}/badge', [EmployeeController::class, 'badge'])->name('employees.badge');
 
     Route::get('departments',[DepartmentController::class,'index'])->name('departments.index')->middleware('permission:view departments');
     Route::get('departments/create',[DepartmentController::class,'create'])->name('departments.create')->middleware('permission:create departments');
