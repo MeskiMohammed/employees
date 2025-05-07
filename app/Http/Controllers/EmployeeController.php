@@ -59,7 +59,7 @@ class EmployeeController extends Controller
         $statuses = Status::all();
 
         return view('employees.index', compact('employees', 'departments', 'statuses'));
-        
+
     }
 
     public function create()
@@ -69,7 +69,7 @@ class EmployeeController extends Controller
         $types = Type::all();
 
         return view('employees.create', compact('departments', 'operators', 'types'));
-        
+
     }
 
     /*public function store(StoreEmployeeRequest $request){
@@ -127,6 +127,7 @@ class EmployeeController extends Controller
                 'operator_id' => $request->operator_id,
                 'cnss' => $request->cnss,
                 'assurance' => $request->assurance,
+                'is_anapec' => $request->has('is_anapec') ? true : false,
             ]);
         }else{
             $data = array_merge($data,[
@@ -340,6 +341,7 @@ class EmployeeController extends Controller
                 'operator_id' => $request->operator_id,
                 'cnss' => $request->cnss,
                 'assurance' => $request->assurance,
+                'is_project' => $request->has('is_project') ? $request->is_project : false,
             ]);
         }else{
             $data = array_merge($data,[

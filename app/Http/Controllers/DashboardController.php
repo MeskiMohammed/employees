@@ -46,11 +46,12 @@ class DashboardController extends Controller
 
         $startDate = now()->format('d'); // Start of today at 00:00:00
         $endDate = now()->addDays(2)->format('d'); // End of the day 2 days from now at 23:59:59
-        
-        $employeesToPay = Employee::whereDay('created_at','>', $startDate)
-            ->whereDay('created_at','<', $endDate)
+
+        $employeesToPay = Employee::whereRaw('DAY(created_at) > ?', [$startDate])
+            ->whereRaw('DAY(created_at) < ?', [$endDate])
+            ->whereHas('typeEmployees', fn($q)=>$q->whereHas('type',fn($q)=>$q->where('type','<>','trainee')))
             ->get();
-        
+
 
         return view('dashboard.index', compact(
             'totalEmployees',
