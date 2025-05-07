@@ -120,8 +120,8 @@
                     <div class="overflow-y-auto grid md:grid-cols-3 gap-4 p-2 border border-base-300 rounded max-h-40 mt-2 @error('department_ids') border-red-500 @enderror">
                         @forelse($departments as $dep)
                         <label for="dep{{ $dep->id }}" class="deps border border-base-300 flex justify-center bg-base-100 rounded items-center py-4 ">
-                            <div class="w-full px-6">
-                                <input type="checkbox" name="department_ids[]" value="{{ $dep->id }}" id="dep{{ $dep->id }}" class="bg-base-200"
+                            <div class="w-full px-6 flex gap-2 items-center">
+                                <input type="checkbox" name="department_ids[]" value="{{ $dep->id }}" id="dep{{ $dep->id }}" class="rounded bg-base-200"
                                     {{ in_array($dep->id, old('department_ids', $employee->employeeDepartments->pluck('department_id')->toArray())) ? 'checked' : '' }}>
                                 <label>{{ $dep->name }}</label>
                             </div>
@@ -372,6 +372,10 @@
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
+                    <div class='flex pt-6 items-center gap-2'>
+                        <input type="checkbox" name="is_anapec" class="bg-base-100 rounded" @if($employee->is_anapec) checked @endif>ANAPEC
+                    </div>
+
                 </div>
 
                 <div x-show="freelancer==='trainee'" class="col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -11,7 +11,6 @@
             <h2 class="text-xl font-semibold text-base-content">Create New Employee</h2>
         </div>
 
-
         <form action="{{ route('employees.store') }}" method="POST" enctype="multipart/form-data" class="p-6">
             @csrf
 
@@ -51,8 +50,6 @@
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
-
-
 
                 <div>
                     <label for="address" class="block text-sm font-medium text-base-content mb-1">Address</label>
@@ -101,8 +98,8 @@
                     <div class="overflow-y-auto grid md:grid-cols-3 gap-4 p-2 border border-base-300 rounded max-h-40 mt-2 @error('department_ids') border-red-500  @enderror">
                         @forelse($departments as $dep)
                             <label for="dep{{ $dep->id }}" class="deps border border-base-300 flex justify-center bg-base-100 rounded items-center py-4 ">
-                                <div class="w-full px-6">
-                                    <input type="checkbox" name="department_ids[]" value="{{ $dep->id }}" id="dep{{ $dep->id }}" class="bg-base-200">
+                                <div class="w-full px-6 flex gap-2 items-center">
+                                    <input type="checkbox" name="department_ids[]" value="{{ $dep->id }}" id="dep{{ $dep->id }}" class="rounded bg-base-200">
                                     <label>{{ $dep->name }}</label>
                                 </div>
                             </label>
@@ -258,8 +255,6 @@
                         @enderror
                     </div>
 
-
-
                     <div>
                         <label for="employment_contract" class="block text-sm font-medium text-base-content mb-1">Employment Contract</label>
                         <input type="file" name="employment_contract" id="employment_contract" class=" file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('employment_contract') border-red-500  @enderror">
@@ -298,6 +293,10 @@
                         @error('cnss_certificate')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
+                    </div>
+
+                    <div class='flex pt-6 items-center gap-2'>
+                        <input type="checkbox" name="is_anapec" class="bg-base-100 rounded">ANAPEC
                     </div>
                 </div>
 
