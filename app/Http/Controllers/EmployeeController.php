@@ -59,6 +59,7 @@ class EmployeeController extends Controller
         $statuses = Status::all();
 
         return view('employees.index', compact('employees', 'departments', 'statuses'));
+        
     }
 
     public function create()
@@ -68,6 +69,7 @@ class EmployeeController extends Controller
         $types = Type::all();
 
         return view('employees.create', compact('departments', 'operators', 'types'));
+        
     }
 
     /*public function store(StoreEmployeeRequest $request){
@@ -555,10 +557,7 @@ class EmployeeController extends Controller
 
         $netSalary = $employee->salary - $cnssDeduction - $incomeTaxDeduction;
 
-        $previousPayments = $employee->payments()
-            ->where('created_at', '>=', now()->startOfMonth())
-            ->where('created_at', '<=', now()->endOfMonth())
-            ->get();
+        $previousPayments = $employee->payments->sortByDesc('created_at');
 
         $paymentTypes = PaymentType::all();
 
@@ -600,7 +599,7 @@ class EmployeeController extends Controller
             'net' => $netSalary,
         ]);
 
-        return redirect()->route('employees.show', $employee)->with('success', 'Payment has been made successfully');
+        return redirect()->back()->with('success', 'Payment has been made successfully');
     }
 
     public function endPost(Employee $employee)

@@ -1,9 +1,12 @@
 @extends('layout.app')
 
 @section('content')
+@if(session('success'))
+        <x-toast></x-toast>
+    @endif
 <div class="container mx-auto p-6" x-data="{ show: null, imageUrl:null, id:null, baseUrl:'{{route('attachments.download',':id')}}'}">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Employee Details</h1>
+        <h1 class="text-2xl font-bold text-base-content">Employee Details</h1>
         <a href="{{ route('employees.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded">
             <i class="fas fa-arrow-left mr-2"></i> Back to Employees Page
         </a>
@@ -105,12 +108,14 @@
                     @elseif ($employee->typeEmployees->last()->type->type === 'trainee')
                     <div>
                         <strong>training type:</strong>
-                        <p>{{ $employee->ice }}</p>
+                        <p>{{ ucfirst($employee->training_type) }}</p>
                     </div>
-                    <div>
-                        <strong>school:</strong>
-                        <p>{{ $employee->school }}</p>
-                    </div>
+                        @if ($employee->training_type === 'student')
+                        <div>
+                            <strong>school:</strong>
+                            <p>{{ $employee->school }}</p>
+                        </div>
+                        @endif
                     @else
                     <div class="w-full grid grid-cols-1 sm:grid-cols-2 text-base-content">
                         <div>

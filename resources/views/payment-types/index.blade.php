@@ -5,6 +5,10 @@
 @section('header', 'Payment Types')
 
 @section('content')
+@if(session('success'))
+        <x-toast></x-toast>
+    @endif
+    
 <div class="bg-base-200 shadow rounded-lg">
     <div class="flex justify-between items-center p-6 border-b border-base-300">
         <h2 class="text-xl font-semibold text-base-content">Payment Types List</h2>

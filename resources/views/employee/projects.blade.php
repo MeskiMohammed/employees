@@ -74,8 +74,10 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                         {{ $project->name }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                        {{ ucfirst($project->status) }}
+                        <td class="px-6 py-4 whitespace-nowrap ">
+                            <span class="px-4 py-2 rounded-full text-white text-sm {{ $project->status?'bg-green-600':'bg-gray-500' }}">
+                                {{ ucfirst($project->status?'done':'working on') }}
+                            </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                         {{ $project->price }}

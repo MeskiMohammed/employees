@@ -5,6 +5,11 @@
 @section('header', 'Employee Types')
 
 @section('content')
+
+@if(session('success'))
+        <x-toast></x-toast>
+    @endif
+
 <div class="bg-base-200 shadow rounded-lg">
     <div class="flex justify-between items-center p-6 border-b border-base-300">
         <h2 class="text-xl font-semibold text-base-content">Types List</h2>
@@ -34,9 +39,7 @@
     </div>
 
     <div class="overflow-x-auto">
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+       
         <table class="min-w-full divide-y divide-base-300">
             <thead class="bg-base-200">
                 <tr>
