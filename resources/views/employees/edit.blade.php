@@ -378,7 +378,30 @@
 
                 </div>
 
-                <div x-show="freelancer==='trainee'" class="col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div x-show="freelancer==='trainee'" class="col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6" x-data="{training_type:'{{ old('training_type',$employee->training_type) }}'}">
+                    <div>
+                        <label for="training_type" class="block text-sm font-medium text-base-content mb-1">Training Type</label>
+                        <select x-model='training_type' name="training_type" id="training_type" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('training_type') border-red-500 @enderror" >
+                            <option value="">Select Type</option>
+                            <option value="observation">observation</option>
+                            <option value="student">student</option>
+                            <option value="PFE">PFE</option>
+                            <option value="paid">paid</option>
+                            <option value="work">work</option>
+                        </select>
+                        @error('training_type')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div x-show='training_type === "student"'>
+                        <label for="school" class="block text-sm font-medium text-base-content mb-1">School</label>
+                        <input type="text" name="school" id="school" value="{{ old('school',$employee->school) }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('school') border-red-500 @enderror">
+                        @error('school')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <div>
                         <label for="internship_agreement" class="block text-sm font-medium text-base-content mb-1">Internship Agreement</label>
                         @if($employee->internshipAgreementAttachment)
