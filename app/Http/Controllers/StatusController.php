@@ -34,7 +34,7 @@ class StatusController extends Controller
         ]);
         
         Status::create($validated);
-        
+
         return redirect()->route('statuses.index')
             ->with('success', 'Status created successfully.');
     }

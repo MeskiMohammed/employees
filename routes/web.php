@@ -6,6 +6,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeProfileController;
 use App\Http\Controllers\EnterpriseController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\FreelancerProjectController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\OperatorController;
@@ -127,8 +128,8 @@ Route::middleware(['auth','role:super_admin|admin'])->group(function () {
   
     Route::get('/enterprise', [EnterpriseController::class, 'edit'])->name('enterprise.edit')->middleware('role:super_admin');
     Route::put('/enterprise', [EnterpriseController::class, 'update'])->name('enterprise.update')->middleware('role:super_admin');
-
     
+    Route::get('/events', [EventController::class, 'index'])->name('events.index')->middleware('role:super_admin');
 });
 
 
