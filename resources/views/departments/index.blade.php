@@ -32,11 +32,11 @@
 
                 <div class="flex items-end">
                     <button type="submit"
-                        class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                        class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 button-white">
                         <i class="fas fa-search mr-2"></i> Search
                     </button>
                     <a href="{{ route('departments.index') }}"
-                        class="ml-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                        class="ml-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 button-white">
                         <i class="fas fa-times mr-2"></i> Reset
                     </a>
                 </div>

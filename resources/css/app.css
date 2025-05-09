@@ -2,10 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
-  input[type="checkbox"] {
-    @apply rounded focus:ring-0 focus:outline-none focus:ring-offset-0 text-primary-600;
-  }
+    input[type="checkbox"] {
+        @apply rounded focus:ring-0 focus:outline-primary-500 focus:ring-offset-0 bg-base-100 text-primary-500;
+    }
+
+    input[type="radio"] {
+        @apply  focus:ring-0 focus:outline-none focus:ring-offset-0 bg-base-100 text-primary-500;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="password"],
+    input[type="file"] {
+        @apply rounded focus:ring-0 focus:outline-primary-500 focus:border-primary-500 bg-base-100 focus:ring-offset-0 text-base-content;
+    }
+
+    select {
+        @apply rounded focus:outline-primary-500 focus:ring-0 focus:ring-offset-0 ;
+    }
+    option {
+        @apply bg-base-100 text-base-content hover:bg-primary-500;
+    }
+
+    select:focus{
+        border-color : #DAB540 !important;
+    }
+
+    textarea:focus,
+    input[type="date"]:focus{
+        @apply outline-primary-500 ring-offset-0 ring-0;
+        border-color : #DAB540 !important;
+    }
+
+    a.bg-indigo-600,
+    button.bg-indigo-600,
+    button.bg-blue-600 {
+        @apply focus:outline-primary-500 focus:ring-0 focus:ring-offset-0;
+        background-color:#DAB540 !important;
+        color:#191E24 !important;
+    }
+
+    a.text-indigo-600 {
+        color:#DAB540 !important;
+    }
+
+    .button-white:focus {
+        @apply ring-offset-0 ring-0 outline outline-2 outline-offset-2 outline-[#E5E7EB];
+    }
 }
 

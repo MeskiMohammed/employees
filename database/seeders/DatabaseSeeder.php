@@ -139,7 +139,7 @@ class DatabaseSeeder extends Seeder
         $usr->assignRole('super_admin');
 
         Enterprise::create([
-            'name'=>'hi',
+            'name'=>'RYD MEDIATECH',
             'logo'=>null
         ]);
     }

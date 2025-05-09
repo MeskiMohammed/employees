@@ -10,11 +10,11 @@
         <div class="p-6 border-b border-base-300">
             <h2 class="text-xl font-semibold text-base-content">Edit Freelancer Project</h2>
         </div>
-        
+
         <form action="{{ route('freelancer-projects.update', $freelancerProject) }}" method="POST" class="p-6">
             @csrf
             @method('PUT')
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
                     <label for="name" class="block text-sm font-medium text-base-content mb-1">Project Name</label>
@@ -23,7 +23,7 @@
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
-                
+
                 <div>
                     <label for="employee_id" class="block text-sm font-medium text-base-content mb-1">Freelancer</label>
                     <select name="employee_id" id="employee_id" class=" bg-base-200 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('employee_id') border-red-500 @enderror" required>
@@ -38,7 +38,7 @@
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
-                
+
                 <div>
                     <label for="price" class="block text-sm font-medium text-base-content mb-1">Price</label>
                     <input type="number" name="price" id="price" min="0" step="0.01" value="{{ old('price', $freelancerProject->price) }}" class="bg-base-200 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('price') border-red-500 @enderror" required>
@@ -47,9 +47,9 @@
                     @enderror
                 </div>
             </div>
-            
+
             <div class="mt-6 flex items-center justify-end">
-                <a href="{{ route('freelancer-projects.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mr-4">
+                <a href="{{ route('freelancer-projects.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none mr-4 button-white">
                     Cancel
                 </a>
                 <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

@@ -12,7 +12,7 @@
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-semibold text-base-content">Edit Enterprise Information</h1>
             <a href="{{ route('dashboard') }}"
-                class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 button-white">
                 Back to Dashboard
             </a>
 
@@ -45,7 +45,7 @@
                                     </div>
                                 @endif
                                 <input type="file" name="logo" id="logo"
-                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-base-300 rounded-md @error('logo') border-red-500 @enderror">
+                                    class="file-input mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-base-300 rounded-md @error('logo') border-red-500 @enderror">
                             </div>
                             <p class="mt-1 text-sm text-base-content">Recommended size: 200x200 pixels. JPG, PNG or GIF.</p>
                             @error('logo')

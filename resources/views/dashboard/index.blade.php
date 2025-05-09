@@ -85,7 +85,7 @@
             <p class="mt-1 max-w-2xl text-sm text-base-content">Employees who need to be paid in 2 days.</p>
         </div>
         <div class="border-t border-base-300">
-            <div class="overflow-hidden overflow-x-auto">
+            <div class=" overflow-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-base-200">
                         <tr>
@@ -135,11 +135,6 @@
                         @endif
                     </tbody>
                 </table>
-            </div>
-        </div>
-        <div class="px-4 py-4 sm:px-6 bg-base-200">
-            <div class="text-sm">
-                <a href="{{ route('payments.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">View all payments</a>
             </div>
         </div>
     </div>
