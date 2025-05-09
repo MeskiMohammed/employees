@@ -145,9 +145,9 @@
                     </div>
 
                     <div x-show="salary">
-                        <label for="salary_free" class="block text-sm font-medium text-base-content mb-1">Salary/Hour</label>
-                        <input type="number" name="salary_free" id="salary_free" min="0" value="{{ old('salary_free') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('salary_free') border-red-500 @enderror">
-                        @error('salary_free')
+                        <label for="hourly_salary" class="block text-sm font-medium text-base-content mb-1">Salary/Hour</label>
+                        <input type="number" name="hourly_salary" id="salary_free" min="0" value="{{ old('hourly_salary') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('hourly_salary') border-red-500 @enderror">
+                        @error('hourly_salary')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>

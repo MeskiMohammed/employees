@@ -104,7 +104,7 @@
                             @if (!$employee->is_project)
                                 <div>
                                     <strong>hourly salary:</strong>
-                                    <p>{{ $employee->salary }} DH</p>
+                                    <p>{{ $employee->hourly_salary }} DH</p>
                                 </div>
                             @endif
                         @elseif ($employee->typeEmployees->last()->type->type === 'trainee')

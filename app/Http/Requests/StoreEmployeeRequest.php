@@ -28,6 +28,7 @@ class StoreEmployeeRequest extends FormRequest
             'is_freelancer' => 'required|string',
             'is_project' => 'nullable|boolean',
             'salary' => 'nullable|numeric', // handled conditionally below
+            'hourly_salary' => 'nullable|numeric', // handled conditionally below
 
             // optional employee/freelancer fields conditionally validated
             'professional_num' => 'nullable|string|max:255',
@@ -67,7 +68,7 @@ class StoreEmployeeRequest extends FormRequest
         });
 
 
-        $validator->sometimes('salary_free', 'required', function ($input) {
+        $validator->sometimes('hourly_salary', 'required', function ($input) {
             return $input->is_freelancer === 'freelancer' && !$input->has('is_project');
         });
 

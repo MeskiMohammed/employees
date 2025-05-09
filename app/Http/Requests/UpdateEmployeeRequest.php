@@ -61,8 +61,7 @@ class UpdateEmployeeRequest extends FormRequest
             // Freelancer specific fields
             'ice' => ['nullable','string','max:255',Rule::requiredIf(fn() => $this->is_freelancer === 'freelancer'),Rule::unique('employees', 'ice')->ignore($employeeId),],
             'is_project' => 'nullable|boolean',
-            'hours' => 'nullable|numeric|min:0',
-
+            'hourly_salary'=> 'nullable|numeric',
             // Attachments for employee
             'employment_contract' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'job_application' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
@@ -103,7 +102,7 @@ class UpdateEmployeeRequest extends FormRequest
         });
 
 
-        $validator->sometimes('salary_free', 'required', function ($input) {
+        $validator->sometimes('hourly_salary', 'required', function ($input) {
             return $input->is_freelancer === 'freelancer' && !$input->has('is_project');
         });
 
