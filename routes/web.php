@@ -141,4 +141,16 @@ Route::middleware(['auth','role:employee'])->group(function () {
     Route::get('/employee/projects', [EmployeeProfileController::class, 'projects'])->name('employee.projects');
     Route::post('/employee/leaves/store', [LeaveController::class,'store'])->name('employee.leaves.store');
 });
+
+
+Route::prefix('documents')->group(function () {
+    Route::view('/attestation-stage', 'documents.attestation_stage')->name('documents.attestation_stage');
+    Route::view('/attestation-travail', 'documents.attestation_travail')->name('documents.attestation_travail');
+    Route::view('/attestation-conges', 'documents.attestation_conges')->name('documents.attestation_conges');
+    Route::view('/attestation-mission', 'documents.attestation_mission')->name('documents.attestation_mission');
+    Route::view('/attestation-salaire', 'documents.attestation_salaire')->name('documents.attestation_salaire');
+    Route::view('/bulletin-paie', 'documents.bulletin_paie')->name('documents.bulletin_paie');
+});
+
+
 require __DIR__.'/auth.php';

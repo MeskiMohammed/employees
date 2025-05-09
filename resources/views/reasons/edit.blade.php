@@ -5,12 +5,16 @@
 @section('header', 'Edit Reason')
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-semibold text-base-content">Edit Reason</h1>
-        <a href="{{ route('reasons.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-            Back to List
-        </a>
+
+
+<div class="max-w-4xl mx-auto">
+    <div class="bg-base-200 shadow rounded-lg">
+        <div class="flex justify-between items-center p-6 border-b border-base-300">
+            <h1 class="text-xl font-semibold text-base-content">Edit Reason</h1>
+            <a href="{{ route('reasons.index') }}"
+                class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 button-white">
+                Back to List
+            </a>
     </div>
 
     <div class="bg-base-200 shadow overflow-hidden sm:rounded-lg">

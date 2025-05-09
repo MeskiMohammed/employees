@@ -8,19 +8,17 @@
     @if(session('success'))
         <x-toast></x-toast>
     @endif
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-semibold text-base-content">Edit Enterprise Information</h1>
+
+
+    <div class="bg-base-200 shadow rounded-lg">
+        <div class="flex justify-between items-center p-6 border-b border-base-300">
+            <h1 class="text-xl font-semibold text-base-content">Edit Enterprise Information</h1>
             <a href="{{ route('dashboard') }}"
                 class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 button-white">
                 Back to Dashboard
             </a>
 
         </div>
-
-
-
-        <div class="bg-base-200 shadow overflow-hidden sm:rounded-lg">
             <form action="{{ route('enterprise.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
