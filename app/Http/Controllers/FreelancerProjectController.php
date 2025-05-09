@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\FreelancerProject;
+use App\Models\Payment;
+use App\Models\PaymentType;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FreelancerProjectController extends Controller
 {
     public function index(Request $request)
     {
         $query = FreelancerProject::with('employee.user');
-    
+
         // Name or employee's user search
         if ($request->filled('search')) {
             $search = $request->search;
@@ -22,29 +25,30 @@ class FreelancerProjectController extends Controller
                       ->orWhere('last_name', 'like', "%{$search}%");
                 });
         }
-    
+
         // Employee filter
         if ($request->filled('employee_id')) {
             $query->where('employee_id', $request->employee_id);
         }
-    
+
         // Price range filters
         if ($request->filled('price_min')) {
             $query->where('price', '>=', $request->price_min);
         }
-    
+
         if ($request->filled('price_max')) {
             $query->where('price', '<=', $request->price_max);
         }
-    
+
         $projects = $query->paginate(10);
         $employees = Employee::with('user')->get();
-    
-        return view('freelancer-projects.index', compact('projects', 'employees'));
+        $paymentTypes = PaymentType::all();
 
-        
+        return view('freelancer-projects.index', compact('projects', 'employees', 'paymentTypes'));
+
+
     }
-    
+
 
     public function create()
     {
@@ -62,10 +66,10 @@ class FreelancerProjectController extends Controller
         ]);
 
         FreelancerProject::create([
-            'name' => $request->name, 
-            'status' => false, 
-            'price' => $request->price, 
-            'employee_id' => $request->employee_id, 
+            'name' => $request->name,
+            'status' => false,
+            'price' => $request->price,
+            'employee_id' => $request->employee_id,
         ]);
 
         return redirect()->route('freelancer-projects.index')
@@ -110,13 +114,26 @@ class FreelancerProjectController extends Controller
             ->with('success', 'Freelancer project deleted successfully.');
     }
 
+    public function done(Request $request, FreelancerProject $freelancerProject)
+    {
+        DB::beginTransaction();
+        try {
+            $freelancerProject->status = true;
+            $freelancerProject->save();
 
-    public function done(FreelancerProject $freelancerProject)
-    { 
-        $freelancerProject->status = true;
-        $freelancerProject->save();
+            Payment::create([
+                'employee_id' => $freelancerProject->employee->id,
+                'payment_type_id' => $request->payment_type_id,
+                'gross' => $freelancerProject->price,
+                'net' => $freelancerProject->price,
+            ]);
 
-        return redirect()->back()->with('success', 'Project Updated successfully.');
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'An error occurred while updating the project.');
+        }
+
+        return redirect()->route('freelancer-projects->index')->with('success', 'Project marked as done and payment recorded.');
     }
-
 }

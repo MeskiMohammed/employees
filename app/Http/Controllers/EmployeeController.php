@@ -45,7 +45,6 @@ class EmployeeController extends Controller
                 $query->where('status_id', $request->status);
             }
 
-
             if ($request->filled('type')) {
                 $query->whereHas('typeEmployees', function ($q) use ($request) {
                     $q->where('type_id', $request->type);
@@ -53,13 +52,11 @@ class EmployeeController extends Controller
             }
         }
 
-
         $employees = $query->paginate(10);
         $departments = Department::all();
         $statuses = Status::all();
 
         return view('employees.index', compact('employees', 'departments', 'statuses'));
-
     }
 
     public function create()
@@ -69,14 +66,7 @@ class EmployeeController extends Controller
         $types = Type::all();
 
         return view('employees.create', compact('departments', 'operators', 'types'));
-
     }
-
-    /*public function store(StoreEmployeeRequest $request){
-        dd($request);
-    }*/
-
-
 
     public function store(StoreEmployeeRequest $request)
     {
@@ -111,8 +101,7 @@ class EmployeeController extends Controller
             $data['is_project'] = $request->has('is_project') ? true : false;
 
             if (!$data['is_project']) {
-                $data['salary'] = $request->salary;
-                $data['hours'] = 0;
+                $data['hourly_salary'] = $request->hourly_salary;
             }
         }
         // Employee Specific
@@ -325,8 +314,7 @@ class EmployeeController extends Controller
             $data['is_project'] = $request->has('is_project') ? $request->is_project : false;
 
             if (!$data['is_project']) {
-                $data['salary'] = $request->salary_free;
-                $data['hours'] = 0;
+                $data['hourly_salary'] = $request->hourly_salary;
             }
         }
         // Employee Specific

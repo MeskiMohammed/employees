@@ -76,7 +76,7 @@ Route::middleware(['auth','role:super_admin|admin'])->group(function () {
     Route::get('freelancer-projects/{freelancer_project}/edit',[FreelancerProjectController::class,'edit'])->name('freelancer-projects.edit')->middleware('permission:edit freelancer_projects');
     Route::put('freelancer-projects/{freelancer_project}',[FreelancerProjectController::class,'update'])->name('freelancer-projects.update')->middleware('permission:edit freelancer_projects');
     Route::delete('freelancer-projects/{freelancer_project}',[FreelancerProjectController::class,'destroy'])->name('freelancer-projects.destroy')->middleware('permission:delete freelancer_projects');
-    Route::put('/freelancer-projects/{freelancer_project}', [FreelancerProjectController::class, 'done'])->name('freelancer-projects.done');
+    Route::put('/freelancer-projects/{freelancer_project}/done', [FreelancerProjectController::class, 'done'])->name('freelancer-projects.done');
 
 
     Route::get('types',[TypeController::class,'index'])->name('types.index')->middleware('permission:view types');
@@ -85,7 +85,7 @@ Route::middleware(['auth','role:super_admin|admin'])->group(function () {
     Route::get('types/{type}/edit',[TypeController::class,'edit'])->name('types.edit')->middleware('permission:edit types');
     Route::put('types/{type}',[TypeController::class,'update'])->name('types.update')->middleware('permission:edit types');
     Route::delete('types/{type}',[TypeController::class,'destroy'])->name('types.destroy')->middleware('permission:delete types');
-    
+
     Route::get('payment-types',[PaymentTypeController::class,'index'])->name('payment-types.index')->middleware('permission:view payment_types');
     Route::get('payment-types/create',[PaymentTypeController::class,'create'])->name('payment-types.create')->middleware('permission:create payment_types');
     Route::post('payment-types',[PaymentTypeController::class,'store'])->name('payment-types.store')->middleware('permission:create payment_types');
@@ -113,22 +113,22 @@ Route::middleware(['auth','role:super_admin|admin'])->group(function () {
     Route::get('payments/{payment}/edit',[PaymentController::class,'edit'])->name('payments.edit')->middleware('permission:edit payments');
     Route::put('payments/{payment}',[PaymentController::class,'update'])->name('payments.update')->middleware('permission:edit payments');
     Route::delete('payments/{payment}',[PaymentController::class,'destroy'])->name('payments.destroy')->middleware('permission:delete payments');
-    
+
     Route::get('reasons',[ReasonController::class,'index'])->name('reasons.index')->middleware('permission:view reasons');
     Route::get('reasons/create',[ReasonController::class,'create'])->name('reasons.create')->middleware('permission:create reasons');
     Route::post('reasons',[ReasonController::class,'store'])->name('reasons.store')->middleware('permission:create reasons');
     Route::get('reasons/{reason}/edit',[ReasonController::class,'edit'])->name('reasons.edit')->middleware('permission:edit reasons');
     Route::put('reasons/{reason}',[ReasonController::class,'update'])->name('reasons.update')->middleware('permission:edit reasons');
     Route::delete('reasons/{reason}',[ReasonController::class,'destroy'])->name('reasons.destroy')->middleware('permission:delete reasons');
-    
+
     Route::get('attachments/{attachment}/download', [AttachmentController::class, 'download'])->name('attachments.download');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('role:super_admin');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('role:super_admin');
-  
+
     Route::get('/enterprise', [EnterpriseController::class, 'edit'])->name('enterprise.edit')->middleware('role:super_admin');
     Route::put('/enterprise', [EnterpriseController::class, 'update'])->name('enterprise.update')->middleware('role:super_admin');
-    
+
     Route::get('/events', [EventController::class, 'index'])->name('events.index')->middleware('role:super_admin');
 });
 

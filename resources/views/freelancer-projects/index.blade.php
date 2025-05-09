@@ -8,7 +8,7 @@
     @if(session('success'))
         <x-toast></x-toast>
     @endif
-    <div class="bg-base-200 shadow rounded-lg">
+    <div class="bg-base-200 shadow rounded-lg" x-data="{ showModal: false, projectId: null, projectPrice: null, projectName: null, freelancerName: null }" x-cloak>
         <div class="flex justify-between items-center p-6 border-b border-base-300">
             <h2 class="text-xl font-semibold text-base-content">Freelancer Projects List</h2>
             @if(Auth::user()->can('create freelancer_projects'))
@@ -107,17 +107,13 @@
                                     {{ ucfirst($project->status?'done':'working on') }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                @if (!$project->status)
-                                    <form action="{{ route('freelancer-projects.done',$project) }}" method="POST" onsubmit="return confirm('Confirmer l\'acceptation de ce projet?')" class="inline-block">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="submit" class="flex justify-center items-center text-green-600 font-medium mr-2 w-5 aspect-square">
+                            <td class=" px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                @if(Auth::user()->can('edit freelancer_projects'))
+                                    @if(!$project->status)
+                                        <button type="button" @click="showModal = true; projectId = {{ $project->id }}; projectPrice = '{{ number_format($project->price, 2) }}'; freelancerName = '{{$project->employee->user->first_name . ' ' . $project->employee->user->last_name}}'; projectName='{{$project->name}}'" class="text-green-600 font-medium mr-2 aspect-square">
                                             <i class="fa-solid fa-check"></i>
                                         </button>
-                                    </form>
-                                @endif
-                                @if(Auth::user()->can('edit freelancer_projects'))
+                                    @endif
                                     <a href="{{ route('freelancer-projects.edit', $project) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">
                                         <i class="fas fa-edit"></i>
                                     </a>
@@ -147,5 +143,47 @@
         <div class="px-6 py-4 border-t border-base-300">
             {{ $projects->withQueryString()->links('vendor.pagination.tailwind') }}
         </div>
+
+        <!-- Alpine.js Modal -->
+        <!-- Overlay -->
+        <div x-show="showModal" style='display:none' class="fixed  inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-base-200 rounded-lg shadow-lg max-w-md w-full p-6" @click.away="showModal = false">
+                <h3 class="text-lg font-semibold mb-4">Confirm Payment</h3>
+                <form method="POST" :action="`/freelancer-projects/${projectId}/done`">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-base-content">Project Name</label>
+                        <input type="text" x-model="projectName" class="mt-1 block w-full border rounded-md p-2 bg-base-100" readonly />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-base-content">Freelancer Name</label>
+                        <input type="text" x-model="freelancerName" class="mt-1 block w-full border rounded-md p-2 bg-base-100" readonly />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-base-content">Price</label>
+                        <input type="text" x-model="projectPrice" class="mt-1 block w-full border rounded-md p-2 bg-base-100" readonly />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-base-content">Payment Type</label>
+                        <select name="payment_type_id" class="mt-1 block w-full bg-base-100 border border-base-300 rounded-md p-2" required>
+                            @foreach($paymentTypes as $type)
+                                <option value="{{ $type->id }}" class='bg-base-100'>{{ $type->type }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="button" @click="showModal = false" class="mr-3 px-4 py-2 bg-gray-300 text-black rounded button-white">Cancel</button>
+                        <button type="submit" class="px-4 py-2 bg-indigo-600 focus:outline focus:outline-2 focus:outline-offset-2 rounded">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+
 @endsection

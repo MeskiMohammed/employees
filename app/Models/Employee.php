@@ -27,7 +27,7 @@ class Employee extends Model
     }
 
     protected $fillable = [
-        'employee_code', 'cin', 'cin_attachment','profile_picture', 'address', 'personal_num',
+        'employee_code', 'cin', 'cin_attachment','profile_picture', 'address', 'personal_num','hourly_salary',
         'professional_num', 'pin', 'puk', 'salary', 'is_anapec', 'is_project', 'hours', 'ice','training_type','school',
         'professional_email', 'cnss', 'assurance', 'user_id', 'department_id','operator_id' , 'status_id'
     ];
