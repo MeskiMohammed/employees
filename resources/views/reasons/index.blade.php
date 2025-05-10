@@ -8,20 +8,35 @@
 @if(session('success'))
         <x-toast></x-toast>
     @endif
+    <div class="bg-base-200 shadow rounded-lg">
+        <div class="flex justify-between items-center p-6 border-b border-base-300">
+            <h2 class="text-xl font-semibold text-base-content">Reasons</h2>
+            @if (Auth::user()->can('create statuses'))
+            <a href="{{ route('reasons.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <i class="fas fa-plus mr-2"></i> Add New Reason
+            </a>
+            @endif
+        </div>
+    
+        <div class="p-6 border-b border-base-300">
+            <form action="{{ route('reasons.index') }}" method="GET" class="flex gap-4">
+                <div class="flex-1">
+                    <label for="search" class="block text-sm font-medium text-base-content mb-1">Search</label>
+                    <input type="text" name="search" id="search" value="{{ request('search') }}" class="bg-base-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md" placeholder="Search reasons...">
+                </div>
+    
+                <div class="flex items-end">
+                    <button type="submit" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 button-white">
+                        <i class="fas fa-search mr-2"></i> Search
+                    </button>
+                    <a href="{{ route('reasons.index') }}" class="ml-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 button-white">
+                        <i class="fas fa-times mr-2"></i> Reset
+                    </a>
+                </div>
+            </form>
+        </div>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-semibold text-base-content">Reasons</h1>
-        @if (Auth::user()->can('create reasons'))
-        <a href="{{ route('reasons.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Add New Reason
-        </a>
-        @endif
-    </div>
-
-
-
-    <div class="bg-base-200 shadow overflow-hidden sm:rounded-lg">
+                
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-base-200">
                 <thead class="bg-base-200">

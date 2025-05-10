@@ -32,7 +32,7 @@
                     <div class="flex items-center ">
 
                         <a class="flex items-center text-black pl-3" href="/" data-discover="true">
-                            <img alt="logo-light" class="h-8 mr-2" src="{{asset('storage/' . \App\Models\Enterprise::first()->logo) }}" />
+                            <img alt="logo" class="h-8 mr-2"  src="{{\App\Models\Enterprise::first()->logo ? asset('storage/' . \App\Models\Enterprise::first()->logo) : asset('logo.png') }}" />
                             {{ \App\Models\Enterprise::first()->name ?? 'Enterprise' }}
                         </a>
 
