@@ -61,6 +61,7 @@ class UpdateEmployeeRequest extends FormRequest
             // Freelancer specific fields
             'ice' => ['nullable','string','max:255',Rule::requiredIf(fn() => $this->is_freelancer === 'freelancer'),Rule::unique('employees', 'ice')->ignore($employeeId),],
             'is_project' => 'nullable|boolean',
+            'is_anapec' => 'nullable|boolean',
             'hourly_salary'=> 'nullable|numeric',
             // Attachments for employee
             'employment_contract' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',

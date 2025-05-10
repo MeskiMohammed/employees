@@ -329,7 +329,7 @@ class EmployeeController extends Controller
                 'operator_id' => $request->operator_id,
                 'cnss' => $request->cnss,
                 'assurance' => $request->assurance,
-                'is_project' => $request->has('is_project') ? $request->is_project : false,
+                'is_anapec' => $request->has('is_anapec') ? $request->is_anapec : false,
             ]);
         }else{
             $data = array_merge($data,[

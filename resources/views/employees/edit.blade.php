@@ -179,9 +179,6 @@
                             <input @click="salary = !salary" type="checkbox" name="is_project" id="is_project" value="1" {{ old('is_project', $employee->is_project) ? 'checked' : '' }} class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-base-300 rounded bg-base-100 ">
                             <span class="ml-2">Is Project Based</span>
                         </label>
-                        @error('is_project')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                        @enderror
                     </div>
 
                     <div x-show="salary">
@@ -373,7 +370,7 @@
                         @enderror
                     </div>
                     <div class='flex pt-6 items-center gap-2'>
-                        <input type="checkbox" name="is_anapec" class="bg-base-100 rounded" @if($employee->is_anapec) checked @endif>ANAPEC
+                        <input type="checkbox" name="is_anapec" value='1' class="bg-base-100 rounded" @if($employee->is_anapec) checked @endif>ANAPEC
                     </div>
 
                 </div>

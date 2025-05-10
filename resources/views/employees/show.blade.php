@@ -128,7 +128,7 @@
                                     <strong>salary:</strong>
                                     <p>{{ $employee->salary }}</p>
                                 </div>
-                                <div>
+                                <div class='col-span-2'>
                                     <strong>professional email:</strong>
                                     <p>{{ $employee->professional_email }}</p>
                                 </div>
@@ -147,6 +147,10 @@
                                 <div>
                                     <strong>Operator:</strong>
                                     <p>{{ $employee->operator->operator }}</p>
+                                </div>
+                                <div>
+                                    <strong>ANAPEC:</strong>
+                                    <p>{{ $employee->is_anapec ? 'yes' : 'no' }}</p>
                                 </div>
                             </div>
                         @endif

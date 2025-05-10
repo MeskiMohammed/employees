@@ -38,6 +38,7 @@
 
     a.bg-indigo-600,
     button.bg-indigo-600,
+    button.bg-cyan-600,
     button.bg-blue-600 {
         @apply focus:outline-primary-500 focus:ring-0 focus:ring-offset-0;
         background-color:#DAB540 !important;
