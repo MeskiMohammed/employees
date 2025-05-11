@@ -618,4 +618,11 @@ class EmployeeController extends Controller
     {
         return view('employees.badge', compact('employee'));
     }
+
+    public function cin(Employee $employee)
+    {
+        $usr = $employee->user;
+        $name = $usr->first_name.' '.$usr->last_name;
+        return Storage::disk('public')->download($employee->cin_attachment, $name.' cin.'.pathinfo($employee->cin_attachment,PATHINFO_EXTENSION));
+    }
 }

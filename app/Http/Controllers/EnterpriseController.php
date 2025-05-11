@@ -25,6 +25,7 @@ class EnterpriseController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'document_template' => 'nullable|file|mimes:pdf',
         ]);
 
         $enterprise = Enterprise::first() ?? new Enterprise();
@@ -39,6 +40,17 @@ class EnterpriseController extends Controller
             // Store new logo
             $path = $request->file('logo')->store('enterprise', 'public');
             $enterprise->logo = $path;
+        }
+
+        if ($request->hasFile('document_template')) {
+            // Delete old logo if exists
+            if ($enterprise->logo && Storage::exists('public/' . $enterprise->document_template)) {
+                Storage::delete('public/' . $enterprise->document_template);
+            }
+
+            // Store new logo
+            $path = $request->file('document_template')->store('enterprise', 'public');
+            $enterprise->document_template = $path;
         }
 
         $enterprise->save();
