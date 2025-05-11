@@ -50,6 +50,18 @@
                                 <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
+
+                        <div>
+                            <label for="logo" class="block text-sm font-medium text-base-content">Enterprise Document Template</label>
+                            <div class="mt-2 flex items-center">
+                                <input type="file" name="document_template" id="logo"
+                                    class="file-input mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-base-300 rounded-md @error('logo') border-red-500 @enderror">
+                            </div>
+                            <p class="mt-1 text-sm text-base-content">File Format: PDF.</p>
+                            @error('document_template')
+                                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
                 </div>
                 <div class="px-4 py-3 bg-base-200 text-right sm:px-6">

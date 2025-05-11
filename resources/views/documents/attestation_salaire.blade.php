@@ -1,15 +1,72 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Attestation de Salaire</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 200px 60px 100px;
+            font-size: 22px;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .inner {
+            width: 100%;
+            line-height: 1.8;
+        }
+
+        .title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 26px;
+            margin-bottom: 30px;
+        }
+
+        .signature {
+            margin-top: 60px;
+        }
+    </style>
 </head>
+
 <body>
-    <p>Nous soussignés, la société RYD MEDIATECH, attestons que :</p>
-    <p><strong>{{ employe_nom }}</strong>, titulaire de la CIN n° {{ employe_cin }}, est employé(e) en qualité de {{ poste }} depuis le {{ date_embauche }}.</p>
-    <p>Il/Elle perçoit un salaire mensuel brut de {{ salaire_brut }} MAD.</p>
-    <p>Cette attestation est délivrée à la demande de l'intéressé(e) pour servir et valoir ce que de droit.</p>
-    <p>Fait à {{ ville }}, le {{ date_actuelle }}.</p>
-    <p>Signature et cachet</p>
+    <div class="content">
+        <div class="inner">
+            <p class="title">Attestation de salaire</p>
+
+
+            <p> Nous soussignés, la société {{ $enterprise->name }}, attestons que :
+                <strong>{{ $employee->user->first_name . ' ' . $employee->user->last_name }}</strong>, titulaire de la
+                CIN n° {{ $employee->cin }}, est employé(e) en qualité
+                de
+                {{ $employee->typeEmployees->last()->type->type }} depuis le
+                {{ $employee->typeEmployees->last()->in_date->format('d/m/Y') }}.
+                Il/Elle perçoit un salaire mensuel brut de {{ $employee->salary }} MAD.
+            </p>
+
+            <p>
+                Cette attestation est délivrée à l’intéressé(e) pour servir et valoir ce que de droit.
+            </p>
+
+            <p class="signature">
+                Fait le : {{ now()->format('d/m/Y') }}
+            </p>
+        </div>
+    </div>
 </body>
+
+
+
 </html>

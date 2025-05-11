@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('logo')->nullable();
             $table->string('name')->nullable();
+            $table->text('document_template')->nullable();
             $table->timestamps();
         });
     }

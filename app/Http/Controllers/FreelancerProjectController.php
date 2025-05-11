@@ -134,6 +134,6 @@ class FreelancerProjectController extends Controller
             return back()->with('error', 'An error occurred while updating the project.');
         }
 
-        return redirect()->route('freelancer-projects->index')->with('success', 'Project marked as done and payment recorded.');
+        return redirect()->route('freelancer-projects.index')->with('success', 'Project marked as done and payment recorded.');
     }
 }
