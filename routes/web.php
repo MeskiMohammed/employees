@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AttachmentController;
+use App\Http\Controllers\BadgeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
@@ -130,6 +131,8 @@ Route::middleware(['auth','role:super_admin|admin'])->group(function () {
     Route::put('/enterprise', [EnterpriseController::class, 'update'])->name('enterprise.update')->middleware('role:super_admin');
 
     Route::get('/events', [EventController::class, 'index'])->name('events.index')->middleware('role:super_admin');
+
+    Route::get('/badge/{employee}',[BadgeController::class,'badge']);
 });
 
 
