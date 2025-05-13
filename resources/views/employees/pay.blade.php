@@ -11,7 +11,7 @@
             <h1 class="text-2xl font-bold text-base-content">Create Payment for {{ $employee->user->first_name }} {{ $employee->user->last_name }}</h1>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6" x-data="{hours: 1,salaryPerHour: {{ $employee->hourly_salary }},get net() {return (this.hours || 0) * this.salaryPerHour;}}">
             <!-- Employee Information Card -->
             <div class="bg-base-200 rounded-lg shadow-md p-6">
                 <div class="flex items-center mb-4">
@@ -104,7 +104,7 @@
             <div class="bg-base-200 rounded-lg shadow-md p-6">
                 <h2 class="text-lg font-semibold mb-4">Salary Calculation</h2>
 
-                <div class="space-y-3" x-data="{hours: 0,salaryPerHour: {{ $employee->hourly_salary }},get net() {return (this.hours || 0) * this.salaryPerHour;}}">
+                <div class="space-y-3" >
                     <div class="flex justify-between items-center">
                         <span class="text-base-content">Salary per Hour</span>
                         <span class="font-medium">{{ number_format($employee->hourly_salary, 2) }} MAD</span>
@@ -112,7 +112,7 @@
 
                     <div class="flex justify-between items-center">
                         <span>Hours</span>
-                        <input type='number' min="0" x-model.number="hours" name="hours" class="h-8 w-24">
+                        <input type='number' min="1" x-model.number="hours" name="hours" class="h-8 w-24">
                     </div>
 
                     <div class="border-t border-gray-200 pt-2 mt-2">
@@ -132,7 +132,7 @@
 
                 <form action="{{ route('employees.pay', $employee) }}" method="POST">
                     @csrf
-
+                    <input type='hidden' :value='hours' name='hours'>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="payment_type_id" class="block text-sm font-medium text-base-content mb-1">Payment Type</label>
@@ -146,15 +146,14 @@
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                         </div>
-
                     </div>
 
                     <div class="flex justify-end mt-6 space-x-3">
-                        <button type="submit" class="text-white py-2 px-4 rounded {{ $hasBeenPayedThisMonth ? 'bg-gray-500 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700' }}" @if($hasBeenPayedThisMonth) disabled @endif>
+                        <button type="submit" class="text-white py-2 px-4 rounded {{ $hasBeenPayedThisMonth && $employee->typeEmployees->last()->type->type !== 'freelancer' ? 'bg-gray-500 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700' }}" @if($hasBeenPayedThisMonth) disabled @endif>
                             Create Payment
                         </button>
                     </div>
-                    @if($hasBeenPayedThisMonth)
+                    @if($hasBeenPayedThisMonth && $employee->typeEmployees->last()->type->type !== 'freelancer')
                         <div class="flex justify-end">
                             <p class="block text-red-500 text-xs mb-2 self-end">Payment has already been made this month.</p>
                         </div>

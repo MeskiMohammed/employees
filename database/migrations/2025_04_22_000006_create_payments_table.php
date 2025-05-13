@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->foreignId('payment_type_id')->constrained();
             $table->double('gross');
             $table->double('cnss')->nullable();
+            $table->integer('hours')->nullable();
             $table->double('tax_rate')->nullable();
             $table->double('income_tax')->nullable();
             $table->double('net');

@@ -571,6 +571,17 @@ class EmployeeController extends Controller
 
     public function pay(Request $request, Employee $employee)
     {
+        if($employee->typeEmployees->last()->type->type === 'freelancer'){
+            Payment::create([
+                'employee_id' => $employee->id,
+                'payment_type_id' => $request->payment_type_id,
+                'gross' => $employee->hourly_salary * $request->hours,
+                'hours' => $request->hours,
+                'net' => $employee->hourly_salary * $request->hours,
+            ]);
+
+            return redirect()->back()->with('success', 'Payment has been made successfully');
+        }
         $grossSalary = $employee->salary;
 
         $cnssRate = 0.0674;
