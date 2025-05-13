@@ -148,7 +148,7 @@
                                 </span>
                             </td>
                             <td
-                                class="px-6 flex justify-end items-center py-4 whitespace-nowrap text-right text-sm font-medium">
+                                class="px-6 mt-2 flex justify-end items-end py-4 whitespace-nowrap text-right text-sm font-medium">
                                 @if($leave->status === 'pending' && Auth::user()->can('edit leaves'))
                                     <a href="{{ route('leaves.update', ['leave' => $leave->id, 'status' => 'approved']) }}"
                                         class="inline-block flex justify-center items-center text-green-600 font-medium mr-2 w-5 aspect-square bg-green-300 border rounded border-green-600"
@@ -160,6 +160,11 @@
                                         class="inline-block flex justify-center items-center text-red-600 font-medium w-5 aspect-square bg-red-300 border rounded border-red-600"
                                         onclick="return confirm('Confirmer l\'annulation de ce congé ?')">
                                         <i class="fa-solid fa-x "></i>
+                                    </a>
+                                @elseif ($leave->status === 'approved' && Auth::user()->can('edit leaves'))
+                                    <a href="{{ route('documents.attestation_conges', $leave) }}" target="_blank"
+                                        class="inline-block flex justify-center items-center text-yellow-600 font-medium w-5 aspect-square bg-yellow-300 border rounded border-yellow-600">
+                                        <i class="fa-solid fa-file"></i>
                                     </a>
                                 @endif
                             </td>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AttachmentController;
+use App\Http\Controllers\BadgeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
@@ -16,7 +17,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReasonController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TypeController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\PdfController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -59,6 +60,7 @@ Route::middleware(['auth','role:super_admin|admin'])->group(function () {
     Route::post('employees/{employee}/pay', [EmployeeController::class, 'pay'])->name('employees.pay');
     Route::put('employees/{employee}/end-post', [EmployeeController::class, 'endPost'])->name('employees.end-post');
     Route::get('employees/{employee}/badge', [EmployeeController::class, 'badge'])->name('employees.badge');
+    Route::get('employees/{employee}/cin', [EmployeeController::class, 'cin'])->name('employees.cin');
 
     Route::get('departments',[DepartmentController::class,'index'])->name('departments.index')->middleware('permission:view departments');
     Route::get('departments/create',[DepartmentController::class,'create'])->name('departments.create')->middleware('permission:create departments');
@@ -130,6 +132,18 @@ Route::middleware(['auth','role:super_admin|admin'])->group(function () {
     Route::put('/enterprise', [EnterpriseController::class, 'update'])->name('enterprise.update')->middleware('role:super_admin');
 
     Route::get('/events', [EventController::class, 'index'])->name('events.index')->middleware('role:super_admin');
+
+    Route::get('/badge/{employee}',[BadgeController::class,'badge']);
+
+    Route::prefix('documents')->group(function () {
+        Route::get('/attestation-stage/{employee}', [PdfController::class,'attestation_de_stage'])->name('documents.attestation_stage');
+        Route::get('/attestation-travail/{employee}', [PdfController::class,'attestation_de_travail'])->name('documents.attestation_travail');
+        Route::get('/attestation-conges/{leave}', [PdfController::class,'attestation_de_conges'])->name('documents.attestation_conges');
+        Route::get('/attestation-mission/{employee}', [PdfController::class,'attestation_de_mission'])->name('documents.attestation_mission');
+        Route::get('/attestation-salaire/{employee}', [PdfController::class,'attestation_de_salaire'])->name('documents.attestation_salaire');
+        Route::get('/bulletin-paie/{employee}', [PdfController::class,'bulltin_paie'])->name('documents.bulletin_paie');
+    });
+
 });
 
 
@@ -143,14 +157,6 @@ Route::middleware(['auth','role:employee'])->group(function () {
 });
 
 
-Route::prefix('documents')->group(function () {
-    Route::view('/attestation-stage', 'documents.attestation_stage')->name('documents.attestation_stage');
-    Route::view('/attestation-travail', 'documents.attestation_travail')->name('documents.attestation_travail');
-    Route::view('/attestation-conges', 'documents.attestation_conges')->name('documents.attestation_conges');
-    Route::view('/attestation-mission', 'documents.attestation_mission')->name('documents.attestation_mission');
-    Route::view('/attestation-salaire', 'documents.attestation_salaire')->name('documents.attestation_salaire');
-    Route::view('/bulletin-paie', 'documents.bulletin_paie')->name('documents.bulletin_paie');
-});
 
 
 require __DIR__.'/auth.php';

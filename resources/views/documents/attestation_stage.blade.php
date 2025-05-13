@@ -1,16 +1,75 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Attestation de Stage</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 200px 60px 100px;
+            font-size: 22px;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .inner {
+            width: 100%;
+            line-height: 1.8;
+        }
+
+        .title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 26px;
+            margin-bottom: 30px;
+        }
+
+        .signature {
+            margin-top: 60px;
+        }
+    </style>
 </head>
+
 <body>
-    <p>Nous soussignés, la société RYD MEDIATECH, sise à {{ entreprise_adresse }}, représentée par {{ representant_nom }},
-         en qualité de {{ representant_fonction }}, attestons que :</p>
-    <p><strong>{{ stagiaire_nom }}</strong>, titulaire de la CIN n° {{ stagiaire_cin }},
-         a effectué un stage au sein de notre entreprise du {{ date_debut }} au {{ date_fin }} en tant que {{ poste }}.</p>
-    <p>Cette attestation est délivrée à la demande de l'intéressé(e) pour servir et valoir ce que de droit.</p>
-    <p>Fait à {{ ville }}, le {{ date_actuelle }}.</p>
-    <p>Signature et cachet</p>
+    <div class="content">
+        <div class="inner">
+            <p class="title">Attestation de stage</p>
+
+            <p>
+                Nous soussignés, la société {{ $enterprise->name }}, 
+                certifions par la présente que Monsieur/Madame <strong>{{ $employee->user->first_name }}
+                    {{ $employee->user->last_name }}</strong><br>
+                demeurant au
+                <strong>{{ $employee->address }}</strong>,<br>
+                CIN : <strong>{{ $employee->cin }}</strong> a effectué un stage au sein de notre entreprise <strong>RYD
+                    MediaTech</strong>
+                du <strong>{{ $employee->typeEmployees->last()->in_date->format('d/m/Y') }}</strong>
+                au
+                <strong>{{ $employee->typeEmployees->last()->out_date ? $employee->typeEmployees->last()->out_date->format('d/m/Y') : 'Actuallement' }}</strong>
+                en qualité
+                <strong>{{'..................................................' }}</strong> .
+            </p>
+
+            <p>
+                Cette attestation est délivrée à l’intéressé(e) pour servir et valoir ce que de droit.
+            </p>
+
+            <p class="signature">
+                Fait le : {{ now()->format('d/m/Y') }}
+            </p>
+        </div>
+    </div>
 </body>
+
 </html>

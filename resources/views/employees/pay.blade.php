@@ -9,6 +9,9 @@
     <div class="container mx-auto px-4 py-6">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-base-content">Create Payment for {{ $employee->user->first_name }} {{ $employee->user->last_name }}</h1>
+            <a href="{{ route('employees.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded">
+                <i class="fas fa-arrow-left mr-2"></i> Back to Employees Page
+            </a>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6" x-data="{hours: 1,salaryPerHour: {{ $employee->hourly_salary }},get net() {return (this.hours || 0) * this.salaryPerHour;}}">
@@ -137,14 +140,10 @@
                         <div>
                             <label for="payment_type_id" class="block text-sm font-medium text-base-content mb-1">Payment Type</label>
                             <select id="payment_type_id" name="payment_type_id" class="w-full bg-base-100 rounded-md border-base-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 @error('payment_type_id') border-red-500  @enderror">
-                                <option value="">Select Payment Type</option>
                                 @foreach($paymentTypes as $type)
                                     <option value="{{ $type->id }}" {{ old('payment_type_id') == $type->id ? 'selected' : '' }}>{{ $type->type }}</option>
                                 @endforeach
                             </select>
-                            @error('payment_type_id')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
                         </div>
                     </div>
 
