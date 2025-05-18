@@ -27,6 +27,10 @@
                         onsubmit="return confirm('Are you sure to give/remove admin to this user?')">
                         @csrf
                         @method('put')
+                        @if(!in_array($employee->typeEmployees->last()->type->type,['trainee','freelancer']))
+                            <a href="{{ route('badge', $employee) }}" target="_blank"
+                                class='rounded px-4 py-2 bg-primary-500 text-black'>Badge</a>
+                        @endif
                         @if($employee->typeEmployees->last()->type->type !== 'trainee')
                             <a href="{{ route('employees.payment', $employee) }}"
                                 class='rounded px-4 py-2 bg-primary-500 text-black'>Payment History</a>
@@ -223,7 +227,7 @@
                     <span class='text-2xl font-semibold'>Documents</span>
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    @if ($employee->typeEmployees->last()->type->type === 'trainee')
+                    @if ($employee->typeEmployees()->firstWhere('type_id',$trainee_type_id))
                         <div class="border border-gray-200 rounded-lg p-4">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center">
@@ -416,14 +420,14 @@
                 </div>
             </div>
 
-            <div x-show="imageCIN" 
+            <div x-show="imageCIN"
                 x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0" 
+                x-transition:enter-start="opacity-0"
                 x-transition:enter-end="opacity-100"
-                x-transition:leave="transition ease-in duration-200" 
+                x-transition:leave="transition ease-in duration-200"
                 x-transition:leave-start="opacity-100"
                 x-transition:leave-end="opacity-0"
-                class="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-75 p-6 z-50" 
+                class="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-75 p-6 z-50"
                 style="display: none;">
 
                 <div class="px-4 flex gap-6 items-center justify-end">

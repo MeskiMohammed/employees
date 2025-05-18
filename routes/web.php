@@ -59,7 +59,7 @@ Route::middleware(['auth','role:super_admin|admin'])->group(function () {
     Route::get('employees/{employee}/pay', [EmployeeController::class, 'payment'])->name('employees.payment');
     Route::post('employees/{employee}/pay', [EmployeeController::class, 'pay'])->name('employees.pay');
     Route::put('employees/{employee}/end-post', [EmployeeController::class, 'endPost'])->name('employees.end-post');
-    Route::get('employees/{employee}/badge', [EmployeeController::class, 'badge'])->name('employees.badge');
+    // Route::get('employees/{employee}/badge', [EmployeeController::class, 'badge'])->name('employees.badge');
     Route::get('employees/{employee}/cin', [EmployeeController::class, 'cin'])->name('employees.cin');
 
     Route::get('departments',[DepartmentController::class,'index'])->name('departments.index')->middleware('permission:view departments');
@@ -133,7 +133,7 @@ Route::middleware(['auth','role:super_admin|admin'])->group(function () {
 
     Route::get('/events', [EventController::class, 'index'])->name('events.index')->middleware('role:super_admin');
 
-    Route::get('/badge/{employee}',[BadgeController::class,'badge']);
+    Route::get('/badge/{employee}',[BadgeController::class,'badge'])->name('badge');
 
     Route::prefix('documents')->group(function () {
         Route::get('/attestation-stage/{employee}', [PdfController::class,'attestation_de_stage'])->name('documents.attestation_stage');

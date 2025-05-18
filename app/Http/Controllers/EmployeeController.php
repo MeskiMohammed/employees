@@ -118,10 +118,10 @@ class EmployeeController extends Controller
                 'assurance' => $request->assurance,
                 'is_anapec' => $request->has('is_anapec') ? true : false,
             ]);
-        }else{
-            $data = array_merge($data,[
-                'training_type'=>$request->training_type,
-                'school'=>$request->school
+        } else {
+            $data = array_merge($data, [
+                'training_type' => $request->training_type,
+                'school' => $request->school
             ]);
         }
 
@@ -178,13 +178,15 @@ class EmployeeController extends Controller
             $iPath = $request->file('insurance')->storeAs('attachments', uniqid() . '_' . $request->file('insurance')->getClientOriginalName(), 'public');
             $rPath = $request->file('resume')->storeAs('attachments', uniqid() . '_' . $request->file('resume')->getClientOriginalName(), 'public');
             $ccPath = $request->file('cnss_certificate')->storeAs('attachments', uniqid() . '_' . $request->file('cnss_certificate')->getClientOriginalName(), 'public');
+            $gcPath = $request->file('good_conduct_certificate')->storeAs('attachments', uniqid() . '_' . $request->file('good_conduct_certificate')->getClientOriginalName(), 'public');
 
             $data = [
-                ['name' => 'employment_contract', 'attachment' => $ecPath, 'type_employee_id' => $typeEmployee->id],
-                ['name' => 'job_application', 'attachment' => $jaPath, 'type_employee_id' => $typeEmployee->id],
-                ['name' => 'insurance', 'attachment' => $iPath, 'type_employee_id' => $typeEmployee->id],
-                ['name' => 'resume', 'attachment' => $rPath, 'type_employee_id' => $typeEmployee->id],
-                ['name' => 'cnss_certificate', 'attachment' => $ccPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'Employment Contract', 'attachment' => $ecPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'Job Application', 'attachment' => $jaPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'Insurance', 'attachment' => $iPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'Resume', 'attachment' => $rPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'CNSS Certificate', 'attachment' => $ccPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'Good Conduct Certificate', 'attachment' => $gcPath, 'type_employee_id' => $typeEmployee->id],
             ];
 
             Attachment::insert($data);
@@ -197,11 +199,11 @@ class EmployeeController extends Controller
             $tPath = $request->file('transcript')->storeAs('attachments', uniqid() . '_' . $request->file('transcript')->getClientOriginalName(), 'public');
 
             $data = [
-                ['name' => 'internship_agreement', 'attachment' => $iagPath, 'type_employee_id' => $typeEmployee->id],
-                ['name' => 'internship_application', 'attachment' => $iapPath, 'type_employee_id' => $typeEmployee->id],
-                ['name' => 'insurance', 'attachment' => $iPath, 'type_employee_id' => $typeEmployee->id],
-                ['name' => 'resume', 'attachment' => $rPath, 'type_employee_id' => $typeEmployee->id],
-                ['name' => 'transcript', 'attachment' => $tPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'Internship Agreement', 'attachment' => $iagPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'Internship Application', 'attachment' => $iapPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'Insurance', 'attachment' => $iPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'Resume', 'attachment' => $rPath, 'type_employee_id' => $typeEmployee->id],
+                ['name' => 'Transcript', 'attachment' => $tPath, 'type_employee_id' => $typeEmployee->id],
             ];
 
             Attachment::insert($data);
@@ -236,7 +238,9 @@ class EmployeeController extends Controller
             'reasons',
         ];
 
-        return view('employees.show', compact('employee', 'modules'));
+        $trainee_type_id = Type::firstWhere('type','trainee')->id;
+
+        return view('employees.show', compact('employee', 'modules','trainee_type_id'));
     }
 
     public function edit(Employee $employee)
@@ -331,10 +335,10 @@ class EmployeeController extends Controller
                 'assurance' => $request->assurance,
                 'is_anapec' => $request->has('is_anapec') ? $request->is_anapec : false,
             ]);
-        }else{
-            $data = array_merge($data,[
-                'training_type'=>$request->training_type,
-                'school'=>$request->school
+        } else {
+            $data = array_merge($data, [
+                'training_type' => $request->training_type,
+                'school' => $request->school
             ]);
         }
 
@@ -393,11 +397,7 @@ class EmployeeController extends Controller
                 Storage::disk('public')->delete($attachment->attachment);
             }
 
-            $eicPath = $request->file('eic')->storeAs(
-                'attachments',
-                uniqid() . '_' . $request->file('eic')->getClientOriginalName(),
-                'public'
-            );
+            $eicPath = $request->file('eic')->storeAs('attachments', uniqid() . '_' . $request->file('eic')->getClientOriginalName(), 'public');
 
             if ($attachment) {
                 $attachment->update(['attachment' => $eicPath]);
@@ -411,11 +411,12 @@ class EmployeeController extends Controller
         } elseif ($request->is_freelancer === 'employee') {
             // Handle employee attachments
             $attachmentTypes = [
-                'employment_contract' => 'employment_contract',
-                'job_application' => 'job_application',
-                'insurance' => 'insurance',
-                'resume' => 'resume',
-                'cnss_certificate' => 'cnss_certificate'
+                'employment_contract' => 'Employment Contract',
+                'job_application' => 'Job Application',
+                'insurance' => 'Insurance',
+                'resume' => 'Resume',
+                'cnss_certificate' => 'CNSS Certificate',
+                'good_conduct_certificate' => 'Good Conduct Certificate'
             ];
 
             foreach ($attachmentTypes as $fileKey => $attachmentName) {
@@ -450,11 +451,11 @@ class EmployeeController extends Controller
         } else { // Trainee
             // Handle trainee attachments
             $attachmentTypes = [
-                'internship_agreement' => 'internship_agreement',
-                'internship_application' => 'internship_application',
-                'insurance_int' => 'insurance',
-                'resume_int' => 'resume',
-                'transcript' => 'transcript'
+                'internship_agreement' => 'Internship Agreement',
+                'internship_application' => 'Internship Application',
+                'insurance_int' => 'Insurance',
+                'resume_int' => 'Resume',
+                'transcript' => 'Transcript'
             ];
 
             foreach ($attachmentTypes as $fileKey => $attachmentName) {
@@ -571,7 +572,7 @@ class EmployeeController extends Controller
 
     public function pay(Request $request, Employee $employee)
     {
-        if($employee->typeEmployees->last()->type->type === 'freelancer'){
+        if ($employee->typeEmployees->last()->type->type === 'freelancer') {
             Payment::create([
                 'employee_id' => $employee->id,
                 'payment_type_id' => $request->payment_type_id,
@@ -623,17 +624,5 @@ class EmployeeController extends Controller
         ]);
 
         return redirect()->route('employees.show', $employee)->with('success', 'Post has been ended successfully');
-    }
-
-    public function badge(Employee $employee)
-    {
-        return view('employees.badge', compact('employee'));
-    }
-
-    public function cin(Employee $employee)
-    {
-        $usr = $employee->user;
-        $name = $usr->first_name.' '.$usr->last_name;
-        return Storage::disk('public')->download($employee->cin_attachment, $name.' cin.'.pathinfo($employee->cin_attachment,PATHINFO_EXTENSION));
     }
 }

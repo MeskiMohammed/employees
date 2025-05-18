@@ -295,6 +295,14 @@
                         @enderror
                     </div>
 
+                    <div>
+                        <label for="good_conduct_certificate" class="block text-sm font-medium text-base-content mb-1">Good Conduct Certificate</label>
+                        <input type="file" name="good_conduct_certificate" id="good_conduct_certificate" class=" file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('good_conduct_certificate') border-red-500  @enderror">
+                        @error('good_conduct_certificate')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <div class='flex pt-6 items-center gap-2'>
                         <input type="checkbox" name="is_anapec" class="bg-base-100 rounded">ANAPEC
                     </div>

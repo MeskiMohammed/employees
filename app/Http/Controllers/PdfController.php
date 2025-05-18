@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Models\Enterprise;
 use App\Models\Leave;
+use App\Models\Type;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -63,9 +64,10 @@ class PdfController extends Controller
     {
         $super = User::first();
         $enterprise = Enterprise::first();
+        $trainee_type_id = Type::firstWhere('type','trainee')->id;
         // $pdf = Pdf::loadView('documents.attestation_stage', compact('employee', 'enterprise', 'super'))->setPaper('A4');
         // return $pdf->stream('attestation_de_stage.pdf');
-        return $this->overlayPdfWithTemplate('documents.attestation_stage',compact('employee', 'enterprise', 'super'),'attestation_de_stage.pdf');
+        return $this->overlayPdfWithTemplate('documents.attestation_stage',compact('employee', 'enterprise', 'super','trainee_type_id'),'attestation_de_stage.pdf');
     }
 
     public function attestation_de_conges(Request $request, Leave $leave)

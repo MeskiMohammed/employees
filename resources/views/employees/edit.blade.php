@@ -369,6 +369,22 @@
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    <div>
+                        <label for="good_conduct_certificate" class="block text-sm font-medium text-base-content mb-1">Good Conduct Certificate</label>
+                        @if($employee->goodConductCertificateAttachment)
+                        <div class="mb-2">
+                            <p class="text-xs text-gray-500">Current attachment: {{ $employee->goodConductCertificateAttachment->original_name }}</p>
+                            <a href="{{ route('attachments.download', $employee->goodConductCertificateAttachment) }}" class="text-xs text-indigo-600 hover:text-indigo-800">Download</a>
+                        </div>
+                        @endif
+                        <input type="file" name="good_conduct_certificate" id="good_conduct_certificate" class="file-input shadow-sm focus:border-2 focus:ring-indigo-500 focus:outline-none h-[calc(0.25rem*9.5)] focus:border-indigo-500 block w-full sm:text-sm border-base-300 rounded-md @error('good_conduct_certificate') border-red-500 @enderror">
+                        <p class="text-xs text-gray-500 mt-1">Leave empty to keep current attachment</p>
+                        @error('good_conduct_certificate')
+                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <div class='flex pt-6 items-center gap-2'>
                         <input type="checkbox" name="is_anapec" value='1' class="bg-base-100 rounded" @if($employee->is_anapec) checked @endif>ANAPEC
                     </div>

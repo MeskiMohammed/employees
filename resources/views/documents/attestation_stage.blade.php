@@ -47,18 +47,17 @@
             <p class="title">Attestation de stage</p>
 
             <p>
-                Nous soussignés, la société {{ $enterprise->name }}, 
-                certifions par la présente que Monsieur/Madame <strong>{{ $employee->user->first_name }}
-                    {{ $employee->user->last_name }}</strong><br>
+                Nous soussignés, la société {{ $enterprise->name }},
+                certifions par la présente que Monsieur/Madame <strong>{{ ucfirst($employee->user->first_name) }}
+                    {{ ucfirst($employee->user->last_name) }}</strong><br>
                 demeurant au
                 <strong>{{ $employee->address }}</strong>,<br>
-                CIN : <strong>{{ $employee->cin }}</strong> a effectué un stage au sein de notre entreprise <strong>RYD
-                    MediaTech</strong>
-                du <strong>{{ $employee->typeEmployees->last()->in_date->format('d/m/Y') }}</strong>
+                CIN : <strong>{{ $employee->cin }}</strong> a effectué un stage au sein de notre entreprise <strong>{{ $enterprise->name }}</strong>
+                du <strong>{{ $employee->typeEmployees()->firstWhere('type_id',$trainee_type_id)->in_date->format('d/m/Y') }}</strong>
                 au
-                <strong>{{ $employee->typeEmployees->last()->out_date ? $employee->typeEmployees->last()->out_date->format('d/m/Y') : 'Actuallement' }}</strong>
+                <strong>{{ $employee->typeEmployees->last()->out_date ? $employee->typeEmployees()->firstWhere('type_id',$trainee_type_id)->out_date->format('d/m/Y') : 'Actuallement' }}</strong>
                 en qualité
-                <strong>{{'..................................................' }}</strong> .
+                <strong>{{'..................................................'}}</strong> .
             </p>
 
             <p>
