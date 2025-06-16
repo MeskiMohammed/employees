@@ -172,7 +172,7 @@
                 <span class='text-2xl font-semibold'>Posts</span>
                 @if(\App\Models\TypeEmployee::where('employee_id', $employee->id)->where('out_date', null)->count() === 0)
                     <a href='{{ route('employees.edit', $employee) }}'
-                        class='rounded px-4 py-2 bg-primary-500 cursor-pointer hover:bg-blue-700 text-black'>Add New Post</a>
+                        class='rounded px-4 py-2 bg-primary-500 cursor-pointer hover:bg-primary-300 text-black'>Add New Post</a>
                 @endif
             </h2>
             @foreach($employee->typeEmployees->sortByDesc('created_at') as $typeEmployee)

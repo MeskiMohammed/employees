@@ -125,7 +125,7 @@ class DatabaseSeeder extends Seeder
             Type::create(['type' => $type]);
         }
 
-        $this->call([PermissionsSeeder::class]);
+        $this->call([PermissionsSeeder::class,EmployeeSeeder::class]);
 
 
         // super admin creation

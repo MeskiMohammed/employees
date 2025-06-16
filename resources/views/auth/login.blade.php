@@ -21,16 +21,16 @@
 </head>
 
 <body class=" min-h-screen bg-white flex items-center justify-center ">
-    <div class="grid grid-cols-2 w-fullrounded-lg flex flex-col md:flex-row overflow-hidden justify-center items-center">
+    <div class="w-full rounded-lg flex flex-col md:flex-row overflow-hidden justify-center items-center">
 
         <!-- Left: Image -->
-        <div class="flex justify-center items-center bg-white">
+        <div class="flex ml-28 justify-center items-center bg-white">
             <img src="{{ asset('login-bg.png') }}" alt="" class="bg-white">
         </div>
 
         <!-- Right: Login Form -->
-        <div class="flex justify-center items-center">
-            <div class="w-96 p-10 rounded-xl">
+        <div class="flex flex-1 justify-center items-center">
+            <div class="w-96 p-10 my-12 rounded-xl border shadow-2xl bg-white">
                 <div class='flex justify-center'><img
                     src="{{\App\Models\Enterprise::first()->logo ? asset('storage/' . \App\Models\Enterprise::first()->logo) : asset('logo.png') }}"
                         class='w-24'></div>
