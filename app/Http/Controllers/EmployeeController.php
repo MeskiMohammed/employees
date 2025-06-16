@@ -38,7 +38,9 @@ class EmployeeController extends Controller
                     });
             });
             if ($request->department != null) {
-                $query->where('department_id', $request->department);
+                $query->whereHas('employeeDepartments', function ($q) use ($request) {
+                    $q->where('department_id', $request->department);
+                });
             }
 
             if ($request->status != null) {
